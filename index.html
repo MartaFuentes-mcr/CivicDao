@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CivicDAO Hero & Métricas</title>
+    <!-- Enlaza tu CSS externo -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- NAVEGACIÓN -->
+    <nav class="navbar">
+      <div class="container navbar__inner">
+        <!-- Logo -->
+        <a href="/" class="navbar__logo">CivicVault</a>
+
+        <!-- Hamburger Menu Button -->
+        <div class="navbar__hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <!-- Menú -->
+        <ul class="navbar__menu" id="navMenu">
+          <li>
+            <a
+              href="#caracteristicas"
+              onclick="scrollToSection('caracteristicas')"
+              >Características</a
+            >
+          </li>
+          <li><a href="#dao" onclick="scrollToSection('dao')">DAO</a></li>
+          <li>
+            <a href="#metricas" onclick="scrollToSection('metrics')"
+              >Métricas</a
+            >
+          </li>
+          <li><a href="dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="proposals/proposals.html">Propuestas</a></li>
+          <li><a href="wallet/wallet.html">💳 Wallet</a></li>
+        </ul>
+
+        <!-- Botón CTA -->
+        <a href="dashboard/dashboard.html" class="btn btn--primary navbar__cta"
+          >Abrir App</a
+        >
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero text-center">
+      <div class="container">
+        <h1 class="hero__title">
+          El Futuro del
+          <span class="text-gradient">Financiamiento Comunitario</span>
+        </h1>
+        <p class="hero__desc">
+          CivicVault combina neobancos, blockchain y gobernanza descentralizada
+          para financiar proyectos de impacto real. Transparencia total, monedas
+          híbridas (fiat+cripto), al alcance de todos. Construyendo un futuro
+          más equitativo, una comunidad a la vez.
+        </p>
+        <div class="hero__buttons">
+          <a href="dashboard/dashboard.html" class="btn btn--primary"
+            >Entrar al Protocolo</a
+          >
+          <a href="/whitepaper.pdf" class="btn btn--outline">Leer Whitepaper</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÉTRICAS -->
+    <section class="metrics">
+      <div class="container">
+        <div class="metrics__grid">
+          <div class="card card--active">
+            <div class="card__value">$2.4B</div>
+            <div class="card__label">Valor Total Bloqueado</div>
+            <div class="card__delta">↑ +12.3%</div>
+          </div>
+          <div class="card">
+            <div class="card__value">15,847</div>
+            <div class="card__label">Gobernadores Activos</div>
+            <div class="card__delta">↑ +8.7%</div>
+          </div>
+          <div class="card">
+            <div class="card__value">1,203</div>
+            <div class="card__label">Propuestas Votadas</div>
+            <div class="card__delta">↑ +23.1%</div>
+          </div>
+          <div class="card">
+            <div class="card__value">18.4%</div>
+            <div class="card__label">Rendimiento Generado</div>
+            <div class="card__delta">↑ +2.1%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES: Construido para Gobernanza Comunitaria -->
+    <section class="features text-center" id="dao">
+      <div class="container">
+        <h2 class="features__title">
+          Construido para
+          <span class="text-gradient">Gobernanza Comunitaria</span>
+        </h2>
+        <p class="features__desc">
+          Nuestra plataforma híbrida está diseñada para que cualquier persona
+          pueda participar en decisiones comunitarias transparentes, con
+          tecnología blockchain que garantiza trazabilidad total de cada euro
+          invertido.
+        </p>
+
+        <div class="features__grid">
+          <!-- Card 1 -->
+          <div class="feature-card">
+            <div class="feature-card__icon">
+              <!-- Aquí puedes reemplazar por tu SVG o <img> -->
+              <svg
+                width="32"
+                height="32"
+                fill="none"
+                stroke="#A855F7"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            </div>
+            <h3 class="feature-card__title">Propuestas Ciudadanas</h3>
+            <p class="feature-card__text">
+              Cualquier miembro puede proponer proyectos de impacto comunitario.
+              La comunidad vota de forma transparente y democrática.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="feature-card">
+            <div class="feature-card__icon">
+              <svg
+                width="32"
+                height="32"
+                fill="none"
+                stroke="#00D9FF"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l2 7h7l-5.5 4 2 7-5.5-4-5.5 4 2-7L3 9h7z" />
+              </svg>
+            </div>
+            <h3 class="feature-card__title">Transparencia Blockchain</h3>
+            <p class="feature-card__text">
+              Cada transacción queda registrada en blockchain. Trazabilidad
+              completa de fondos desde la contribución hasta el impacto final.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="feature-card">
+            <div class="feature-card__icon">
+              <svg
+                width="32"
+                height="32"
+                fill="none"
+                stroke="#A855F7"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M4 4h16v4H4V4zm0 6h16v4H4v-4zm0 6h16v4H4v-4z" />
+              </svg>
+            </div>
+            <h3 class="feature-card__title">Neobanco Híbrido</h3>
+            <p class="feature-card__text">
+              Contribuye en euros o cripto desde tu app favorita. Conversión
+              automática, sin fricciones, máxima inclusión financiera.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARACTERÍSTICAS DEL PROTOCOLO -->
+    <!-- CARACTERÍSTICAS DEL PROTOCOLO -->
+    <section class="protocol-features text-center" id="caracteristicas">
+      <div class="container">
+        <h2 class="protocol-features__title">
+          <span class="text-gradient">Características</span> de la Plataforma
+        </h2>
+        <p class="protocol-features__desc">
+          Tecnología híbrida que democratiza el acceso al financiamiento
+          comunitario, combinando lo mejor del mundo tradicional y cripto.
+        </p>
+
+        <!-- Único grid con las 6 cards -->
+        <div class="protocol-features__grid">
+          <!-- Card 1 -->
+          <div class="protocol-card">
+            <div class="protocol-card__icon">
+              <!-- SVG 1 -->
+            </div>
+            <h3 class="protocol-card__title">Decisiones Comunitarias</h3>
+            <p class="protocol-card__text">
+              Vota propuestas de proyectos locales desde tu móvil. Cada voto
+              cuenta igual, sin importar cuánto contribuyas.
+            </p>
+          </div>
+          <!-- Card 2 -->
+          <div class="protocol-card">
+            <div class="protocol-card__icon">
+              <!-- SVG 2 -->
+            </div>
+            <h3 class="protocol-card__title">Fondos Seguros</h3>
+            <p class="protocol-card__text">
+              Multi-firma bancaria tradicional + blockchain. Tus fondos están
+              protegidos por regulación financiera y criptografía.
+            </p>
+          </div>
+          <!-- Card 3 -->
+          <div class="protocol-card">
+            <div class="protocol-card__icon">
+              <!-- SVG 3 -->
+            </div>
+            <h3 class="protocol-card__title">Impacto Medible</h3>
+            <p class="protocol-card__text">
+              Tracking en tiempo real del progreso de cada proyecto. Fotos,
+              métricas e informes que demuestran el cambio real.
+            </p>
+          </div>
+          <!-- Card 4 -->
+          <div class="protocol-card">
+            <div class="protocol-card__icon">
+              <!-- SVG 4 -->
+            </div>
+            <h3 class="protocol-card__title">Acceso Universal</h3>
+            <p class="protocol-card__text">
+              Contribuye desde cualquier app de pago: Bizum, PayPal, revolut, o
+              tu wallet cripto favorita. Sin barreras técnicas.
+            </p>
+          </div>
+          <!-- Card 5 -->
+          <div class="protocol-card">
+            <div class="protocol-card__icon">
+              <!-- SVG 5 -->
+            </div>
+            <h3 class="protocol-card__title">Comunidad Global</h3>
+            <p class="protocol-card__text">
+              Conecta con otras comunidades mundiales. Comparte experiencias,
+              replicas proyectos exitosos, amplifica el impacto.
+            </p>
+          </div>
+          <!-- Card 6 -->
+          <div class="protocol-card">
+            <div class="protocol-card__icon">
+              <!-- SVG 6 -->
+            </div>
+            <h3 class="protocol-card__title">Multi-Moneda</h3>
+            <p class="protocol-card__text">
+              EUR, USD, Bitcoin, USDC... Contribuye en tu moneda preferida.
+              Conversión automática y transparente en tiempo real.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL: Listo para Gobernar el Futuro? -->
+    <section class="cta-section">
+      <div class="container cta-container">
+        <h2 class="cta-title">
+          ¿Listo para
+          <span class="text-gradient">Transformar tu Comunidad</span>?
+        </h2>
+        <p class="cta-desc">
+          Únete a miles de personas que ya están financiando proyectos reales,
+          construyendo un futuro más transparente y equitativo para todos.
+        </p>
+        <div class="cta-buttons">
+          <a href="dashboard/dashboard.html" class="btn btn--primary"
+            >Explorar Proyectos</a
+          >
+          <a href="proposals/proposals.html" class="btn btn--outline"
+            >Ver Propuestas</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <!-- Logo + Nombre -->
+        <div class="footer__brand">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- Ejemplo de icono, reemplaza por tu logo -->
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="4"
+              fill="#0F172A"
+              stroke="#00D9FF"
+              stroke-width="2"
+            />
+            <path
+              d="M7 12l3 3 7-7"
+              stroke="#00D9FF"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="footer__logo-text">CivicVault</span>
+        </div>
+
+        <!-- Enlaces (opcional) -->
+        <ul class="footer__links">
+          <li><a href="#caracteristicas">Características</a></li>
+          <li><a href="#dao">DAO</a></li>
+          <li><a href="#metricas">Métricas</a></li>
+          <li><a href="#protocol">Protocolo</a></li>
+          <li>
+            <a href="https://discord.gg/tu-servidor" target="_blank">Discord</a>
+          </li>
+        </ul>
+
+        <!-- Copyright -->
+        <div class="footer__copy">
+          © 2024 Protocolo CivicVault. Construyendo el futuro de la gobernanza
+          DeFi.
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript para navegación -->
+    <script>
+      // Hamburger Menu Toggle
+      const hamburger = document.getElementById("hamburger");
+      const navMenu = document.getElementById("navMenu");
+
+      hamburger.addEventListener("click", function () {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      // Cerrar menú al hacer click en un enlace (mobile)
+      navMenu.addEventListener("click", function (e) {
+        if (e.target.tagName === "A") {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Smooth scroll to sections
+      function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          section.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }
+
+      // Cerrar menú al hacer click fuera
+      document.addEventListener("click", function (e) {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Agregar IDs a las secciones para navegación
+      document.addEventListener("DOMContentLoaded", function () {
+        // Agregar ID a la sección de métricas
+        const metricsSection = document.querySelector(".metrics");
+        if (metricsSection && !metricsSection.id) {
+          metricsSection.id = "metrics";
+        }
+
+        // Agregar clase active al link actual basado en scroll
+        window.addEventListener("scroll", function () {
+          const sections = ["caracteristicas", "dao", "metrics"];
+          let current = "";
+
+          sections.forEach((sectionId) => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+              const sectionTop = section.offsetTop - 100;
+              if (window.pageYOffset >= sectionTop) {
+                current = sectionId;
+              }
+            }
+          });
+
+          // Highlight current section in navbar
+          document.querySelectorAll(".navbar__menu a").forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + current) {
+              link.classList.add("active");
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1583 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fondo Comunitario | CivicVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      function openContribution(projectName) {
+        document.getElementById("modalProjectName").innerText = projectName;
+        document.getElementById("contributionModal").classList.remove("hidden");
+      }
+      function closeContribution() {
+        document.getElementById("contributionModal").classList.add("hidden");
+      }
+      function setQuickAmount(amount) {
+        document.getElementById("amountInput").value = amount;
+      }
+    </script>
+  </head>
+  <body class="bg-[#0d1117] text-white font-sans">
+    <!-- Modal de contribución -->
+    <div
+      id="contributionModal"
+      class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-slate-900 rounded-xl p-6 w-full max-w-md shadow-xl relative"
+      >
+        <button
+          onclick="closeContribution()"
+          class="absolute top-2 right-3 text-slate-400 hover:text-white"
+        >
+          ✕
+        </button>
+        <h2 class="text-lg font-bold mb-2">Contribuir al Proyecto</h2>
+        <p class="text-sm text-slate-400 mb-4" id="modalProjectName">
+          Nombre del Proyecto
+        </p>
+        <label for="amountInput" class="block text-sm mb-1">Cantidad (€)</label>
+        <input
+          id="amountInput"
+          type="number"
+          placeholder="0.00"
+          class="w-full bg-slate-800 p-2 rounded mb-4 text-sm text-white"
+        />
+        <div class="flex gap-2 mb-4">
+          <button
+            onclick="setQuickAmount(10)"
+            class="bg-slate-800 px-3 py-1 rounded text-sm"
+          >
+            €10
+          </button>
+          <button
+            onclick="setQuickAmount(25)"
+            class="bg-slate-800 px-3 py-1 rounded text-sm"
+          >
+            €25
+          </button>
+          <button
+            onclick="setQuickAmount(50)"
+            class="bg-slate-800 px-3 py-1 rounded text-sm"
+          >
+            €50
+          </button>
+          <button
+            onclick="setQuickAmount(100)"
+            class="bg-slate-800 px-3 py-1 rounded text-sm"
+          >
+            €100
+          </button>
+        </div>
+        <button
+          class="w-full bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded text-sm font-semibold"
+        >
+          Confirmar Contribución
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal de detalles del proyecto -->
+    <div
+      id="projectDetailsModal"
+      class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-slate-900 rounded-xl p-6 w-full max-w-4xl shadow-xl relative max-h-[90vh] overflow-y-auto"
+      >
+        <button
+          onclick="closeProjectDetails()"
+          class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"
+        >
+          ✕
+        </button>
+
+        <div id="projectDetailsContent">
+          <!-- Content will be dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para Nueva Propuesta -->
+    <div
+      id="newProposalModal"
+      class="hidden fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-slate-900 rounded-xl p-6 w-full max-w-2xl shadow-xl relative max-h-[90vh] overflow-y-auto"
+      >
+        <button
+          onclick="closeNewProposal()"
+          class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl"
+        >
+          ✕
+        </button>
+
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-white mb-2">💡 Nueva Propuesta</h2>
+          <p class="text-slate-400 text-sm">
+            Completa el formulario para proponer un nuevo proyecto comunitario
+          </p>
+        </div>
+
+        <form id="proposalForm" class="space-y-4">
+          <!-- Título del proyecto -->
+          <div>
+            <label
+              for="proposalTitle"
+              class="block text-sm font-medium text-slate-300 mb-1"
+              >Título del Proyecto *</label
+            >
+            <input
+              type="text"
+              id="proposalTitle"
+              name="title"
+              required
+              class="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ej: Centro de Salud Comunitario"
+            />
+          </div>
+
+          <!-- Categoría -->
+          <div>
+            <label
+              for="proposalCategory"
+              class="block text-sm font-medium text-slate-300 mb-1"
+              >Categoría *</label
+            >
+            <select
+              id="proposalCategory"
+              name="category"
+              required
+              class="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Selecciona una categoría</option>
+              <option value="infraestructura">🏗️ Infraestructura</option>
+              <option value="educacion">📚 Educación</option>
+              <option value="salud">🏥 Salud</option>
+              <option value="transporte">🚌 Transporte</option>
+              <option value="medio-ambiente">🌱 Medio Ambiente</option>
+              <option value="cultura">🎭 Cultura y Arte</option>
+              <option value="tecnologia">💻 Tecnología</option>
+              <option value="deporte">⚽ Deporte y Recreación</option>
+              <option value="otros">📋 Otros</option>
+            </select>
+          </div>
+
+          <!-- Descripción -->
+          <div>
+            <label
+              for="proposalDescription"
+              class="block text-sm font-medium text-slate-300 mb-1"
+            >
+              Descripción *
+              <span id="charCount" class="text-slate-500 text-xs"
+                >(0/500 caracteres)</span
+              >
+            </label>
+            <textarea
+              id="proposalDescription"
+              name="description"
+              required
+              rows="4"
+              maxlength="500"
+              class="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Describe detalladamente tu propuesta, sus beneficios y cómo impactará a la comunidad..."
+              oninput="updateCharCount()"
+            ></textarea>
+            <div class="text-xs text-slate-500 mt-1">
+              💡 Incluye: objetivos, beneficiarios, impacto esperado y
+              justificación del presupuesto
+            </div>
+          </div>
+
+          <!-- Presupuesto estimado -->
+          <div>
+            <label
+              for="proposalBudget"
+              class="block text-sm font-medium text-slate-300 mb-1"
+              >Presupuesto Estimado (€) *</label
+            >
+            <div class="relative">
+              <span
+                class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
+                >€</span
+              >
+              <input
+                type="number"
+                id="proposalBudget"
+                name="budget"
+                required
+                min="100"
+                step="100"
+                class="w-full bg-slate-800 border border-slate-600 rounded-lg pl-8 pr-3 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="15000"
+              />
+            </div>
+            <div class="text-xs text-slate-500 mt-1">
+              💰 Rango recomendado: ��500 - €100,000 según el tipo de proyecto
+            </div>
+          </div>
+
+          <!-- Ubicación -->
+          <div>
+            <label
+              for="proposalLocation"
+              class="block text-sm font-medium text-slate-300 mb-1"
+              >Ubicación/Área de Impacto *</label
+            >
+            <input
+              type="text"
+              id="proposalLocation"
+              name="location"
+              required
+              class="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ej: Barrio Centro, Todo el municipio, Zona Norte..."
+            />
+          </div>
+
+          <!-- Duración estimada -->
+          <div>
+            <label
+              for="proposalDuration"
+              class="block text-sm font-medium text-slate-300 mb-1"
+              >Duración Estimada</label
+            >
+            <select
+              id="proposalDuration"
+              name="duration"
+              class="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Selecciona duración</option>
+              <option value="1-3 meses">1-3 meses</option>
+              <option value="3-6 meses">3-6 meses</option>
+              <option value="6-12 meses">6-12 meses</option>
+              <option value="Más de 1 año">Más de 1 año</option>
+            </select>
+          </div>
+
+          <!-- Información de contacto -->
+          <div>
+            <label
+              for="proposalContact"
+              class="block text-sm font-medium text-slate-300 mb-1"
+              >Información de Contacto</label
+            >
+            <input
+              type="text"
+              id="proposalContact"
+              name="contact"
+              class="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Tu nombre y forma de contacto (opcional)"
+            />
+          </div>
+
+          <!-- Términos y condiciones -->
+          <div class="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="agreementTerms"
+              required
+              class="mt-1 w-4 h-4 text-blue-600 bg-slate-800 border-slate-600 rounded focus:ring-blue-500"
+            />
+            <label for="agreementTerms" class="text-sm text-slate-300">
+              Acepto que mi propuesta sea revisada por la comunidad y entiendo
+              que debe cumplir con las
+              <a href="#" class="text-blue-400 hover:text-blue-300"
+                >políticas de propuestas</a
+              >
+              de CivicVault.
+            </label>
+          </div>
+
+          <!-- Botones -->
+          <div class="flex flex-col md:flex-row gap-3 pt-4">
+            <button
+              type="submit"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition duration-200 flex-1"
+            >
+              📝 Enviar Propuesta
+            </button>
+            <button
+              type="button"
+              onclick="closeNewProposal()"
+              class="bg-slate-700 hover:bg-slate-600 text-white font-medium px-6 py-3 rounded-lg transition duration-200"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Header/Navbar -->
+    <nav
+      class="bg-[#0d1117] border-b border-slate-700 px-4 md:px-8 py-4 shadow-md sticky top-0 z-50"
+    >
+      <div class="flex justify-between items-center">
+        <!-- Logo -->
+        <a
+          href="/index.html"
+          class="text-white text-xl md:text-2xl font-bold tracking-tight hover:text-cyan-400 transition duration-200"
+        >
+          <span class="text-cyan-500">Civic</span>Vault
+        </a>
+
+        <!-- Hamburger Menu Button (Mobile) -->
+        <button
+          id="dashboardHamburger"
+          class="md:hidden text-white focus:outline-none"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-8">
+          <div class="flex gap-6 text-sm font-medium">
+            <a
+              href="/index.html"
+              class="text-slate-300 hover:text-white transition duration-200"
+              >Inicio</a
+            >
+            <a
+              href="/proposals/proposals.html"
+              class="text-slate-300 hover:text-white transition duration-200"
+              >Propuestas</a
+            >
+            <a
+              href="/dashboard/dashboard.html"
+              class="text-cyan-400 font-semibold"
+              >Fondo Comunitario</a
+            >
+            <a
+              href="/wallet/wallet.html"
+              class="text-slate-300 hover:text-white transition duration-200"
+              >💳 Wallet</a
+            >
+          </div>
+
+          <!-- User Info Desktop -->
+          <div class="text-right text-sm border-l border-slate-600 pl-6">
+            <p class="text-slate-400">Tus Ahorros</p>
+            <p class="text-cyan-400 font-semibold text-lg">€1,247.50</p>
+            <button
+              onclick="openContribution('Contribución General')"
+              class="bg-cyan-600 hover:bg-cyan-700 text-white text-sm mt-2 px-4 py-2 rounded shadow transition duration-200"
+            >
+              Contribuir
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Menu -->
+      <div
+        id="dashboardMobileMenu"
+        class="md:hidden hidden mt-4 pt-4 border-t border-slate-600"
+      >
+        <div class="flex flex-col gap-4">
+          <a
+            href="/index.html"
+            class="text-slate-300 hover:text-white transition duration-200 py-2"
+            >Inicio</a
+          >
+          <a
+            href="/proposals/proposals.html"
+            class="text-slate-300 hover:text-white transition duration-200 py-2"
+            >Propuestas</a
+          >
+          <a
+            href="/dashboard/dashboard.html"
+            class="text-cyan-400 font-semibold py-2"
+            >Fondo Comunitario</a
+          >
+          <a
+            href="/wallet/wallet.html"
+            class="text-slate-300 hover:text-white transition duration-200 py-2"
+            >💳 Wallet</a
+          >
+
+          <!-- User Info Mobile -->
+          <div class="text-center text-sm mt-4 pt-4 border-t border-slate-600">
+            <p class="text-slate-400">Tus Ahorros</p>
+            <p class="text-cyan-400 font-semibold text-lg">€1,247.50</p>
+            <button
+              onclick="openContribution('Contribución General')"
+              class="bg-cyan-600 hover:bg-cyan-700 text-white text-sm mt-2 px-4 py-2 rounded shadow w-full transition duration-200"
+            >
+              Contribuir
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Métricas generales -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 md:p-6">
+      <div class="bg-slate-800 p-3 md:p-4 rounded-xl shadow-md text-center">
+        <p class="text-xs md:text-sm text-slate-400">Total Ahorrado</p>
+        <p class="text-lg md:text-xl font-semibold text-cyan-300">€1,247.50</p>
+      </div>
+      <div class="bg-slate-800 p-3 md:p-4 rounded-xl shadow-md text-center">
+        <p class="text-xs md:text-sm text-slate-400">Proyectos Apoyados</p>
+        <p class="text-lg md:text-xl font-semibold text-green-300">8</p>
+      </div>
+      <div class="bg-slate-800 p-3 md:p-4 rounded-xl shadow-md text-center">
+        <p class="text-xs md:text-sm text-slate-400">Puntuación de Impacto</p>
+        <p class="text-lg md:text-xl font-semibold text-lime-300">92/100</p>
+      </div>
+      <div class="bg-slate-800 p-3 md:p-4 rounded-xl shadow-md text-center">
+        <p class="text-xs md:text-sm text-slate-400">Ahorro Mensual</p>
+        <p class="text-lg md:text-xl font-semibold text-pink-300">€150.00</p>
+      </div>
+    </section>
+
+    <!-- Estadísticas del Fondo -->
+    <section class="bg-slate-900 mx-4 md:mx-6 p-4 md:p-6 rounded-xl mb-6">
+      <h2 class="text-lg md:text-xl font-semibold mb-4">
+        Estadísticas del Fondo Comunitario
+      </h2>
+      <div
+        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center text-sm"
+      >
+        <div class="p-2">
+          <p class="text-slate-400 text-xs md:text-sm">Fondos Totales</p>
+          <p class="font-bold text-cyan-300">€487,350</p>
+        </div>
+        <div class="p-2">
+          <p class="text-slate-400 text-xs md:text-sm">Proyectos Activos</p>
+          <p class="font-bold text-blue-300">4</p>
+        </div>
+        <div class="p-2">
+          <p class="text-slate-400 text-xs md:text-sm">Completados</p>
+          <p class="font-bold text-green-300">12</p>
+        </div>
+        <div class="p-2">
+          <p class="text-slate-400 text-xs md:text-sm">Contribuyentes</p>
+          <p class="font-bold text-purple-300">1,247</p>
+        </div>
+        <div class="p-2">
+          <p class="text-slate-400 text-xs md:text-sm">Promedio</p>
+          <p class="font-bold text-sky-300">€185.40</p>
+        </div>
+        <div class="p-2">
+          <p class="text-slate-400 text-xs md:text-sm">Impacto</p>
+          <p class="font-bold text-pink-400">94%</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de Actividad Reciente y Estadísticas Personales -->
+    <section class="px-4 md:px-6 mb-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Actividad Reciente -->
+        <div
+          class="bg-slate-900 rounded-xl p-4 md:p-6 shadow-md border border-slate-700"
+        >
+          <h2 class="text-lg md:text-xl font-semibold mb-4 text-cyan-400">
+            📊 Actividad Reciente
+          </h2>
+          <div class="space-y-3">
+            <div class="flex items-start gap-3 p-3 bg-slate-800 rounded-lg">
+              <div
+                class="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"
+              ></div>
+              <div class="flex-1">
+                <p class="text-sm text-white font-medium">
+                  Contribución realizada
+                </p>
+                <p class="text-xs text-slate-400">
+                  €50.00 al Parque Barrio San José
+                </p>
+                <p class="text-xs text-slate-500">Hace 2 horas</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-3 bg-slate-800 rounded-lg">
+              <div
+                class="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"
+              ></div>
+              <div class="flex-1">
+                <p class="text-sm text-white font-medium">
+                  Nuevo proyecto disponible
+                </p>
+                <p class="text-xs text-slate-400">
+                  Centro de Salud Comunitario
+                </p>
+                <p class="text-xs text-slate-500">Hace 1 día</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-3 bg-slate-800 rounded-lg">
+              <div
+                class="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"
+              ></div>
+              <div class="flex-1">
+                <p class="text-sm text-white font-medium">
+                  Proyecto completado
+                </p>
+                <p class="text-xs text-slate-400">Renovación Plaza Central</p>
+                <p class="text-xs text-slate-500">Hace 3 días</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-3 bg-slate-800 rounded-lg">
+              <div
+                class="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"
+              ></div>
+              <div class="flex-1">
+                <p class="text-sm text-white font-medium">
+                  Recompensa obtenida
+                </p>
+                <p class="text-xs text-slate-400">
+                  +15 puntos de impacto por participación
+                </p>
+                <p class="text-xs text-slate-500">Hace 5 días</p>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="w-full mt-4 text-cyan-400 text-sm hover:text-cyan-300 transition duration-200"
+          >
+            Ver toda la actividad →
+          </button>
+        </div>
+
+        <!-- Estadísticas Personales -->
+        <div
+          class="bg-slate-900 rounded-xl p-4 md:p-6 shadow-md border border-slate-700"
+        >
+          <h2 class="text-lg md:text-xl font-semibold mb-4 text-cyan-400">
+            🎯 Tu Impacto Personal
+          </h2>
+
+          <!-- Progreso mensual -->
+          <div class="mb-6">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-slate-300">Meta mensual</span>
+              <span class="text-sm text-cyan-400 font-semibold"
+                >€150 / €200</span
+              >
+            </div>
+            <div class="w-full bg-slate-700 h-3 rounded-full overflow-hidden">
+              <div
+                class="bg-gradient-to-r from-cyan-400 to-blue-500 h-3 w-[75%] rounded-full"
+              ></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">75% completado este mes</p>
+          </div>
+
+          <!-- Rankings -->
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="text-center p-3 bg-slate-800 rounded-lg">
+              <p class="text-xl font-bold text-green-400">#23</p>
+              <p class="text-xs text-slate-400">Ranking general</p>
+            </div>
+            <div class="text-center p-3 bg-slate-800 rounded-lg">
+              <p class="text-xl font-bold text-purple-400">7°</p>
+              <p class="text-xs text-slate-400">En tu distrito</p>
+            </div>
+          </div>
+
+          <!-- Logros recientes -->
+          <div class="mb-4">
+            <h3 class="text-sm font-semibold text-slate-300 mb-2">
+              🏆 Logros Recientes
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="px-2 py-1 bg-yellow-600 text-yellow-100 text-xs rounded-full"
+                >Contribuyente Consistente</span
+              >
+              <span
+                class="px-2 py-1 bg-green-600 text-green-100 text-xs rounded-full"
+                >Apoyo Comunitario</span
+              >
+              <span
+                class="px-2 py-1 bg-blue-600 text-blue-100 text-xs rounded-full"
+                >Primera Contribución</span
+              >
+            </div>
+          </div>
+
+          <!-- Próxima recompensa -->
+          <div
+            class="bg-gradient-to-r from-purple-600 to-pink-600 p-3 rounded-lg"
+          >
+            <p class="text-sm font-semibold text-white">Próxima recompensa</p>
+            <p class="text-xs text-purple-100">
+              Contribuye €50 más para desbloquear "Mecenas Local" 🌟
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lista de proyectos -->
+    <section class="px-4 md:px-6 pb-12 space-y-6 md:space-y-8">
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button
+          class="bg-cyan-600 px-3 md:px-4 py-1 md:py-2 rounded text-xs md:text-sm transition duration-200 hover:bg-cyan-700"
+        >
+          Proyectos Activos (4)
+        </button>
+        <button
+          class="bg-slate-800 px-3 md:px-4 py-1 md:py-2 rounded text-xs md:text-sm transition duration-200 hover:bg-slate-700"
+        >
+          Completados (1)
+        </button>
+        <button
+          class="bg-slate-800 px-3 md:px-4 py-1 md:py-2 rounded text-xs md:text-sm transition duration-200 hover:bg-slate-700"
+        >
+          Todos (5)
+        </button>
+      </div>
+
+      <!-- Proyecto 1 -->
+      <div
+        class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-4 md:p-6 shadow-md border border-cyan-700"
+      >
+        <div class="flex flex-col md:flex-row md:justify-between mb-3">
+          <div class="mb-2 md:mb-0">
+            <h3 class="text-base md:text-lg font-bold text-cyan-400 mb-2">
+              Nuevo Parque en Barrio San José
+            </h3>
+            <div class="flex flex-wrap gap-1 md:gap-2">
+              <span class="text-xs bg-green-700 text-white px-2 py-1 rounded"
+                >Infraestructura</span
+              >
+              <span class="text-xs bg-green-500 text-white px-2 py-1 rounded"
+                >Activo</span
+              >
+            </div>
+          </div>
+          <p class="text-xs md:text-sm text-orange-300 text-right md:text-left">
+            45 días restantes
+          </p>
+        </div>
+        <p class="text-slate-300 text-sm mb-3">
+          Construcción de un parque comunitario con juegos infantiles, área
+          deportiva y zona verde para el barrio San José.
+        </p>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-slate-400 mb-3"
+        >
+          <span>🏡 Barrio San José, Sector Norte</span>
+          <span>🤝 127 contribuyentes</span>
+          <span>🔹 Impacto: <span class="text-red-400">Alto</span></span>
+        </div>
+        <div class="w-full bg-slate-700 h-2 rounded overflow-hidden mb-2">
+          <div class="bg-cyan-400 h-2 w-[72%]"></div>
+        </div>
+        <div
+          class="flex flex-col md:flex-row md:justify-between md:items-center text-sm mb-4"
+        >
+          <p class="text-slate-300 mb-1 md:mb-0">
+            €32.400 <span class="text-slate-500">de €45.000</span> — Faltan
+            €12.600
+          </p>
+          <p class="text-purple-400 font-semibold">72.0% completado</p>
+        </div>
+        <div class="flex flex-col md:flex-row gap-2">
+          <button
+            onclick="openContribution('Nuevo Parque en Barrio San José')"
+            class="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded text-sm transition duration-200 flex-1 md:flex-none"
+          >
+            Contribuir
+          </button>
+          <button
+            onclick="openProjectDetails('parque')"
+            class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded text-sm transition duration-200"
+          >
+            Ver Detalles
+          </button>
+          <button
+            onclick="shareProject('Nuevo Parque en Barrio San José')"
+            class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded text-sm transition duration-200"
+          >
+            Compartir
+          </button>
+        </div>
+      </div>
+
+      <!-- Proyecto 2 -->
+      <div
+        class="bg-slate-900 rounded-xl p-4 md:p-6 shadow-md border border-slate-700"
+      >
+        <div class="flex flex-col md:flex-row md:justify-between mb-3">
+          <div class="mb-2 md:mb-0">
+            <h3 class="text-base md:text-lg font-bold text-sky-300 mb-2">
+              Programa de Becas Estudiantiles
+            </h3>
+            <div class="flex flex-wrap gap-1 md:gap-2">
+              <span class="text-xs bg-blue-700 text-white px-2 py-1 rounded"
+                >Educación</span
+              >
+              <span class="text-xs bg-green-500 text-white px-2 py-1 rounded"
+                >Activo</span
+              >
+            </div>
+          </div>
+          <p class="text-xs md:text-sm text-orange-300 text-right md:text-left">
+            60 días restantes
+          </p>
+        </div>
+        <p class="text-slate-300 text-sm mb-3">
+          Fondo de becas para estudiantes de bajos recursos del municipio para
+          continuar estudios superiores
+        </p>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-slate-400 mb-3"
+        >
+          <span>📅 Todo el Municipio</span>
+          <span>🔍 89 contribuyentes</span>
+          <span>⚡ Impacto: <span class="text-red-400">Muy Alto</span></span>
+        </div>
+        <div class="w-full bg-slate-700 h-2 rounded overflow-hidden mb-2">
+          <div class="bg-cyan-400 h-2 w-[62.5%]"></div>
+        </div>
+        <div
+          class="flex flex-col md:flex-row md:justify-between md:items-center text-sm mb-4"
+        >
+          <p class="text-slate-300 mb-1 md:mb-0">
+            €18.750 <span class="text-slate-500">de €30.000</span> — Faltan
+            €11.250
+          </p>
+          <p class="text-purple-400 font-semibold">62.5% completado</p>
+        </div>
+        <div class="flex flex-col md:flex-row gap-2">
+          <button
+            onclick="openContribution('Programa de Becas Estudiantiles')"
+            class="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded text-sm transition duration-200 flex-1 md:flex-none"
+          >
+            Contribuir
+          </button>
+          <button
+            onclick="openProjectDetails('becas')"
+            class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded text-sm transition duration-200"
+          >
+            Ver Detalles
+          </button>
+          <button
+            onclick="shareProject('Programa de Becas Estudiantiles')"
+            class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded text-sm transition duration-200"
+          >
+            Compartir
+          </button>
+        </div>
+      </div>
+
+      <!-- Proyecto 3 -->
+      <div
+        class="bg-slate-900 rounded-xl p-4 md:p-6 shadow-md border border-slate-700"
+      >
+        <div class="flex flex-col md:flex-row md:justify-between mb-3">
+          <div class="mb-2 md:mb-0">
+            <h3 class="text-base md:text-lg font-bold text-sky-300 mb-2">
+              Mejora del Transporte Público
+            </h3>
+            <div class="flex flex-wrap gap-1 md:gap-2">
+              <span class="text-xs bg-purple-700 text-white px-2 py-1 rounded"
+                >Transporte</span
+              >
+              <span class="text-xs bg-green-500 text-white px-2 py-1 rounded"
+                >Activo</span
+              >
+            </div>
+          </div>
+          <p class="text-xs md:text-sm text-orange-300 text-right md:text-left">
+            90 días restantes
+          </p>
+        </div>
+        <p class="text-slate-300 text-sm mb-3">
+          Modernización de paradas de autobús y rutas optimizadas para mejor
+          conectividad urbana
+        </p>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-slate-400 mb-3"
+        >
+          <span>📍 Centro y Periferia</span>
+          <span>🤝 156 contribuyentes</span>
+          <span>🔹 Impacto: <span class="text-orange-400">Alto</span></span>
+        </div>
+        <div class="w-full bg-slate-700 h-2 rounded overflow-hidden mb-2">
+          <div class="bg-cyan-400 h-2 w-[27.2%]"></div>
+        </div>
+        <div
+          class="flex flex-col md:flex-row md:justify-between md:items-center text-sm mb-4"
+        >
+          <p class="text-slate-300 mb-1 md:mb-0">
+            €23.100 <span class="text-slate-500">de €85.000</span> — Faltan
+            €61.900
+          </p>
+          <p class="text-purple-400 font-semibold">27.2% completado</p>
+        </div>
+        <div class="flex flex-col md:flex-row gap-2">
+          <button
+            onclick="openContribution('Mejora del Transporte Público')"
+            class="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded text-sm transition duration-200 flex-1 md:flex-none"
+          >
+            Contribuir
+          </button>
+          <button
+            onclick="openProjectDetails('transporte')"
+            class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded text-sm transition duration-200"
+          >
+            Ver Detalles
+          </button>
+          <button
+            onclick="shareProject('Mejora del Transporte Público')"
+            class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded text-sm transition duration-200"
+          >
+            Compartir
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección para Nueva Propuesta -->
+    <section class="px-4 md:px-6 py-8 mb-8">
+      <div
+        class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-xl p-6 md:p-8 text-center border border-blue-700 shadow-lg"
+      >
+        <div class="mb-4">
+          <h2 class="text-xl md:text-2xl font-bold text-white mb-2">
+            💡 ¿Tienes una idea para la comunidad?
+          </h2>
+          <p class="text-blue-100 text-sm md:text-base max-w-2xl mx-auto">
+            Propón un nuevo proyecto que beneficie a nuestra comunidad. Tu idea
+            podría ser el próximo proyecto financiado por el fondo comunitario.
+          </p>
+        </div>
+
+        <div
+          class="flex flex-col md:flex-row gap-4 justify-center items-center"
+        >
+          <button
+            onclick="openNewProposalModal()"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition duration-200 flex items-center gap-2 shadow-lg"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              ></path>
+            </svg>
+            Crear Nueva Propuesta
+          </button>
+
+          <a
+            href="/proposals/proposals.html"
+            class="bg-slate-700 hover:bg-slate-600 text-white font-medium px-6 py-3 rounded-lg transition duration-200 flex items-center gap-2"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+            Ver Todas las Propuestas
+          </a>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div class="flex items-center justify-center gap-2 text-blue-200">
+            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+            Revisión comunitaria
+          </div>
+          <div class="flex items-center justify-center gap-2 text-blue-200">
+            <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+            Votación transparente
+          </div>
+          <div class="flex items-center justify-center gap-2 text-blue-200">
+            <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
+            Financiación asegurada
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-xs text-slate-500 mt-8 pb-6">
+      © 2023 CivicVault. Todos los derechos reservados.
+      <a href="#" class="text-blue-400 underline">Política de Privacidad</a>
+    </footer>
+
+    <!-- JavaScript para navegación del dashboard -->
+    <script>
+      // Dashboard hamburger menu toggle
+      const dashboardHamburger = document.getElementById("dashboardHamburger");
+      const dashboardMobileMenu = document.getElementById(
+        "dashboardMobileMenu",
+      );
+
+      if (dashboardHamburger && dashboardMobileMenu) {
+        dashboardHamburger.addEventListener("click", function () {
+          dashboardMobileMenu.classList.toggle("hidden");
+
+          // Toggle hamburger icon
+          const svg = dashboardHamburger.querySelector("svg path");
+          if (dashboardMobileMenu.classList.contains("hidden")) {
+            svg.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+          } else {
+            svg.setAttribute("d", "M6 18L18 6M6 6l12 12");
+          }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener("click", function (e) {
+          if (
+            !dashboardHamburger.contains(e.target) &&
+            !dashboardMobileMenu.contains(e.target)
+          ) {
+            dashboardMobileMenu.classList.add("hidden");
+            const svg = dashboardHamburger.querySelector("svg path");
+            svg.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+          }
+        });
+
+        // Close mobile menu when window is resized to desktop
+        window.addEventListener("resize", function () {
+          if (window.innerWidth >= 768) {
+            dashboardMobileMenu.classList.add("hidden");
+            const svg = dashboardHamburger.querySelector("svg path");
+            svg.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+          }
+        });
+      }
+
+      // Datos de los proyectos
+      const projectsData = {
+        parque: {
+          name: "Nuevo Parque en Barrio San José",
+          category: "Infraestructura",
+          status: "Activo",
+          description:
+            "Construcción de un parque comunitario con juegos infantiles, área deportiva y zona verde para el barrio San José.",
+          goal: 45000,
+          raised: 32400,
+          remaining: 45,
+          contributors: 127,
+          impact: "Alto",
+          startDate: "2024-01-10",
+          endDate: "2024-03-15",
+          location: "Barrio San José, Sector Norte",
+          coordinator: "María González - Asociación Vecinal San José",
+          details: {
+            objectives: [
+              "Crear un espacio de recreación seguro para familias",
+              "Mejorar la calidad de vida del barrio",
+              "Fomentar la cohesión social y actividades comunitarias",
+              "Incrementar el valor inmobiliario de la zona",
+            ],
+            timeline: [
+              {
+                phase: "Diseño y permisos",
+                duration: "4 semanas",
+                status: "Completado",
+              },
+              {
+                phase: "Preparación del terreno",
+                duration: "2 semanas",
+                status: "En progreso",
+              },
+              {
+                phase: "Construcción de infraestructura",
+                duration: "6 semanas",
+                status: "Pendiente",
+              },
+              {
+                phase: "Instalación de juegos y mobiliario",
+                duration: "3 semanas",
+                status: "Pendiente",
+              },
+              {
+                phase: "Jardinería y acabados",
+                duration: "2 semanas",
+                status: "Pendiente",
+              },
+            ],
+            budget: [
+              { item: "Preparación del terreno", amount: 8000 },
+              { item: "Juegos infantiles", amount: 15000 },
+              { item: "Área deportiva", amount: 12000 },
+              { item: "Jardinería y paisajismo", amount: 7000 },
+              { item: "Mobiliario urbano", amount: 3000 },
+            ],
+          },
+        },
+        becas: {
+          name: "Programa de Becas Estudiantiles",
+          category: "Educación",
+          status: "Activo",
+          description:
+            "Fondo de becas para estudiantes de bajos recursos del municipio para continuar estudios superiores.",
+          goal: 30000,
+          raised: 18750,
+          remaining: 60,
+          contributors: 89,
+          impact: "Muy Alto",
+          startDate: "2024-01-01",
+          endDate: "2024-12-31",
+          location: "Todo el Municipio",
+          coordinator: "Dr. Carlos Mendoza - Universidad Local",
+          details: {
+            objectives: [
+              "Otorgar 15 becas completas para estudiantes de escasos recursos",
+              "Reducir la deserción universitaria por motivos económicos",
+              "Fomentar el desarrollo profesional en la comunidad",
+              "Crear un programa sostenible de ayuda educativa",
+            ],
+            timeline: [
+              {
+                phase: "Convocatoria y postulaciones",
+                duration: "6 semanas",
+                status: "Completado",
+              },
+              {
+                phase: "Evaluación de candidatos",
+                duration: "4 semanas",
+                status: "Completado",
+              },
+              {
+                phase: "Selección de beneficiarios",
+                duration: "2 semanas",
+                status: "En progreso",
+              },
+              {
+                phase: "Desembolso primer semestre",
+                duration: "1 semana",
+                status: "Pendiente",
+              },
+              {
+                phase: "Seguimiento académico",
+                duration: "Continuo",
+                status: "Pendiente",
+              },
+            ],
+            budget: [
+              { item: "Becas universitarias (15 estudiantes)", amount: 22500 },
+              { item: "Material de estudio", amount: 3000 },
+              { item: "Programas de tutoría", amount: 2500 },
+              { item: "Administración del programa", amount: 1500 },
+              { item: "Evaluación y seguimiento", amount: 500 },
+            ],
+          },
+        },
+        transporte: {
+          name: "Mejora del Transporte Público",
+          category: "Transporte",
+          status: "Activo",
+          description:
+            "Modernización de paradas de autobús y rutas optimizadas para mejor conectividad urbana.",
+          goal: 85000,
+          raised: 23100,
+          remaining: 90,
+          contributors: 156,
+          impact: "Alto",
+          startDate: "2024-02-01",
+          endDate: "2024-08-31",
+          location: "Centro y Periferia",
+          coordinator: "Ing. Ana Torres - Departamento de Transporte Municipal",
+          details: {
+            objectives: [
+              "Modernizar 25 paradas de autobús con techado y asientos",
+              "Implementar sistema de información en tiempo real",
+              "Optimizar 5 rutas principales para mejor cobertura",
+              "Instalar puntos de carga para dispositivos móviles",
+            ],
+            timeline: [
+              {
+                phase: "Estudio de rutas y ubicaciones",
+                duration: "8 semanas",
+                status: "En progreso",
+              },
+              {
+                phase: "Diseño de nuevas paradas",
+                duration: "6 semanas",
+                status: "Pendiente",
+              },
+              {
+                phase: "Fabricación e instalación",
+                duration: "10 semanas",
+                status: "Pendiente",
+              },
+              {
+                phase: "Sistema de información digital",
+                duration: "4 semanas",
+                status: "Pendiente",
+              },
+              {
+                phase: "Pruebas y puesta en marcha",
+                duration: "2 semanas",
+                status: "Pendiente",
+              },
+            ],
+            budget: [
+              { item: "Construcción de paradas (25 unidades)", amount: 50000 },
+              { item: "Sistema de información digital", amount: 15000 },
+              { item: "Puntos de carga solar", amount: 10000 },
+              { item: "Señalización y mapas", amount: 5000 },
+              { item: "Instalación y mano de obra", amount: 5000 },
+            ],
+          },
+        },
+      };
+
+      // Funcionalidad de contribución mejorada
+      function openContribution(projectName) {
+        document.getElementById("modalProjectName").innerText = projectName;
+        document.getElementById("contributionModal").classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeContribution() {
+        document.getElementById("contributionModal").classList.add("hidden");
+        document.body.style.overflow = "auto";
+      }
+
+      function setQuickAmount(amount) {
+        document.getElementById("amountInput").value = amount;
+      }
+
+      // Funcionalidad de detalles del proyecto
+      function openProjectDetails(projectId) {
+        const project = projectsData[projectId];
+        if (!project) return;
+
+        const modal = document.getElementById("projectDetailsModal");
+        const content = document.getElementById("projectDetailsContent");
+
+        const percentage = ((project.raised / project.goal) * 100).toFixed(1);
+
+        content.innerHTML = `
+        <div class="mb-6">
+          <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+            <div>
+              <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">${project.name}</h2>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-3 py-1 bg-blue-600 text-white text-sm rounded-full">${project.category}</span>
+                <span class="px-3 py-1 bg-green-500 text-white text-sm rounded-full">${project.status}</span>
+                <span class="px-3 py-1 bg-orange-600 text-white text-sm rounded-full">Impacto: ${project.impact}</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="text-sm text-slate-400">Tiempo restante</p>
+              <p class="text-lg font-semibold text-orange-300">${project.remaining} días</p>
+            </div>
+          </div>
+
+          <p class="text-slate-300 mb-4">${project.description}</p>
+
+          <!-- Información básica -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="bg-slate-800 p-4 rounded-lg">
+              <h3 class="font-semibold text-cyan-400 mb-2">📍 Ubicación</h3>
+              <p class="text-sm text-slate-300">${project.location}</p>
+            </div>
+            <div class="bg-slate-800 p-4 rounded-lg">
+              <h3 class="font-semibold text-cyan-400 mb-2">👤 Coordinador</h3>
+              <p class="text-sm text-slate-300">${project.coordinator}</p>
+            </div>
+            <div class="bg-slate-800 p-4 rounded-lg">
+              <h3 class="font-semibold text-cyan-400 mb-2">📅 Duración</h3>
+              <p class="text-sm text-slate-300">${project.startDate} - ${project.endDate}</p>
+            </div>
+            <div class="bg-slate-800 p-4 rounded-lg">
+              <h3 class="font-semibold text-cyan-400 mb-2">👥 Contribuyentes</h3>
+              <p class="text-sm text-slate-300">${project.contributors} personas</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progreso financiero -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold text-white mb-4">💰 Progreso Financiero</h3>
+          <div class="bg-slate-800 p-4 rounded-lg">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-slate-300">Progreso</span>
+              <span class="text-cyan-400 font-semibold">${percentage}%</span>
+            </div>
+            <div class="w-full bg-slate-700 h-3 rounded-full mb-3">
+              <div class="bg-cyan-400 h-3 rounded-full" style="width: ${percentage}%"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-4 text-center text-sm">
+              <div>
+                <p class="text-slate-400">Recaudado</p>
+                <p class="font-semibold text-green-400">€${project.raised.toLocaleString()}</p>
+              </div>
+              <div>
+                <p class="text-slate-400">Objetivo</p>
+                <p class="font-semibold text-blue-400">€${project.goal.toLocaleString()}</p>
+              </div>
+              <div>
+                <p class="text-slate-400">Faltante</p>
+                <p class="font-semibold text-orange-400">€${(project.goal - project.raised).toLocaleString()}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objetivos -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold text-white mb-4">🎯 Objetivos del Proyecto</h3>
+          <div class="bg-slate-800 p-4 rounded-lg">
+            <ul class="space-y-2">
+              ${project.details.objectives
+                .map(
+                  (obj) => `
+                <li class="flex items-start gap-2">
+                  <span class="text-green-400 mt-1">✓</span>
+                  <span class="text-slate-300 text-sm">${obj}</span>
+                </li>
+              `,
+                )
+                .join("")}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold text-white mb-4">📅 Cronograma</h3>
+          <div class="bg-slate-800 p-4 rounded-lg">
+            <div class="space-y-3">
+              ${project.details.timeline
+                .map(
+                  (phase) => `
+                <div class="flex items-center gap-4 p-3 bg-slate-700 rounded-lg">
+                  <div class="w-3 h-3 rounded-full ${
+                    phase.status === "Completado"
+                      ? "bg-green-400"
+                      : phase.status === "En progreso"
+                        ? "bg-yellow-400"
+                        : "bg-slate-500"
+                  }"></div>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-white">${phase.phase}</p>
+                    <p class="text-xs text-slate-400">Duración: ${phase.duration}</p>
+                  </div>
+                  <span class="text-xs px-2 py-1 rounded ${
+                    phase.status === "Completado"
+                      ? "bg-green-600 text-green-100"
+                      : phase.status === "En progreso"
+                        ? "bg-yellow-600 text-yellow-100"
+                        : "bg-slate-600 text-slate-300"
+                  }">${phase.status}</span>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        </div>
+
+        <!-- Presupuesto -->
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold text-white mb-4">💼 Distribución del Presupuesto</h3>
+          <div class="bg-slate-800 p-4 rounded-lg">
+            <div class="space-y-3">
+              ${project.details.budget
+                .map(
+                  (item) => `
+                <div class="flex justify-between items-center p-2 bg-slate-700 rounded">
+                  <span class="text-sm text-slate-300">${item.item}</span>
+                  <span class="text-sm font-semibold text-cyan-400">€${item.amount.toLocaleString()}</span>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="flex flex-col md:flex-row gap-3 mt-6">
+          <button onclick="closeProjectDetails(); openContribution('${project.name}')"
+                  class="bg-cyan-600 hover:bg-cyan-700 px-6 py-3 rounded-lg text-sm font-semibold transition duration-200 flex-1">
+            💰 Contribuir al Proyecto
+          </button>
+          <button onclick="shareProject('${project.name}')"
+                  class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg text-sm font-semibold transition duration-200">
+            📤 Compartir
+          </button>
+          <button onclick="followProject('${projectId}')"
+                  class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg text-sm font-semibold transition duration-200">
+            🔔 Seguir Proyecto
+          </button>
+        </div>
+      `;
+
+        modal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeProjectDetails() {
+        document.getElementById("projectDetailsModal").classList.add("hidden");
+        document.body.style.overflow = "auto";
+      }
+
+      // Función para compartir proyecto
+      function shareProject(projectName) {
+        if (navigator.share) {
+          navigator.share({
+            title: `${projectName} - CivicVault`,
+            text: `Echa un vistazo a este proyecto comunitario: ${projectName}`,
+            url: window.location.href,
+          });
+        } else {
+          // Fallback para navegadores que no soportan Web Share API
+          const url = window.location.href;
+          const text = `Echa un vistazo a este proyecto comunitario: ${projectName} - ${url}`;
+
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => {
+              showNotification("¡Enlace copiado al portapapeles!", "success");
+            });
+          } else {
+            // Fallback más básico
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            showNotification("¡Enlace copiado al portapapeles!", "success");
+          }
+        }
+      }
+
+      // Función para seguir proyecto
+      function followProject(projectId) {
+        showNotification(
+          "¡Ahora sigues este proyecto! Recibir��s notificaciones sobre su progreso.",
+          "success",
+        );
+      }
+
+      // Funcionalidad para Nueva Propuesta
+      function openNewProposalModal() {
+        document.getElementById("newProposalModal").classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeNewProposal() {
+        document.getElementById("newProposalModal").classList.add("hidden");
+        document.body.style.overflow = "auto";
+
+        // Reset form
+        document.getElementById("proposalForm").reset();
+      }
+
+      // Manejar envío del formulario de propuesta
+      function handleProposalSubmit(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const proposalData = {
+          title: formData.get("title"),
+          category: formData.get("category"),
+          description: formData.get("description"),
+          budget: formData.get("budget"),
+          location: formData.get("location"),
+          duration: formData.get("duration"),
+          contact: formData.get("contact"),
+          timestamp: new Date().toISOString(),
+          status: "En revisión",
+          id: "prop-" + Date.now(),
+        };
+
+        // Simular envío exitoso
+        showLoadingState();
+
+        setTimeout(() => {
+          hideLoadingState();
+          closeNewProposal();
+          showNotification(
+            "¡Propuesta enviada exitosamente! Será revisada por la comunidad en los próximos días.",
+            "success",
+          );
+
+          // Opcional: agregar la propuesta a una lista local para demostración
+          addProposalToRecentActivity(proposalData);
+        }, 2000);
+      }
+
+      function showLoadingState() {
+        const submitBtn = document.querySelector(
+          '#proposalForm button[type="submit"]',
+        );
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Enviando propuesta...
+      `;
+      }
+
+      function hideLoadingState() {
+        const submitBtn = document.querySelector(
+          '#proposalForm button[type="submit"]',
+        );
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "📝 Enviar Propuesta";
+      }
+
+      function addProposalToRecentActivity(proposalData) {
+        // Encontrar la sección de actividad reciente y agregar la nueva propuesta
+        const activitySection = document.querySelector(
+          '[class*="Actividad Reciente"]',
+        )?.parentElement;
+        if (activitySection) {
+          const newActivity = document.createElement("div");
+          newActivity.className =
+            "flex items-start gap-3 p-3 bg-slate-800 rounded-lg";
+          newActivity.innerHTML = `
+          <div class="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+          <div class="flex-1">
+            <p class="text-sm text-white font-medium">Propuesta enviada</p>
+            <p class="text-xs text-slate-400">${proposalData.title}</p>
+            <p class="text-xs text-slate-500">Ahora mismo</p>
+          </div>
+        `;
+
+          const activitiesContainer =
+            activitySection.querySelector(".space-y-3");
+          if (activitiesContainer) {
+            activitiesContainer.insertBefore(
+              newActivity,
+              activitiesContainer.firstChild,
+            );
+          }
+        }
+      }
+
+      // Función para contador de caracteres
+      function updateCharCount() {
+        const textarea = document.getElementById("proposalDescription");
+        const charCount = document.getElementById("charCount");
+        const currentLength = textarea.value.length;
+        const maxLength = 500;
+
+        charCount.textContent = `(${currentLength}/${maxLength} caracteres)`;
+
+        if (currentLength > maxLength * 0.9) {
+          charCount.classList.add("text-yellow-400");
+          charCount.classList.remove("text-slate-500");
+        } else if (currentLength === maxLength) {
+          charCount.classList.add("text-red-400");
+          charCount.classList.remove("text-yellow-400", "text-slate-500");
+        } else {
+          charCount.classList.add("text-slate-500");
+          charCount.classList.remove("text-yellow-400", "text-red-400");
+        }
+      }
+
+      // Validación en tiempo real del presupuesto
+      function validateBudget() {
+        const budgetInput = document.getElementById("proposalBudget");
+        const budget = parseInt(budgetInput.value);
+
+        if (budget && budget < 100) {
+          budgetInput.setCustomValidity("El presupuesto mínimo es €100");
+        } else if (budget && budget > 1000000) {
+          budgetInput.setCustomValidity("El presupuesto máximo es €1,000,000");
+        } else {
+          budgetInput.setCustomValidity("");
+        }
+      }
+
+      // Agregar validación al campo de presupuesto
+      document.addEventListener("DOMContentLoaded", function () {
+        const budgetInput = document.getElementById("proposalBudget");
+        if (budgetInput) {
+          budgetInput.addEventListener("input", validateBudget);
+        }
+      });
+
+      // Función para mostrar notificaciones
+      function showNotification(message, type = "info") {
+        const notification = document.createElement("div");
+        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transition-all duration-300 ${
+          type === "success"
+            ? "bg-green-600 text-white"
+            : type === "error"
+              ? "bg-red-600 text-white"
+              : "bg-blue-600 text-white"
+        }`;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.style.transform = "translateX(100%)";
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 3000);
+      }
+
+      // Event listeners para modales
+      document
+        .getElementById("contributionModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeContribution();
+        });
+
+      document
+        .getElementById("projectDetailsModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeProjectDetails();
+        });
+
+      document
+        .getElementById("newProposalModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeNewProposal();
+        });
+
+      // Event listener para el formulario de propuesta
+      document
+        .getElementById("proposalForm")
+        .addEventListener("submit", handleProposalSubmit);
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeContribution();
+          closeProjectDetails();
+          closeNewProposal();
+        }
+      });
+    </script>
+  </body>
+</html>

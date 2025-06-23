@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CivicWallet | Monedero Híbrido Universal</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      /* Estilos específicos para el wallet */
+      .wallet-header {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        padding: 3rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .wallet-title {
+        font-size: 2.5rem;
+        font-weight: 300;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(90deg, #00d9ff, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .wallet-subtitle {
+        color: #94a3b8;
+        font-size: 1rem;
+      }
+
+      .balance-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-top: 2rem;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 217, 255, 0.1);
+      }
+
+      .balance-label {
+        color: #94a3b8;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .balance-amount {
+        font-size: 3.5rem;
+        font-weight: 200;
+        margin-bottom: 1rem;
+        color: #ffffff;
+      }
+
+      .balance-change {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(34, 197, 94, 0.1);
+        color: #22c55e;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin: 3rem 0;
+      }
+
+      .action-btn {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: inherit;
+        text-decoration: none;
+        display: block;
+      }
+
+      .action-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: #00d9ff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 217, 255, 0.3);
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .action-icon {
+        width: 3rem;
+        height: 3rem;
+        background: linear-gradient(135deg, #00d9ff, #a855f7);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+      }
+
+      .action-label {
+        font-weight: 500;
+        font-size: 1rem;
+        color: #ffffff;
+      }
+
+      .main-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .wallet-section {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: #00d9ff;
+      }
+
+      .currency-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        margin-bottom: 0.5rem;
+        transition: background 0.2s ease;
+        cursor: pointer;
+      }
+
+      .currency-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .currency-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .currency-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: white;
+      }
+
+      .currency-details h3 {
+        font-weight: 500;
+        margin: 0 0 0.25rem 0;
+        color: #ffffff;
+      }
+
+      .currency-details p {
+        color: #94a3b8;
+        font-size: 0.875rem;
+        margin: 0;
+      }
+
+      .currency-balance {
+        text-align: right;
+      }
+
+      .currency-amount {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #ffffff;
+      }
+
+      .currency-change {
+        color: #22c55e;
+        font-size: 0.875rem;
+      }
+
+      .add-currency-btn {
+        width: 100%;
+        padding: 1rem;
+        border: 2px dashed rgba(255, 255, 255, 0.2);
+        border-radius: 0.75rem;
+        background: transparent;
+        color: #94a3b8;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.875rem;
+      }
+
+      .add-currency-btn:hover {
+        border-color: #00d9ff;
+        color: #00d9ff;
+      }
+
+      .transaction-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        margin-bottom: 0.5rem;
+        transition: background 0.2s ease;
+      }
+
+      .transaction-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .transaction-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+      }
+
+      .transaction-details h4 {
+        font-weight: 500;
+        margin: 0 0 0.25rem 0;
+        font-size: 0.9rem;
+        color: #ffffff;
+      }
+
+      .transaction-details p {
+        color: #94a3b8;
+        font-size: 0.75rem;
+        margin: 0;
+      }
+
+      .transaction-amount {
+        margin-left: auto;
+        text-align: right;
+      }
+
+      .staking-pool {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .pool-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 1rem;
+      }
+
+      .pool-title {
+        font-weight: 500;
+        font-size: 1rem;
+        color: #ffffff;
+      }
+
+      .apy-badge {
+        background: #00d9ff;
+        color: #0f172a;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .pool-description {
+        color: #94a3b8;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+      }
+
+      .pool-stats {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.875rem;
+      }
+
+      .pool-stats span {
+        color: #94a3b8;
+      }
+
+      .pool-stats .amount {
+        color: #ffffff;
+        font-weight: 500;
+      }
+
+      .pool-total {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1rem;
+        margin-top: 1rem;
+      }
+
+      .view-all-btn {
+        background: transparent;
+        border: none;
+        color: #00d9ff;
+        font-size: 0.875rem;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      .view-all-btn:hover {
+        color: #a855f7;
+      }
+
+      @media (max-width: 768px) {
+        .main-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .balance-amount {
+          font-size: 2.5rem;
+        }
+
+        .wallet-title {
+          font-size: 2rem;
+        }
+
+        .quick-actions {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVEGACIÓN -->
+    <nav class="navbar">
+      <div class="container navbar__inner">
+        <!-- Logo -->
+        <a href="/index.html" class="navbar__logo">CivicVault</a>
+
+        <!-- Hamburger Menu Button -->
+        <div class="navbar__hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <!-- Menú -->
+        <ul class="navbar__menu" id="navMenu">
+          <li><a href="/index.html">Inicio</a></li>
+          <li><a href="/dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="/proposals/proposals.html">Propuestas</a></li>
+          <li><a href="/wallet/wallet.html" class="active">💳 Wallet</a></li>
+        </ul>
+
+        <!-- Botón CTA -->
+        <a href="/dashboard/dashboard.html" class="btn btn--primary navbar__cta"
+          >Abrir App</a
+        >
+      </div>
+    </nav>
+
+    <!-- Header del Wallet -->
+    <header class="wallet-header">
+      <div class="container">
+        <h1 class="wallet-title">CivicWallet</h1>
+        <p class="wallet-subtitle">
+          Tu monedero híbrido universal • Fiat + Crypto • Transparencia total
+        </p>
+
+        <!-- Balance total -->
+        <div class="balance-card">
+          <div class="balance-label">Balance Total</div>
+          <div class="balance-amount" id="totalBalance">€3,247.85</div>
+          <div class="balance-change">↗ +€127.45 (+4.1%) último mes</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+      <!-- Acciones rápidas -->
+      <section class="quick-actions">
+        <button class="action-btn" onclick="openExchangeModal()">
+          <div class="action-icon">🔄</div>
+          <div class="action-label">Intercambiar</div>
+        </button>
+
+        <button class="action-btn" onclick="openSendModal()">
+          <div class="action-icon">📤</div>
+          <div class="action-label">Enviar</div>
+        </button>
+
+        <button class="action-btn" onclick="openReceiveModal()">
+          <div class="action-icon">📥</div>
+          <div class="action-label">Recibir</div>
+        </button>
+
+        <button class="action-btn" onclick="openStakingModal()">
+          <div class="action-icon">🌱</div>
+          <div class="action-label">Staking</div>
+        </button>
+      </section>
+
+      <div class="main-grid">
+        <!-- Columna Principal: Balances -->
+        <div>
+          <!-- Balances por Moneda -->
+          <div class="wallet-section">
+            <h2 class="section-title">💰 Tus Balances</h2>
+
+            <div>
+              <!-- EUR -->
+              <div class="currency-item">
+                <div class="currency-info">
+                  <div class="currency-icon" style="background-color: #3b82f6">
+                    €
+                  </div>
+                  <div class="currency-details">
+                    <h3>Euro (EUR)</h3>
+                    <p>Moneda fiduciaria</p>
+                  </div>
+                </div>
+                <div class="currency-balance">
+                  <div class="currency-amount">€1,847.23</div>
+                  <div class="currency-change">+€23.45</div>
+                </div>
+              </div>
+
+              <!-- Bitcoin -->
+              <div class="currency-item">
+                <div class="currency-info">
+                  <div class="currency-icon" style="background-color: #f97316">
+                    ₿
+                  </div>
+                  <div class="currency-details">
+                    <h3>Bitcoin (BTC)</h3>
+                    <p>0.0234 BTC</p>
+                  </div>
+                </div>
+                <div class="currency-balance">
+                  <div class="currency-amount">€987.45</div>
+                  <div class="currency-change">+€87.23</div>
+                </div>
+              </div>
+
+              <!-- USDC -->
+              <div class="currency-item">
+                <div class="currency-info">
+                  <div class="currency-icon" style="background-color: #10b981">
+                    $
+                  </div>
+                  <div class="currency-details">
+                    <h3>USD Coin (USDC)</h3>
+                    <p>456.78 USDC</p>
+                  </div>
+                </div>
+                <div class="currency-balance">
+                  <div class="currency-amount">€413.17</div>
+                  <div class="currency-change">+€16.77</div>
+                </div>
+              </div>
+
+              <!-- Agregar nueva moneda -->
+              <button class="add-currency-btn" onclick="openAddCurrencyModal()">
+                ➕ Agregar Nueva Moneda
+              </button>
+            </div>
+          </div>
+
+          <!-- Historial de Transacciones -->
+          <div class="wallet-section" style="margin-top: 2rem">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <h2 class="section-title" style="margin-bottom: 0">
+                📋 Historial
+              </h2>
+              <button class="view-all-btn">Ver todas</button>
+            </div>
+
+            <div>
+              <div class="transaction-item">
+                <div
+                  class="transaction-icon"
+                  style="background-color: rgba(34, 197, 94, 0.2)"
+                >
+                  📥
+                </div>
+                <div class="transaction-details">
+                  <h4>Recibido de PayPal</h4>
+                  <p>Hash: 0x7a8b9c... • Hace 2 horas</p>
+                </div>
+                <div class="transaction-amount">
+                  <div style="color: #22c55e; font-weight: 600">+€150.00</div>
+                  <div style="color: #94a3b8; font-size: 0.75rem">EUR</div>
+                </div>
+              </div>
+
+              <div class="transaction-item">
+                <div
+                  class="transaction-icon"
+                  style="background-color: rgba(59, 130, 246, 0.2)"
+                >
+                  🔄
+                </div>
+                <div class="transaction-details">
+                  <h4>Intercambio BTC → EUR</h4>
+                  <p>Hash: 0x5f6e7d... • Ayer</p>
+                </div>
+                <div class="transaction-amount">
+                  <div style="color: #ffffff; font-weight: 600">€327.85</div>
+                  <div style="color: #94a3b8; font-size: 0.75rem">
+                    Rate: €42,380/BTC
+                  </div>
+                </div>
+              </div>
+
+              <div class="transaction-item">
+                <div
+                  class="transaction-icon"
+                  style="background-color: rgba(249, 115, 22, 0.2)"
+                >
+                  🌱
+                </div>
+                <div class="transaction-details">
+                  <h4>Recompensa Staking</h4>
+                  <p>Pool: Proyectos Comunitarios • Hace 3 días</p>
+                </div>
+                <div class="transaction-amount">
+                  <div style="color: #f97316; font-weight: 600">+€12.45</div>
+                  <div style="color: #94a3b8; font-size: 0.75rem">USDC</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Lateral: Staking y más -->
+        <div>
+          <!-- Staking Pools -->
+          <div class="wallet-section">
+            <h2 class="section-title">🌱 Staking Activo</h2>
+
+            <div>
+              <!-- Pool 1: Proyectos Comunitarios -->
+              <div class="staking-pool">
+                <div class="pool-header">
+                  <h3 class="pool-title">Proyectos Comunitarios</h3>
+                  <span class="apy-badge">12.4% APY</span>
+                </div>
+                <p class="pool-description">
+                  Tu contribución financia proyectos reales
+                </p>
+                <div class="pool-stats">
+                  <span>Stakeado: <span class="amount">€450.00</span></span>
+                  <span
+                    >Ganado:
+                    <span class="amount" style="color: #22c55e"
+                      >€18.67</span
+                    ></span
+                  >
+                </div>
+              </div>
+
+              <!-- Pool 2: Liquidez USDC/EUR -->
+              <div class="staking-pool">
+                <div class="pool-header">
+                  <h3 class="pool-title">Liquidez USDC/EUR</h3>
+                  <span class="apy-badge" style="background: #3b82f6"
+                    >8.7% APY</span
+                  >
+                </div>
+                <p class="pool-description">
+                  Facilita intercambios para la comunidad
+                </p>
+                <div class="pool-stats">
+                  <span>Stakeado: <span class="amount">€320.00</span></span>
+                  <span
+                    >Ganado:
+                    <span class="amount" style="color: #3b82f6"
+                      >€9.34</span
+                    ></span
+                  >
+                </div>
+              </div>
+
+              <!-- Pool 3: Seguro Comunitario -->
+              <div class="staking-pool">
+                <div class="pool-header">
+                  <h3 class="pool-title">Seguro Comunitario</h3>
+                  <span class="apy-badge" style="background: #8b5cf6"
+                    >6.2% APY</span
+                  >
+                </div>
+                <p class="pool-description">Protege fondos de proyectos</p>
+                <button
+                  class="btn btn--primary"
+                  onclick="openStakingModal()"
+                  style="width: 100%; margin-top: 0.5rem"
+                >
+                  Comenzar Staking
+                </button>
+              </div>
+
+              <div class="pool-total">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 0.5rem;
+                  "
+                >
+                  <span style="color: #94a3b8">Total Stakeado:</span>
+                  <span style="color: #ffffff; font-weight: 600">€770.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: #94a3b8">Rendimientos Totales:</span>
+                  <span style="color: #22c55e; font-weight: 600">+€28.01</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estadísticas -->
+          <div class="wallet-section" style="margin-top: 2rem">
+            <h2 class="section-title">📊 Estadísticas</h2>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem">
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #94a3b8">Transacciones este mes:</span>
+                <span style="color: #ffffff; font-weight: 600">23</span>
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #94a3b8">Fees pagados:</span>
+                <span style="color: #ffffff; font-weight: 600">€2.15</span>
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #94a3b8">CO₂ compensado:</span>
+                <span style="color: #22c55e; font-weight: 600">4.2 kg</span>
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #94a3b8">Impacto social:</span>
+                <span style="color: #8b5cf6; font-weight: 600">Alto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="4"
+              fill="#0F172A"
+              stroke="#00D9FF"
+              stroke-width="2"
+            />
+            <path
+              d="M7 12l3 3 7-7"
+              stroke="#00D9FF"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="footer__logo-text">CivicVault</span>
+        </div>
+
+        <ul class="footer__links">
+          <li><a href="#caracteristicas">Características</a></li>
+          <li><a href="#dao">DAO</a></li>
+          <li><a href="#metricas">Métricas</a></li>
+          <li><a href="#protocol">Protocolo</a></li>
+        </ul>
+
+        <div class="footer__copy">
+          © 2024 Protocolo CivicVault. Construyendo el futuro de la gobernanza
+          DeFi.
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      // Hamburger Menu Toggle (reutiliza el del index.html)
+      const hamburger = document.getElementById("hamburger");
+      const navMenu = document.getElementById("navMenu");
+
+      hamburger.addEventListener("click", function () {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      // Cerrar menú al hacer click en un enlace (mobile)
+      navMenu.addEventListener("click", function (e) {
+        if (e.target.tagName === "A") {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Cerrar menú al hacer click fuera
+      document.addEventListener("click", function (e) {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Funciones del wallet
+      function openExchangeModal() {
+        alert(
+          "🔄 INTERCAMBIO DE DIVISAS\n\n" +
+            "Próximamente: Modal completo para intercambiar entre:\n\n" +
+            "• EUR ↔ BTC\n" +
+            "• EUR ↔ USDC\n" +
+            "• BTC ↔ USDC\n\n" +
+            "Con rates en tiempo real y fees transparentes.",
+        );
+      }
+
+      function openSendModal() {
+        alert(
+          "📤 ENVIAR DINERO\n\n" +
+            "Próximamente: Envía a cualquier dirección:\n\n" +
+            "• Email: maria@gmail.com\n" +
+            "• Usuario: @maria\n" +
+            "• Wallet: 0x742d35Cc6B...\n" +
+            "• IBAN: ES91 2100 0418...\n\n" +
+            "Envío global sin barreras.",
+        );
+      }
+
+      function openReceiveModal() {
+        alert(
+          "📥 RECIBIR DINERO\n\n" +
+            "Tu dirección universal:\n" +
+            "civicvault.app/u/tu-usuario\n\n" +
+            "📧 Email: tu-email@ejemplo.com\n" +
+            "₿ Bitcoin: bc1qxy2kgdygjrsqtzq2n0yrf...\n" +
+            "🏦 IBAN: ES91 2100 0418 4502 0005 1332\n\n" +
+            "💳 También puedes generar un código QR",
+        );
+      }
+
+      function openStakingModal() {
+        alert(
+          "🌱 STAKING - GENERA RENDIMIENTOS\n\n" +
+            "Pools disponibles:\n\n" +
+            "🏘️ Proyectos Comunitarios (12.4% APY)\n" +
+            "💱 Liquidez USDC/EUR (8.7% APY)\n" +
+            "🛡️ Seguro Comunitario (6.2% APY)\n\n" +
+            "Contribuye al impacto social mientras generas rendimientos.",
+        );
+      }
+
+      function openAddCurrencyModal() {
+        alert(
+          "➕ AGREGAR NUEVA MONEDA\n\n" +
+            "Monedas disponibles:\n\n" +
+            "🏦 Fiat: USD, GBP, CHF, JPY\n" +
+            "₿ Crypto: ETH, ADA, SOL, DOT\n" +
+            "💰 Stablecoins: USDT, DAI, BUSD\n\n" +
+            "✨ Próximamente: Monedas locales y CBDCs",
+        );
+      }
+
+      // Simulación de actualizaciones en tiempo real
+      function updateBalances() {
+        const totalBalance = document.getElementById("totalBalance");
+        if (totalBalance) {
+          const variation = (Math.random() - 0.5) * 5; // ±€2.5
+          const currentValue = parseFloat(
+            totalBalance.textContent.replace("€", "").replace(",", ""),
+          );
+          const newValue = currentValue + variation;
+          totalBalance.textContent = `€${newValue.toFixed(2).replace(".", ",")}`;
+        }
+      }
+
+      // Actualizar cada 30 segundos
+      setInterval(updateBalances, 30000);
+    </script>
+  </body>
+</html>
