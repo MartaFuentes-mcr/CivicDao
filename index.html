@@ -3,16 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CivicDAO Hero & Métricas - El Futuro del Financiamiento Comunitario" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     <title>CivicDAO Hero & Métricas</title>
     <!-- Enlaza tu CSS externo -->
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
     <!-- NAVEGACIÓN -->
-    <nav class="navbar">
+    <nav class="navbar navbar--transparent">
       <div class="container navbar__inner">
         <!-- Logo -->
-        <a href="/" class="navbar__logo">CivicVault</a>
+        <a href="/" class="navbar__logo">
+          <img src="assets/images/logo.svg" alt="CivicVault Logo" class="navbar__logo-img">
+          <span>CivicVault</span>
+        </a>
 
         <!-- Hamburger Menu Button -->
         <div class="navbar__hamburger" id="hamburger">
@@ -26,13 +33,12 @@
           <li>
             <a
               href="#caracteristicas"
-              onclick="scrollToSection('caracteristicas')"
               >Características</a
             >
           </li>
-          <li><a href="#dao" onclick="scrollToSection('dao')">DAO</a></li>
+          <li><a href="#dao">DAO</a></li>
           <li>
-            <a href="#metricas" onclick="scrollToSection('metrics')"
+            <a href="#metricas"
               >Métricas</a
             >
           </li>
@@ -49,23 +55,35 @@
     </nav>
 
     <!-- HERO -->
-    <section class="hero text-center">
-      <div class="container">
+    <section class="hero">
+      <div class="container hero__inner">
         <h1 class="hero__title">
-          El Futuro del
-          <span class="text-gradient">Financiamiento Comunitario</span>
+          El Futuro del <span>Financiamiento Comunitario</span>
         </h1>
         <p class="hero__desc">
-          CivicVault combina neobancos, blockchain y gobernanza descentralizada
-          para financiar proyectos de impacto real. Transparencia total, monedas
-          híbridas (fiat+cripto), al alcance de todos. Construyendo un futuro
-          más equitativo, una comunidad a la vez.
+          CivicVault combina la transparencia de blockchain con la facilidad de la
+          banca tradicional para crear un sistema híbrido de financiamiento
+          comunitario. Vota, financia y rastrea proyectos locales con total
+          transparencia.
         </p>
         <div class="hero__buttons">
-          <a href="dashboard/dashboard.html" class="btn btn--primary"
-            >Entrar al Protocolo</a
-          >
-          <a href="/whitepaper.pdf" class="btn btn--outline">Leer Whitepaper</a>
+          <a href="dashboard/dashboard.html" class="btn btn--primary btn--lg">Explorar Proyectos</a>
+          <a href="proposals/proposals.html" class="btn btn--outline btn--lg">Proponer Idea</a>
+        </div>
+        
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <div class="hero__stat-value">€2.4M</div>
+            <div class="hero__stat-label">Fondos Gestionados</div>
+          </div>
+          <div class="hero__stat">
+            <div class="hero__stat-value">127</div>
+            <div class="hero__stat-label">Proyectos Financiados</div>
+          </div>
+          <div class="hero__stat">
+            <div class="hero__stat-value">12,450</div>
+            <div class="hero__stat-label">Miembros Activos</div>
+          </div>
         </div>
       </div>
     </section>
@@ -339,36 +357,26 @@
       </div>
     </footer>
 
-    <!-- JavaScript para navegación -->
+    <!-- JavaScript Components -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
+    
     <script>
-      // Hamburger Menu Toggle
-      const hamburger = document.getElementById("hamburger");
-      const navMenu = document.getElementById("navMenu");
-
-      hamburger.addEventListener("click", function () {
-        hamburger.classList.toggle("active");
-        navMenu.classList.toggle("active");
+      // Initialize components when DOM is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize navbar
+        const navbar = new Navbar('index');
+        navbar.init();
+        
+        // Initialize footer
+        const footer = new Footer();
+        footer.init();
       });
-
-      // Cerrar menú al hacer click en un enlace (mobile)
-      navMenu.addEventListener("click", function (e) {
-        if (e.target.tagName === "A") {
-          hamburger.classList.remove("active");
-          navMenu.classList.remove("active");
-        }
-      });
-
-      // Smooth scroll to sections
-      function scrollToSection(sectionId) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          section.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      }
-
+      
       // Cerrar menú al hacer click fuera
       document.addEventListener("click", function (e) {
         if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {

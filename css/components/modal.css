@@ -1,0 +1,150 @@
+/**
+ * Modal CSS
+ * Estilos para ventanas modales
+ */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-normal);
+  padding: 1rem;
+}
+
+.modal.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal__content {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(20px);
+  transition: transform var(--transition-normal);
+}
+
+.modal.is-active .modal__content {
+  transform: translateY(0);
+}
+
+.modal__header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin: 0;
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: color var(--transition-normal);
+}
+
+.modal__close:hover {
+  color: var(--color-error);
+}
+
+.modal__body {
+  padding: 1.5rem;
+}
+
+.modal__footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Variantes de modal */
+.modal--sm .modal__content {
+  max-width: 400px;
+}
+
+.modal--lg .modal__content {
+  max-width: 700px;
+}
+
+.modal--xl .modal__content {
+  max-width: 900px;
+}
+
+.modal--full .modal__content {
+  max-width: 1200px;
+  width: 90%;
+}
+
+/* Modal de confirmación */
+.modal--confirm .modal__body {
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+.modal--confirm .modal__icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal--confirm .modal__icon--success {
+  color: var(--color-success);
+}
+
+.modal--confirm .modal__icon--warning {
+  color: var(--color-warning);
+}
+
+.modal--confirm .modal__icon--error {
+  color: var(--color-error);
+}
+
+.modal--confirm .modal__message {
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  color: var(--color-secondary);
+}
+
+.modal--confirm .modal__description {
+  color: var(--color-text-light);
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal__content {
+    max-width: 100%;
+  }
+  
+  .modal__footer {
+    flex-direction: column-reverse;
+  }
+  
+  .modal__footer .btn {
+    width: 100%;
+  }
+}

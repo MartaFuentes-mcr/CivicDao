@@ -1,0 +1,25 @@
+/**
+ * Main CSS file
+ * Imports all CSS modules
+ */
+
+/* Base styles */
+@import 'base.css';
+
+/* Components */
+@import 'components.css';
+@import 'components/forms.css';
+@import 'components/modal.css';
+@import 'components/badges.css';
+@import 'components/progress.css';
+@import 'components/notifications.css';
+@import 'components/search.css';
+
+/* Layouts */
+@import 'layout.css';
+
+/* Page-specific styles */
+@import 'pages/wallet.css';
+@import 'pages/proposals.css';
+@import 'pages/dashboard.css';
+/* Add more page imports as needed */

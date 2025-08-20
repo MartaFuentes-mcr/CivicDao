@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Filtros - Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .dashboard-filters__advanced {
+            position: relative;
+            margin-bottom: 200px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn--outline {
+            background-color: transparent;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .btn--sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        .btn.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .dashboard-filters__advanced-panel {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .dashboard-filters__advanced-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dashboard-filters__advanced-header h4 {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .dashboard-filters__advanced-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .dashboard-filters__advanced-content {
+            padding: 16px;
+        }
+        
+        .dashboard-filters__advanced-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            padding: 12px 16px;
+            border-top: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .range-slider {
+            margin-top: 8px;
+        }
+        
+        .range-slider__input {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            outline: none;
+            margin-bottom: 8px;
+        }
+        
+        .range-slider__input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+        }
+        
+        .range-slider__value {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox input {
+            margin: 0;
+        }
+        
+        .checkbox__label {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prueba de Filtros Avanzados</h1>
+        
+        <div class="dashboard-filters__advanced">
+            <button class="btn btn--sm btn--outline" id="advancedFiltersBtn">
+                <i>⚙️</i> Filtros Avanzados
+            </button>
+            <div class="dashboard-filters__advanced-panel" id="advancedFiltersPanel">
+                <div class="dashboard-filters__advanced-header">
+                    <h4>Filtros Avanzados</h4>
+                    <button class="dashboard-filters__advanced-close">×</button>
+                </div>
+                <div class="dashboard-filters__advanced-content">
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select class="form-select">
+                            <option value="">Todas las categorías</option>
+                            <option value="sostenibilidad">Sostenibilidad</option>
+                            <option value="educacion">Educación</option>
+                            <option value="tecnologia">Tecnología</option>
+                            <option value="cultura">Cultura</option>
+                            <option value="salud">Salud</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ubicación</label>
+                        <select class="form-select">
+                            <option value="">Todas las ubicaciones</option>
+                            <option value="centro">Distrito Centro</option>
+                            <option value="norte">Distrito Norte</option>
+                            <option value="sur">Distrito Sur</option>
+                            <option value="este">Distrito Este</option>
+                            <option value="oeste">Distrito Oeste</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Presupuesto</label>
+                        <div class="range-slider">
+                            <input type="range" min="0" max="100000" value="50000" class="range-slider__input" id="budgetSlider">
+                            <div class="range-slider__value">Hasta €50,000</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tiempo restante</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkbox__label">Menos de 7 días</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkbox__label">7-30 días</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkbox__label">Más de 30 días</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-filters__advanced-footer">
+                    <button class="btn btn--sm btn--outline">Restablecer</button>
+                    <button class="btn btn--sm" style="background-color: #3b82f6; color: white;">Aplicar Filtros</button>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <p>Este es un ejemplo simple para probar el funcionamiento del botón de filtros avanzados.</p>
+            <p>Haz clic en el botón "Filtros Avanzados" para mostrar/ocultar el panel de filtros.</p>
+            <p>Instrucciones:</p>
+            <ol>
+                <li>Haz clic en el botón "Filtros Avanzados" para mostrar el panel.</li>
+                <li>Haz clic en el botón "×" para cerrar el panel.</li>
+                <li>Haz clic fuera del panel para cerrarlo automáticamente.</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // Función para inicializar el botón de filtros
+        function initFilterButton() {
+            console.log('Inicializando botón de filtros...');
+            
+            // Obtener referencias a los elementos
+            var filterButton = document.getElementById('advancedFiltersBtn');
+            var filterPanel = document.getElementById('advancedFiltersPanel');
+            var closeButton = document.querySelector('.dashboard-filters__advanced-close');
+            
+            console.log('Botón de filtros:', filterButton);
+            console.log('Panel de filtros:', filterPanel);
+            console.log('Botón de cerrar:', closeButton);
+            
+            // Verificar si los elementos existen
+            if (!filterButton) {
+                console.error('Error: No se encontró el botón de filtros (advancedFiltersBtn)');
+                return;
+            }
+            
+            if (!filterPanel) {
+                console.error('Error: No se encontró el panel de filtros (advancedFiltersPanel)');
+                return;
+            }
+            
+            // Asegurarse de que el panel esté oculto inicialmente
+            filterPanel.style.display = 'none';
+            
+            // Función para mostrar/ocultar el panel
+            function togglePanel(event) {
+                // Evitar que el evento se propague
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                
+                console.log('Alternando panel de filtros');
+                
+                if (filterPanel.style.display === 'none' || filterPanel.style.display === '') {
+                    // Mostrar el panel
+                    filterPanel.style.display = 'block';
+                    filterButton.classList.add('active');
+                    console.log('Panel mostrado');
+                    
+                    // Añadir un pequeño retraso para evitar que el evento de clic se propague
+                    setTimeout(function() {
+                        // Añadir evento para cerrar al hacer clic fuera
+                        document.addEventListener('click', outsideClickHandler);
+                    }, 10);
+                } else {
+                    // Ocultar el panel
+                    filterPanel.style.display = 'none';
+                    filterButton.classList.remove('active');
+                    console.log('Panel ocultado');
+                    
+                    // Eliminar el evento de clic fuera
+                    document.removeEventListener('click', outsideClickHandler);
+                }
+            }
+            
+            // Función para cerrar el panel
+            function closePanel(event) {
+                // Evitar que el evento se propague
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                
+                console.log('Cerrando panel de filtros');
+                filterPanel.style.display = 'none';
+                filterButton.classList.remove('active');
+                
+                // Eliminar el evento de clic fuera
+                document.removeEventListener('click', outsideClickHandler);
+            }
+            
+            // Función para manejar clics fuera del panel
+            function outsideClickHandler(event) {
+                if (!filterPanel.contains(event.target) && event.target !== filterButton) {
+                    closePanel();
+                }
+            }
+            
+            // Asignar eventos usando addEventListener
+            filterButton.addEventListener('click', togglePanel);
+            
+            if (closeButton) {
+                closeButton.addEventListener('click', closePanel);
+            }
+            
+            console.log('Inicialización del botón de filtros completada');
+            
+            // Configurar el slider de presupuesto
+            var budgetSlider = document.getElementById('budgetSlider');
+            var budgetValue = document.querySelector('.range-slider__value');
+            
+            if (budgetSlider && budgetValue) {
+                budgetSlider.addEventListener('input', function() {
+                    budgetValue.textContent = 'Hasta €' + parseInt(this.value).toLocaleString();
+                });
+            }
+        }
+        
+        // Inicializar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initFilterButton);
+        } else {
+            // Si el DOM ya está cargado, inicializar inmediatamente
+            initFilterButton();
+        }
+    </script>
+</body>
+</html>

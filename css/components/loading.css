@@ -1,0 +1,171 @@
+/**
+ * Loading Component CSS
+ * Estilos para componentes de carga y estados de procesamiento
+ */
+
+/* Overlay de carga */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(var(--color-background-rgb), 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: var(--border-radius-lg);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Spinner de carga */
+.loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid rgba(var(--color-primary-rgb), 0.3);
+  border-radius: 50%;
+  border-top-color: var(--color-primary);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.loading-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Confirmación de propuesta */
+.proposal-confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.proposal-confirmation__icon {
+  font-size: 4rem;
+  color: var(--color-success);
+  margin-bottom: 1.5rem;
+  animation: scaleIn 0.5s ease;
+}
+
+.proposal-confirmation__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+
+.proposal-confirmation__message {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  margin-bottom: 1.5rem;
+  max-width: 36rem;
+  line-height: 1.5;
+}
+
+.proposal-confirmation__details {
+  background-color: var(--color-background-alt);
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
+  width: 100%;
+  max-width: 24rem;
+  margin-bottom: 1.5rem;
+}
+
+.proposal-confirmation__detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.proposal-confirmation__detail:last-child {
+  margin-bottom: 0;
+}
+
+.proposal-confirmation__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+}
+
+.proposal-confirmation__value {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.proposal-confirmation__progress {
+  width: 100%;
+  max-width: 24rem;
+}
+
+.proposal-confirmation__progress-label {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  margin-bottom: 0.5rem;
+}
+
+.proposal-confirmation__progress-bar {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--color-background-alt);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.proposal-confirmation__progress-value {
+  height: 100%;
+  width: 0;
+  background-color: var(--color-primary);
+  border-radius: 1rem;
+}
+
+/* Animaciones */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Estilos para campos con error */
+.proposal-form__input.error,
+.proposal-form__select.error,
+.proposal-form__textarea.error {
+  border-color: var(--color-error);
+  background-color: rgba(var(--color-error-rgb), 0.05);
+}
+
+.proposal-form__input.error:focus,
+.proposal-form__select.error:focus,
+.proposal-form__textarea.error:focus {
+  box-shadow: 0 0 0 2px rgba(var(--color-error-rgb), 0.2);
+}

@@ -3,829 +3,608 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Propuestas DAO | CivicVault</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Propuestas comunitarias - CivicVault" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Propuestas | CivicVault</title>
+    <!-- Enlaza tu CSS externo -->
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/pages/proposals.css" />
+    <link rel="stylesheet" href="../css/components/loading.css" />
   </head>
-  <body class="bg-[#0d1117] text-white font-sans">
-    <!-- Header/Navbar -->
-    <nav
-      class="bg-[#0d1117] border-b border-slate-700 px-4 md:px-8 py-4 shadow-md sticky top-0 z-50"
-    >
-      <div class="flex justify-between items-center">
+  <body>
+    <!-- NAVEGACIÓN -->
+    <nav class="navbar">
+      <div class="container navbar__inner">
         <!-- Logo -->
-        <a
-          href="/index.html"
-          class="text-white text-xl md:text-2xl font-bold tracking-tight hover:text-cyan-400 transition duration-200"
-        >
-          <span class="text-cyan-500">Civic</span>Vault
+        <a href="/" class="navbar__logo">
+          <img src="../assets/images/logo.svg" alt="CivicVault Logo" class="navbar__logo-img">
+          <span>CivicVault</span>
         </a>
 
-        <!-- Hamburger Menu Button (Mobile) -->
-        <button
-          id="proposalsHamburger"
-          class="md:hidden text-white focus:outline-none"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </button>
-
-        <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center gap-8">
-          <div class="flex gap-6 text-sm font-medium">
-            <a
-              href="/index.html"
-              class="text-slate-300 hover:text-white transition duration-200"
-              >Inicio</a
-            >
-            <a
-              href="/proposals/proposals.html"
-              class="text-cyan-400 font-semibold"
-              >Propuestas</a
-            >
-            <a
-              href="/dashboard/dashboard.html"
-              class="text-slate-300 hover:text-white transition duration-200"
-              >Fondo Comunitario</a
-            >
-            <a
-              href="/wallet/wallet.html"
-              class="text-slate-300 hover:text-white transition duration-200"
-              >💳 Wallet</a
-            >
-          </div>
-
-          <!-- New Proposal Button Desktop -->
-          <a
-            href="#"
-            class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded shadow transition duration-200"
-            >+ Nueva Propuesta</a
-          >
+        <!-- Hamburger Menu Button -->
+        <div class="navbar__hamburger" id="proposalsHamburger">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-      </div>
 
-      <!-- Mobile Navigation Menu -->
-      <div
-        id="proposalsMobileMenu"
-        class="md:hidden hidden mt-4 pt-4 border-t border-slate-600"
-      >
-        <div class="flex flex-col gap-4">
-          <a
-            href="/index.html"
-            class="text-slate-300 hover:text-white transition duration-200 py-2"
-            >Inicio</a
-          >
-          <a
-            href="/proposals/proposals.html"
-            class="text-cyan-400 font-semibold py-2"
-            >Propuestas</a
-          >
-          <a
-            href="/dashboard/dashboard.html"
-            class="text-slate-300 hover:text-white transition duration-200 py-2"
-            >Fondo Comunitario</a
-          >
-          <a
-            href="/wallet/wallet.html"
-            class="text-slate-300 hover:text-white transition duration-200 py-2"
-            >💳 Wallet</a
-          >
+        <!-- Menú -->
+        <ul class="navbar__menu" id="proposalsMobileMenu">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="#" class="active">Propuestas</a></li>
+          <li><a href="../wallet/wallet.html">Wallet</a></li>
+        </ul>
 
-          <!-- New Proposal Button Mobile -->
-          <a
-            href="#"
-            class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded shadow w-full text-center mt-4 transition duration-200"
-            >+ Nueva Propuesta</a
-          >
+        <div class="navbar__actions">
+          <a href="../wallet/wallet.html" class="btn btn--outline btn--sm">Mi Cuenta</a>
         </div>
       </div>
     </nav>
 
-    <!-- Page Header -->
-    <header class="px-4 md:px-6 py-6">
-      <h1 class="text-2xl md:text-3xl font-bold text-blue-400">
-        Propuestas Comunitarias
-      </h1>
-      <p class="text-sm text-slate-400">
-        Vota y propón proyectos que transformen tu comunidad
-      </p>
-
-      <!-- Stats rápidas -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-        <div class="bg-slate-800 p-3 rounded-lg text-center">
-          <p class="text-lg font-bold text-green-400">12</p>
-          <p class="text-xs text-slate-400">Proyectos Activos</p>
-        </div>
-        <div class="bg-slate-800 p-3 rounded-lg text-center">
-          <p class="text-lg font-bold text-blue-400">€487K</p>
-          <p class="text-xs text-slate-400">Fondos Disponibles</p>
-        </div>
-        <div class="bg-slate-800 p-3 rounded-lg text-center">
-          <p class="text-lg font-bold text-purple-400">2,847</p>
-          <p class="text-xs text-slate-400">Votantes Activos</p>
-        </div>
-        <div class="bg-slate-800 p-3 rounded-lg text-center">
-          <p class="text-lg font-bold text-cyan-400">94%</p>
-          <p class="text-xs text-slate-400">Transparencia</p>
+    <!-- Header de Propuestas -->
+    <header class="proposals-header">
+      <div class="container">
+        <div class="proposals-header__inner">
+          <div class="proposals-header__content">
+            <h1 class="proposals-header__title">Propuestas Comunitarias</h1>
+            <p class="proposals-header__subtitle">Explora, vota y contribuye a las propuestas de la comunidad</p>
+            
+            <div class="proposals-stats">
+              <div class="proposals-stat">
+                <div class="proposals-stat__value">45</div>
+                <div class="proposals-stat__label">Propuestas Activas</div>
+              </div>
+              <div class="proposals-stat">
+                <div class="proposals-stat__value">127</div>
+                <div class="proposals-stat__label">Propuestas Aprobadas</div>
+              </div>
+              <div class="proposals-stat">
+                <div class="proposals-stat__value">€1.2M</div>
+                <div class="proposals-stat__label">Fondos Asignados</div>
+              </div>
+            </div>
+          </div>
+          <div class="proposals-header__action">
+            <button id="newProposalBtn" class="btn btn--primary btn--lg btn--pulse">
+              <i class="fas fa-plus-circle"></i> Nueva Propuesta
+            </button>
+            <div class="proposals-header__tooltip">
+              <i class="fas fa-info-circle"></i> Haz clic para crear una nueva propuesta comunitaria
+            </div>
+          </div>
         </div>
       </div>
     </header>
 
-    <!-- Filtros -->
-    <section class="px-4 md:px-6 py-4">
-      <div
-        class="flex flex-col md:flex-row md:items-center justify-between gap-4"
-      >
-        <input
-          type="text"
-          placeholder="Buscar propuestas..."
-          class="w-full md:w-1/2 px-4 py-2 rounded bg-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-        />
-        <div class="flex flex-wrap gap-2 text-sm">
-          <button
-            class="bg-blue-700 px-3 md:px-4 py-1 md:py-2 rounded text-white transition duration-200 hover:bg-blue-600"
-          >
-            🗳️ En Votación (4)
-          </button>
-          <button
-            class="bg-slate-800 px-3 md:px-4 py-1 md:py-2 rounded text-slate-300 transition duration-200 hover:bg-slate-700"
-          >
-            ✅ Aprobadas (8)
-          </button>
-          <button
-            class="bg-slate-800 px-3 md:px-4 py-1 md:py-2 rounded text-slate-300 transition duration-200 hover:bg-slate-700"
-          >
-            🚧 En Ejecución (5)
-          </button>
-          <button
-            class="bg-slate-800 px-3 md:px-4 py-1 md:py-2 rounded text-slate-300 transition duration-200 hover:bg-slate-700"
-          >
-            🎉 Completadas (12)
-          </button>
-          <button
-            class="bg-slate-800 px-3 md:px-4 py-1 md:py-2 rounded text-slate-300 transition duration-200 hover:bg-slate-700"
-          >
-            Todas (29)
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Lista de propuestas -->
-    <main class="space-y-4 md:space-y-6 px-4 md:px-6 pb-10">
-      <!-- Propuesta 1: Red de Huertos Urbanos -->
-      <div
-        class="bg-gradient-to-r from-green-900 to-emerald-900 rounded-xl p-4 md:p-6 shadow-md border border-green-700"
-      >
-        <div
-          class="flex flex-col md:flex-row justify-between md:items-center mb-3"
-        >
-          <div class="mb-2 md:mb-0">
-            <h2 class="text-base md:text-lg font-bold mb-2 text-green-200">
-              🌱 Red de Huertos Urbanos Comunitarios
-            </h2>
-            <div class="flex flex-wrap gap-1 md:gap-2">
-              <span class="bg-green-600 text-xs rounded px-2 py-1 text-white"
-                >🌿 Sostenibilidad</span
-              >
-              <span class="bg-blue-600 text-xs rounded px-2 py-1 text-white"
-                >🗳️ En Votación</span
-              >
-              <span class="bg-purple-600 text-xs rounded px-2 py-1 text-white"
-                >🌍 Alto Impacto</span
-              >
+    <!-- Contenido Principal -->
+    <main class="py-6">
+      <div class="container">
+        <!-- Filtros y Búsqueda -->
+        <div class="proposals-filters">
+          <div class="proposals-filters__tabs">
+            <button data-filter="all" class="proposals-filters__tab proposals-filters__tab--active">
+              <span class="proposals-filters__tab-icon"><i class="fas fa-list"></i></span>
+              <span class="proposals-filters__tab-text">Todas</span>
+              <span class="proposals-filters__tab-count">172</span>
+            </button>
+            <button data-filter="voting" class="proposals-filters__tab">
+              <span class="proposals-filters__tab-icon"><i class="fas fa-vote-yea"></i></span>
+              <span class="proposals-filters__tab-text">En Votación</span>
+              <span class="proposals-filters__tab-count">45</span>
+            </button>
+            <button data-filter="approved" class="proposals-filters__tab">
+              <span class="proposals-filters__tab-icon"><i class="fas fa-check-circle"></i></span>
+              <span class="proposals-filters__tab-text">Aprobadas</span>
+              <span class="proposals-filters__tab-count">78</span>
+            </button>
+            <button data-filter="completed" class="proposals-filters__tab">
+              <span class="proposals-filters__tab-icon"><i class="fas fa-flag-checkered"></i></span>
+              <span class="proposals-filters__tab-text">Completadas</span>
+              <span class="proposals-filters__tab-count">49</span>
+            </button>
+            <button data-filter="rejected" class="proposals-filters__tab">
+              <span class="proposals-filters__tab-icon"><i class="fas fa-times-circle"></i></span>
+              <span class="proposals-filters__tab-text">Rechazadas</span>
+              <span class="proposals-filters__tab-count">12</span>
+            </button>
+          </div>
+          
+          <div class="proposals-filters__actions">
+            <div class="search-box">
+              <input type="text" placeholder="Buscar propuestas..." class="form-input" id="searchProposals" />
+              <button class="search-box__button"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="proposals-filters__sort">
+              <select class="form-select form-select--sm">
+                <option value="recent">Más recientes</option>
+                <option value="votes">Más votadas</option>
+                <option value="budget">Mayor presupuesto</option>
+                <option value="ending">Finalizan pronto</option>
+              </select>
+            </div>
+            
+            <div class="proposals-filters__view">
+              <button class="btn btn--icon btn--sm btn--outline active" data-view="grid">
+                <i class="fas fa-th-large"></i>
+              </button>
+              <button class="btn btn--icon btn--sm btn--outline" data-view="list">
+                <i class="fas fa-list"></i>
+              </button>
             </div>
           </div>
-          <p class="text-xs md:text-sm text-green-300">
-            ⏳ 6d 12h restantes para votar
-          </p>
         </div>
 
-        <p class="text-slate-200 text-sm mb-3">
-          Crear una red de 12 huertos comunitarios en azoteas y solares vacíos,
-          proporcionando alimentos frescos, educación ambiental y espacios de
-          encuentro vecinal. Incluye sistema de compostaje y recogida de agua de
-          lluvia.
-        </p>
-
-        <div
-          class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-slate-300 mb-3"
-        >
-          <span>📅 Propuesta: 2024-01-20</span>
-          <span>👥 Mínimo: 500 votos</span>
-          <span>📍 12 ubicaciones identificadas</span>
-          <span>💰 Presupuesto: €45,000</span>
-          <span>🗳 Votos actuales: 1,247</span>
-        </div>
-
-        <!-- Progreso de votación -->
-        <div class="mb-3">
-          <div class="flex justify-between text-xs text-slate-300 mb-1">
-            <span>Progreso de votación</span>
-            <span>249% del mínimo alcanzado</span>
-          </div>
-          <div class="w-full bg-slate-700 h-2 rounded mb-1">
-            <div class="bg-green-400 h-2 rounded w-[89%]"></div>
-          </div>
-        </div>
-
-        <div
-          class="flex flex-col md:flex-row justify-between md:items-center gap-3"
-        >
-          <div class="text-sm space-x-4">
-            <span class="text-green-400 font-semibold"
-              >✅ A favor: 1,108 (89%)</span
-            >
-            <span class="text-red-400 font-semibold"
-              >❌ En contra: 139 (11%)</span
-            >
-          </div>
-          <div class="flex flex-col md:flex-row gap-2">
-            <button
-              onclick="voteForProposal('huertos', true)"
-              class="bg-green-600 hover:bg-green-700 px-3 py-2 text-xs rounded transition duration-200"
-            >
-              ✅ Votar A Favor
-            </button>
-            <button
-              onclick="voteForProposal('huertos', false)"
-              class="bg-red-600 hover:bg-red-700 px-3 py-2 text-xs rounded transition duration-200"
-            >
-              ❌ Votar En Contra
-            </button>
-            <button
-              onclick="viewProposalDetails('huertos')"
-              class="bg-slate-700 hover:bg-slate-600 px-3 py-2 text-xs rounded transition duration-200 text-center"
-            >
-              📋 Ver Detalles
-            </button>
-          </div>
-        </div>
-
-        <!-- Información adicional -->
-        <div
-          class="mt-4 pt-3 border-t border-green-700 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs"
-        >
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
-            <span class="text-slate-300"
-              >Blockchain: Todas las transacciones públicas</span
-            >
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
-            <span class="text-slate-300"
-              >Propuesta por: Asociación Verde Local</span
-            >
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
-            <span class="text-slate-300"
-              >Beneficiarios estimados: 2,500 familias</span
-            >
-          </div>
-        </div>
-      </div>
-
-      <!-- Propuesta 2: Centro de Energías Renovables -->
-      <div
-        class="bg-gradient-to-r from-blue-900 to-cyan-900 rounded-xl p-4 md:p-6 shadow-md border border-blue-700"
-      >
-        <div
-          class="flex flex-col md:flex-row justify-between md:items-center mb-3"
-        >
-          <div class="mb-2 md:mb-0">
-            <h2 class="text-base md:text-lg font-bold mb-2 text-blue-200">
-              ⚡ Centro de Formación en Energías Renovables
-            </h2>
-            <div class="flex flex-wrap gap-1 md:gap-2">
-              <span class="bg-blue-600 text-xs rounded px-2 py-1 text-white"
-                >🎓 Educación</span
-              >
-              <span class="bg-green-600 text-xs rounded px-2 py-1 text-white"
-                >🗳️ En Votación</span
-              >
-              <span class="bg-orange-600 text-xs rounded px-2 py-1 text-white"
-                >⚡ Energía</span
-              >
+        <!-- Propuestas -->
+        <div class="proposals-grid">
+          <!-- Propuesta 1 -->
+          <div class="proposal-card">
+            <div class="proposal-card__header">
+              <div class="proposal-card__category">
+                <i class="fas fa-leaf"></i>
+                <span>Sostenibilidad</span>
+              </div>
+              <span class="badge badge--primary">En Votación</span>
+            </div>
+            
+            <div class="proposal-card__content">
+              <h3 class="proposal-card__title">Red de Huertos Urbanos Comunitarios</h3>
+              <p class="proposal-card__description">Crear una red de 12 huertos comunitarios en azoteas y solares vacíos, proporcionando alimentos frescos, educación ambiental y espacios de encuentro vecinal.</p>
+              
+              <div class="proposal-card__budget">
+                <span class="proposal-card__budget-label">Presupuesto solicitado</span>
+                <span class="proposal-card__budget-value">€45,000</span>
+              </div>
+              
+              <div class="proposal-card__progress">
+                <div class="proposal-card__progress-info">
+                  <span class="proposal-card__progress-label">1,247 de 500 votos necesarios</span>
+                  <span class="proposal-card__progress-percentage">249%</span>
+                </div>
+                <div class="proposal-card__progress-bar">
+                  <div class="proposal-card__progress-value" style="width: 100%"></div>
+                </div>
+              </div>
+              
+              <div class="proposal-card__votes">
+                <div class="proposal-card__vote-item proposal-card__vote-item--favor">
+                  <i class="fas fa-thumbs-up"></i>
+                  <span>1,108 a favor</span>
+                </div>
+                <div class="proposal-card__vote-item proposal-card__vote-item--against">
+                  <i class="fas fa-thumbs-down"></i>
+                  <span>139 en contra</span>
+                </div>
+              </div>
+              
+              <div class="proposal-card__meta">
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Propuesta el 20 Ene 2024</span>
+                </div>
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-clock"></i>
+                  <span>Finaliza en 6d 12h</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="proposal-card__footer">
+              <button class="btn btn--outline btn--sm" onclick="viewProposalDetails('huertos')">Ver Detalles</button>
+              <div class="proposal-card__actions">
+                <button class="btn btn--success btn--sm" onclick="voteForProposal('huertos', true)">
+                  <i class="fas fa-thumbs-up"></i> Votar
+                </button>
+                <button class="btn btn--error btn--sm" onclick="voteForProposal('huertos', false)">
+                  <i class="fas fa-thumbs-down"></i> Contra
+                </button>
+              </div>
             </div>
           </div>
-          <p class="text-xs md:text-sm text-blue-300">
-            ⏳ 4d 8h restantes para votar
-          </p>
-        </div>
-
-        <p class="text-slate-200 text-sm mb-3">
-          Establecer un centro de formación técnica en instalación de placas
-          solares, eólica doméstica y eficiencia energética. Incluye talleres
-          gratuitos para vecinos y programa de certificación profesional.
-        </p>
-
-        <div
-          class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-slate-300 mb-3"
-        >
-          <span>📅 Propuesta: 2024-01-18</span>
-          <span>👥 Mínimo: 400 votos</span>
-          <span>🏢 Local ya identificado</span>
-          <span>💰 Presupuesto: €28,500</span>
-          <span>🗳 Votos actuales: 756</span>
-        </div>
-
-        <div class="mb-3">
-          <div class="flex justify-between text-xs text-slate-300 mb-1">
-            <span>Progreso de votación</span>
-            <span>189% del mínimo alcanzado</span>
-          </div>
-          <div class="w-full bg-slate-700 h-2 rounded mb-1">
-            <div class="bg-blue-400 h-2 rounded w-[94%]"></div>
-          </div>
-        </div>
-
-        <div
-          class="flex flex-col md:flex-row justify-between md:items-center gap-3"
-        >
-          <div class="text-sm space-x-4">
-            <span class="text-green-400 font-semibold"
-              >✅ A favor: 712 (94%)</span
-            >
-            <span class="text-red-400 font-semibold"
-              >❌ En contra: 44 (6%)</span
-            >
-          </div>
-          <div class="flex flex-col md:flex-row gap-2">
-            <button
-              onclick="voteForProposal('energia', true)"
-              class="bg-green-600 hover:bg-green-700 px-3 py-2 text-xs rounded transition duration-200"
-            >
-              ✅ Votar A Favor
-            </button>
-            <button
-              onclick="voteForProposal('energia', false)"
-              class="bg-red-600 hover:bg-red-700 px-3 py-2 text-xs rounded transition duration-200"
-            >
-              ❌ Votar En Contra
-            </button>
-            <button
-              onclick="viewProposalDetails('energia')"
-              class="bg-slate-700 hover:bg-slate-600 px-3 py-2 text-xs rounded transition duration-200 text-center"
-            >
-              📋 Ver Detalles
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Propuesta 3: Aplicación de Transparencia Municipal -->
-      <div
-        class="bg-gradient-to-r from-purple-900 to-indigo-900 rounded-xl p-4 md:p-6 shadow-md border border-purple-700"
-      >
-        <div
-          class="flex flex-col md:flex-row justify-between md:items-center mb-3"
-        >
-          <div class="mb-2 md:mb-0">
-            <h2 class="text-base md:text-lg font-bold mb-2 text-purple-200">
-              📱 App de Transparencia Municipal en Blockchain
-            </h2>
-            <div class="flex flex-wrap gap-1 md:gap-2">
-              <span class="bg-purple-600 text-xs rounded px-2 py-1 text-white"
-                >💻 Tecnología</span
-              >
-              <span class="bg-green-600 text-xs rounded px-2 py-1 text-white"
-                >🗳️ En Votación</span
-              >
-              <span class="bg-blue-600 text-xs rounded px-2 py-1 text-white"
-                >🔍 Transparencia</span
-              >
+          
+          <!-- Propuesta 2 -->
+          <div class="proposal-card">
+            <div class="proposal-card__header">
+              <div class="proposal-card__category">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Educación</span>
+              </div>
+              <span class="badge badge--primary">En Votación</span>
+            </div>
+            
+            <div class="proposal-card__content">
+              <h3 class="proposal-card__title">Centro de Formación en Energías Renovables</h3>
+              <p class="proposal-card__description">Establecer un centro de formación técnica en instalación de placas solares, eólica doméstica y eficiencia energética. Incluye talleres gratuitos para vecinos.</p>
+              
+              <div class="proposal-card__budget">
+                <span class="proposal-card__budget-label">Presupuesto solicitado</span>
+                <span class="proposal-card__budget-value">€28,500</span>
+              </div>
+              
+              <div class="proposal-card__progress">
+                <div class="proposal-card__progress-info">
+                  <span class="proposal-card__progress-label">756 de 400 votos necesarios</span>
+                  <span class="proposal-card__progress-percentage">189%</span>
+                </div>
+                <div class="proposal-card__progress-bar">
+                  <div class="proposal-card__progress-value" style="width: 100%"></div>
+                </div>
+              </div>
+              
+              <div class="proposal-card__votes">
+                <div class="proposal-card__vote-item proposal-card__vote-item--favor">
+                  <i class="fas fa-thumbs-up"></i>
+                  <span>712 a favor</span>
+                </div>
+                <div class="proposal-card__vote-item proposal-card__vote-item--against">
+                  <i class="fas fa-thumbs-down"></i>
+                  <span>44 en contra</span>
+                </div>
+              </div>
+              
+              <div class="proposal-card__meta">
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Propuesta el 18 Ene 2024</span>
+                </div>
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-clock"></i>
+                  <span>Finaliza en 4d 8h</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="proposal-card__footer">
+              <button class="btn btn--outline btn--sm" onclick="viewProposalDetails('energia')">Ver Detalles</button>
+              <div class="proposal-card__actions">
+                <button class="btn btn--success btn--sm" onclick="voteForProposal('energia', true)">
+                  <i class="fas fa-thumbs-up"></i> Votar
+                </button>
+                <button class="btn btn--error btn--sm" onclick="voteForProposal('energia', false)">
+                  <i class="fas fa-thumbs-down"></i> Contra
+                </button>
+              </div>
             </div>
           </div>
-          <p class="text-xs md:text-sm text-purple-300">
-            ⏳ 9d 14h restantes para votar
-          </p>
-        </div>
-
-        <p class="text-slate-200 text-sm mb-3">
-          Desarrollar una aplicación móvil que registre en blockchain todos los
-          gastos municipales en tiempo real. Los ciudadanos podrán escanear
-          códigos QR en obras públicas para ver costos, proveedores y progreso.
-        </p>
-
-        <div
-          class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-slate-300 mb-3"
-        >
-          <span>📅 Propuesta: 2024-01-22</span>
-          <span>👥 Mínimo: 600 votos</span>
-          <span>🔗 100% en blockchain</span>
-          <span>💰 Presupuesto: €18,000</span>
-          <span>🗳 Votos actuales: 423</span>
-        </div>
-
-        <div class="mb-3">
-          <div class="flex justify-between text-xs text-slate-300 mb-1">
-            <span>Progreso de votación</span>
-            <span>71% del mínimo alcanzado</span>
-          </div>
-          <div class="w-full bg-slate-700 h-2 rounded mb-1">
-            <div class="bg-purple-400 h-2 rounded w-[71%]"></div>
-          </div>
-        </div>
-
-        <div
-          class="flex flex-col md:flex-row justify-between md:items-center gap-3"
-        >
-          <div class="text-sm space-x-4">
-            <span class="text-green-400 font-semibold"
-              >✅ A favor: 398 (94%)</span
-            >
-            <span class="text-red-400 font-semibold"
-              >❌ En contra: 25 (6%)</span
-            >
-          </div>
-          <div class="flex flex-col md:flex-row gap-2">
-            <button
-              onclick="voteForProposal('transparencia', true)"
-              class="bg-green-600 hover:bg-green-700 px-3 py-2 text-xs rounded transition duration-200"
-            >
-              ✅ Votar A Favor
-            </button>
-            <button
-              onclick="voteForProposal('transparencia', false)"
-              class="bg-red-600 hover:bg-red-700 px-3 py-2 text-xs rounded transition duration-200"
-            >
-              ❌ Votar En Contra
-            </button>
-            <button
-              onclick="viewProposalDetails('transparencia')"
-              class="bg-slate-700 hover:bg-slate-600 px-3 py-2 text-xs rounded transition duration-200 text-center"
-            >
-              📋 Ver Detalles
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Propuesta 4: Red de Microcréditos Comunitarios -->
-      <div
-        class="bg-gradient-to-r from-orange-900 to-red-900 rounded-xl p-4 md:p-6 shadow-md border border-orange-700"
-      >
-        <div
-          class="flex flex-col md:flex-row justify-between md:items-center mb-3"
-        >
-          <div class="mb-2 md:mb-0">
-            <h2 class="text-base md:text-lg font-bold mb-2 text-orange-200">
-              🏪 Red de Microcréditos para Pequeños Comercios
-            </h2>
-            <div class="flex flex-wrap gap-1 md:gap-2">
-              <span class="bg-orange-600 text-xs rounded px-2 py-1 text-white"
-                >💼 Economía</span
-              >
-              <span class="bg-green-600 text-xs rounded px-2 py-1 text-white"
-                >🗳️ En Votación</span
-              >
-              <span class="bg-blue-600 text-xs rounded px-2 py-1 text-white"
-                >🤝 Social</span
-              >
+          
+          <!-- Propuesta 3 -->
+          <div class="proposal-card">
+            <div class="proposal-card__header">
+              <div class="proposal-card__category">
+                <i class="fas fa-recycle"></i>
+                <span>Sostenibilidad</span>
+              </div>
+              <span class="badge badge--success">Aprobada</span>
+            </div>
+            
+            <div class="proposal-card__content">
+              <h3 class="proposal-card__title">Programa de Reciclaje Comunitario</h3>
+              <p class="proposal-card__description">Implementación de un sistema de reciclaje comunitario con puntos de recogida selectiva y programa educativo para escuelas y centros comunitarios.</p>
+              
+              <div class="proposal-card__budget">
+                <span class="proposal-card__budget-label">Presupuesto aprobado</span>
+                <span class="proposal-card__budget-value">€32,750</span>
+              </div>
+              
+              <div class="proposal-card__result">
+                <div class="proposal-card__result-info">
+                  <span class="proposal-card__result-label">Resultado final</span>
+                  <span class="proposal-card__result-percentage">87.8% aprobación</span>
+                </div>
+                <div class="proposal-card__result-bar">
+                  <div class="proposal-card__result-value" style="width: 87.8%"></div>
+                </div>
+              </div>
+              
+              <div class="proposal-card__votes">
+                <div class="proposal-card__vote-item proposal-card__vote-item--favor">
+                  <i class="fas fa-thumbs-up"></i>
+                  <span>892 a favor</span>
+                </div>
+                <div class="proposal-card__vote-item proposal-card__vote-item--against">
+                  <i class="fas fa-thumbs-down"></i>
+                  <span>124 en contra</span>
+                </div>
+              </div>
+              
+              <div class="proposal-card__meta">
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Propuesta el 5 Ene 2024</span>
+                </div>
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Aprobada el 12 Ene 2024</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="proposal-card__footer">
+              <button class="btn btn--outline btn--sm" onclick="viewProposalDetails('reciclaje')">Ver Detalles</button>
+              <button class="btn btn--primary btn--sm">Ver Proyecto</button>
             </div>
           </div>
-          <p class="text-xs md:text-sm text-orange-300">
-            ⏳ 1d 4h restantes para votar
-          </p>
+          
+          <!-- Propuesta 4 -->
+          <div class="proposal-card">
+            <div class="proposal-card__header">
+              <div class="proposal-card__category">
+                <i class="fas fa-palette"></i>
+                <span>Cultura</span>
+              </div>
+              <span class="badge badge--primary">En Votación</span>
+            </div>
+            
+            <div class="proposal-card__content">
+              <h3 class="proposal-card__title">Taller de Artes Digitales para Jóvenes</h3>
+              <p class="proposal-card__description">Creación de un espacio de formación en artes digitales para jóvenes de 14 a 25 años, con equipamiento tecnológico y mentores profesionales.</p>
+              
+              <div class="proposal-card__budget">
+                <span class="proposal-card__budget-label">Presupuesto solicitado</span>
+                <span class="proposal-card__budget-value">€18,900</span>
+              </div>
+              
+              <div class="proposal-card__progress">
+                <div class="proposal-card__progress-info">
+                  <span class="proposal-card__progress-label">342 de 400 votos necesarios</span>
+                  <span class="proposal-card__progress-percentage">85%</span>
+                </div>
+                <div class="proposal-card__progress-bar">
+                  <div class="proposal-card__progress-value" style="width: 85%"></div>
+                </div>
+              </div>
+              
+              <div class="proposal-card__votes">
+                <div class="proposal-card__vote-item proposal-card__vote-item--favor">
+                  <i class="fas fa-thumbs-up"></i>
+                  <span>312 a favor</span>
+                </div>
+                <div class="proposal-card__vote-item proposal-card__vote-item--against">
+                  <i class="fas fa-thumbs-down"></i>
+                  <span>30 en contra</span>
+                </div>
+              </div>
+              
+              <div class="proposal-card__meta">
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Propuesta el 14 Ene 2024</span>
+                </div>
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-clock"></i>
+                  <span>Finaliza en 8d 16h</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="proposal-card__footer">
+              <button class="btn btn--outline btn--sm" onclick="viewProposalDetails('artes')">Ver Detalles</button>
+              <div class="proposal-card__actions">
+                <button class="btn btn--success btn--sm" onclick="voteForProposal('artes', true)">
+                  <i class="fas fa-thumbs-up"></i> Votar
+                </button>
+                <button class="btn btn--error btn--sm" onclick="voteForProposal('artes', false)">
+                  <i class="fas fa-thumbs-down"></i> Contra
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Propuesta 5 -->
+          <div class="proposal-card">
+            <div class="proposal-card__header">
+              <div class="proposal-card__category">
+                <i class="fas fa-heartbeat"></i>
+                <span>Salud</span>
+              </div>
+              <span class="badge badge--warning">Propuesta</span>
+            </div>
+            
+            <div class="proposal-card__content">
+              <h3 class="proposal-card__title">Centro de Bienestar Mental Comunitario</h3>
+              <p class="proposal-card__description">Establecimiento de un centro de apoyo psicológico gratuito con profesionales especializados en salud mental para toda la comunidad.</p>
+              
+              <div class="proposal-card__budget">
+                <span class="proposal-card__budget-label">Presupuesto solicitado</span>
+                <span class="proposal-card__budget-value">€52,000</span>
+              </div>
+              
+              <div class="proposal-card__progress">
+                <div class="proposal-card__progress-info">
+                  <span class="proposal-card__progress-label">89 de 500 votos necesarios</span>
+                  <span class="proposal-card__progress-percentage">18%</span>
+                </div>
+                <div class="proposal-card__progress-bar">
+                  <div class="proposal-card__progress-value" style="width: 18%"></div>
+                </div>
+              </div>
+              
+              <div class="proposal-card__votes">
+                <div class="proposal-card__vote-item proposal-card__vote-item--favor">
+                  <i class="fas fa-thumbs-up"></i>
+                  <span>78 a favor</span>
+                </div>
+                <div class="proposal-card__vote-item proposal-card__vote-item--against">
+                  <i class="fas fa-thumbs-down"></i>
+                  <span>11 en contra</span>
+                </div>
+              </div>
+              
+              <div class="proposal-card__meta">
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Propuesta el 22 Ene 2024</span>
+                </div>
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-clock"></i>
+                  <span>Finaliza en 12d 4h</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="proposal-card__footer">
+              <button class="btn btn--outline btn--sm" onclick="viewProposalDetails('bienestar')">Ver Detalles</button>
+              <div class="proposal-card__actions">
+                <button class="btn btn--success btn--sm" onclick="voteForProposal('bienestar', true)">
+                  <i class="fas fa-thumbs-up"></i> Votar
+                </button>
+                <button class="btn btn--error btn--sm" onclick="voteForProposal('bienestar', false)">
+                  <i class="fas fa-thumbs-down"></i> Contra
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Propuesta 6 -->
+          <div class="proposal-card">
+            <div class="proposal-card__header">
+              <div class="proposal-card__category">
+                <i class="fas fa-dumbbell"></i>
+                <span>Deporte</span>
+              </div>
+              <span class="badge badge--error">Rechazada</span>
+            </div>
+            
+            <div class="proposal-card__content">
+              <h3 class="proposal-card__title">Gimnasio al Aire Libre en Parque Central</h3>
+              <p class="proposal-card__description">Instalación de equipamiento deportivo al aire libre en el Parque Central para promover la actividad física gratuita entre los vecinos.</p>
+              
+              <div class="proposal-card__budget">
+                <span class="proposal-card__budget-label">Presupuesto solicitado</span>
+                <span class="proposal-card__budget-value">€15,200</span>
+              </div>
+              
+              <div class="proposal-card__result">
+                <div class="proposal-card__result-info">
+                  <span class="proposal-card__result-label">Resultado final</span>
+                  <span class="proposal-card__result-percentage" style="color: var(--color-error);">32% aprobación</span>
+                </div>
+                <div class="proposal-card__result-bar">
+                  <div class="proposal-card__result-value" style="width: 32%; background: linear-gradient(90deg, var(--color-error), rgba(var(--color-error-rgb), 0.8));"></div>
+                </div>
+              </div>
+              
+              <div class="proposal-card__votes">
+                <div class="proposal-card__vote-item proposal-card__vote-item--favor">
+                  <i class="fas fa-thumbs-up"></i>
+                  <span>156 a favor</span>
+                </div>
+                <div class="proposal-card__vote-item proposal-card__vote-item--against">
+                  <i class="fas fa-thumbs-down"></i>
+                  <span>332 en contra</span>
+                </div>
+              </div>
+              
+              <div class="proposal-card__meta">
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Propuesta el 28 Dic 2023</span>
+                </div>
+                <div class="proposal-card__meta-item">
+                  <i class="fas fa-times-circle"></i>
+                  <span>Rechazada el 8 Ene 2024</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="proposal-card__footer">
+              <button class="btn btn--outline btn--sm" onclick="viewProposalDetails('gimnasio')">Ver Detalles</button>
+              <button class="btn btn--secondary btn--sm" disabled>Propuesta Cerrada</button>
+            </div>
+          </div>
         </div>
-
-        <p class="text-slate-200 text-sm mb-3">
-          Crear un fondo rotativo de microcréditos (€500-€5000) para pequeños
-          emprendedores locales. Sistema de avales comunitarios, interés 0%,
-          pagos en blockchain para máxima transparencia.
-        </p>
-
-        <div
-          class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-slate-300 mb-3"
-        >
-          <span>📅 Propuesta: 2024-01-16</span>
-          <span>👥 Mínimo: 800 votos</span>
-          <span>💳 20 microcréditos inicial</span>
-          <span>💰 Presupuesto: €65,000</span>
-          <span>🗳 Votos actuales: 1,834</span>
-        </div>
-
-        <div class="mb-3">
-          <div class="flex justify-between text-xs text-slate-300 mb-1">
-            <span>Progreso de votación</span>
-            <span>229% del mínimo alcanzado</span>
+        
+        <!-- Paginación -->
+        <div class="pagination mt-6">
+          <button class="pagination__btn pagination__btn--prev" disabled>Anterior</button>
+          <div class="pagination__pages">
+            <button class="pagination__page pagination__page--active">1</button>
+            <button class="pagination__page">2</button>
+            <button class="pagination__page">3</button>
+            <span class="pagination__ellipsis">...</span>
+            <button class="pagination__page">8</button>
           </div>
-          <div class="w-full bg-slate-700 h-2 rounded mb-1">
-            <div class="bg-orange-400 h-2 rounded w-[96%]"></div>
-          </div>
-        </div>
-
-        <div
-          class="flex flex-col md:flex-row justify-between md:items-center gap-3"
-        >
-          <div class="text-sm space-x-4">
-            <span class="text-green-400 font-semibold"
-              >✅ A favor: 1,761 (96%)</span
-            >
-            <span class="text-red-400 font-semibold"
-              >❌ En contra: 73 (4%)</span
-            >
-          </div>
-          <div class="flex flex-col md:flex-row gap-2">
-            <button
-              onclick="voteForProposal('microcreditos', true)"
-              class="bg-green-600 hover:bg-green-700 px-3 py-2 text-xs rounded transition duration-200"
-            >
-              ✅ Votar A Favor
-            </button>
-            <button
-              onclick="voteForProposal('microcreditos', false)"
-              class="bg-red-600 hover:bg-red-700 px-3 py-2 text-xs rounded transition duration-200"
-            >
-              ❌ Votar En Contra
-            </button>
-            <button
-              onclick="viewProposalDetails('microcreditos')"
-              class="bg-slate-700 hover:bg-slate-600 px-3 py-2 text-xs rounded transition duration-200 text-center"
-            >
-              📋 Ver Detalles
-            </button>
-          </div>
+          <button class="pagination__btn pagination__btn--next">Siguiente</button>
         </div>
       </div>
     </main>
 
     <!-- Footer -->
-    <footer class="text-center text-xs text-slate-500 mt-8 pb-6">
-      © 2025 CivicVault. Todos los derechos reservados.
-      <a href="#" class="text-blue-400 underline">Política de Privacidad</a>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__brand">
+            <div class="footer__logo">
+              <img src="../assets/images/logo.svg" alt="CivicVault Logo" class="footer__logo-img">
+              <div class="footer__logo-text">CivicVault</div>
+            </div>
+            <p class="footer__tagline">
+              Transformando comunidades a través de la financiación transparente y participativa.
+            </p>
+            <div class="footer__social">
+              <a href="#" class="footer__social-link"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="footer__social-link"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="footer__social-link"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="footer__social-link"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          
+          <div class="footer__column">
+            <h3 class="footer__column-title">Plataforma</h3>
+            <ul class="footer__links">
+              <li><a href="../index.html">Inicio</a></li>
+              <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+              <li><a href="#">Propuestas</a></li>
+              <li><a href="../wallet/wallet.html">Wallet</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer__column">
+            <h3 class="footer__column-title">Recursos</h3>
+            <ul class="footer__links">
+              <li><a href="#">Documentación</a></li>
+              <li><a href="#">Guías</a></li>
+              <li><a href="#">API</a></li>
+              <li><a href="#">Comunidad</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer__column">
+            <h3 class="footer__column-title">Legal</h3>
+            <ul class="footer__links">
+              <li><a href="#">Términos de Servicio</a></li>
+              <li><a href="#">Política de Privacidad</a></li>
+              <li><a href="#">Cookies</a></li>
+              <li><a href="#">Licencias</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="footer__bottom">
+          <div class="footer__copy">
+            &copy; 2024 CivicVault. Todos los derechos reservados.
+          </div>
+          <div class="footer__legal">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Cookies</a>
+          </div>
+        </div>
+      </div>
     </footer>
 
-    <!-- JavaScript para navegación y funcionalidad de propuestas -->
-    <script>
-      // Proposals hamburger menu toggle
-      const proposalsHamburger = document.getElementById("proposalsHamburger");
-      const proposalsMobileMenu = document.getElementById(
-        "proposalsMobileMenu",
-      );
-
-      if (proposalsHamburger && proposalsMobileMenu) {
-        proposalsHamburger.addEventListener("click", function () {
-          proposalsMobileMenu.classList.toggle("hidden");
-
-          // Toggle hamburger icon
-          const svg = proposalsHamburger.querySelector("svg path");
-          if (proposalsMobileMenu.classList.contains("hidden")) {
-            svg.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
-          } else {
-            svg.setAttribute("d", "M6 18L18 6M6 6l12 12");
-          }
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener("click", function (e) {
-          if (
-            !proposalsHamburger.contains(e.target) &&
-            !proposalsMobileMenu.contains(e.target)
-          ) {
-            proposalsMobileMenu.classList.add("hidden");
-            const svg = proposalsHamburger.querySelector("svg path");
-            svg.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
-          }
-        });
-
-        // Close mobile menu when window is resized to desktop
-        window.addEventListener("resize", function () {
-          if (window.innerWidth >= 768) {
-            proposalsMobileMenu.classList.add("hidden");
-            const svg = proposalsHamburger.querySelector("svg path");
-            svg.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
-          }
-        });
-      }
-
-      // Sistema de votación y propuestas
-      let userVotes = {}; // Simular votos del usuario
-
-      // Función para votar en propuestas
-      function voteForProposal(proposalId, support) {
-        // Verificar si el usuario ya votó
-        if (userVotes[proposalId]) {
-          showNotification(
-            "Ya has votado en esta propuesta. El voto es vinculante e inmutable en blockchain.",
-            "warning",
-          );
-          return;
-        }
-
-        // Confirmar voto
-        const confirmation = confirm(
-          `¿Confirmas tu voto ${support ? "A FAVOR" : "EN CONTRA"} de esta propuesta?\n\n` +
-            `⚠️ IMPORTANTE: Tu voto quedará registrado permanentemente en blockchain y no se puede cambiar.\n` +
-            `🔍 Tu dirección wallet será pública pero anónima.\n` +
-            `📊 El resultado será transparente y verificable por todos.`,
-        );
-
-        if (confirmation) {
-          // Simular proceso de votación en blockchain
-          showVotingProcess(proposalId, support);
-        }
-      }
-
-      function showVotingProcess(proposalId, support) {
-        const notification = showNotification(
-          "🔗 Conectando con blockchain...",
-          "info",
-          6000,
-        );
-
-        setTimeout(() => {
-          showNotification(
-            "📝 Registrando voto en blockchain...",
-            "info",
-            4000,
-          );
-
-          setTimeout(() => {
-            showNotification("⛏️ Minando transacción...", "info", 3000);
-
-            setTimeout(() => {
-              // Registrar el voto
-              userVotes[proposalId] = support;
-
-              // Actualizar visualmente los contadores (simulado)
-              updateVoteCounters(proposalId, support);
-
-              showNotification(
-                `🎉 ¡Voto registrado exitosamente!\n` +
-                  `Hash: 0x${Math.random().toString(16).substr(2, 8)}...\n` +
-                  `Gas usado: 21,000 | Confirmaciones: 12/12`,
-                "success",
-              );
-
-              // Deshabilitar botones de voto para esta propuesta
-              disableVoteButtons(proposalId);
-            }, 3000);
-          }, 4000);
-        }, 2000);
-      }
-
-      function updateVoteCounters(proposalId, support) {
-        // Esta función simularía la actualización en tiempo real desde blockchain
-        console.log(
-          `Voto registrado para ${proposalId}: ${support ? "A favor" : "En contra"}`,
-        );
-      }
-
-      function disableVoteButtons(proposalId) {
-        const buttons = document.querySelectorAll(
-          `button[onclick*="${proposalId}"]`,
-        );
-        buttons.forEach((button) => {
-          if (button.textContent.includes("Votar")) {
-            button.disabled = true;
-            button.classList.add("opacity-50", "cursor-not-allowed");
-            if (userVotes[proposalId]) {
-              button.textContent = userVotes[proposalId]
-                ? "✅ Votaste A Favor"
-                : "❌ Votaste En Contra";
-            }
-          }
-        });
-      }
-
-      // Función para ver detalles de propuesta
-      function viewProposalDetails(proposalId) {
-        const proposalData = {
-          huertos: {
-            title: "Red de Huertos Urbanos Comunitarios",
-            description:
-              "Proyecto integral para crear 12 huertos comunitarios distribuidos por la ciudad.",
-            timeline: "6 meses de implementación",
-            budget: "€45,000",
-            impact:
-              "2,500 familias beneficiadas, 60 empleos temporales, -40% residuos orgánicos",
-            blockchain: "0xa1b2c3d4e5f6789012345678901234567890abcd",
-            proposer: "Asociación Verde Local",
-            supporters: [
-              "EcoBarrio",
-              "Permacultura Urbana",
-              "Vecinos Sostenibles",
-            ],
-          },
-          energia: {
-            title: "Centro de Formación en Energías Renovables",
-            description:
-              "Centro educativo especializado en tecnologías limpias y formación técnica.",
-            timeline: "4 meses de implementación",
-            budget: "€28,500",
-            impact:
-              "200 personas formadas/año, 50 certificaciones técnicas, -25% consumo energético local",
-            blockchain: "0xb2c3d4e5f6789012345678901234567890abcde1",
-            proposer: "Cooperativa Energética Local",
-            supporters: [
-              "Universidad Técnica",
-              "Sindicato Electricistas",
-              "Ayuntamiento",
-            ],
-          },
-          transparencia: {
-            title: "App de Transparencia Municipal en Blockchain",
-            description:
-              "Aplicación móvil para tracking en tiempo real de gastos municipales.",
-            timeline: "3 meses de desarrollo",
-            budget: "€18,000",
-            impact:
-              "100% transparencia gastos públicos, +80% confianza ciudadana, modelo replicable",
-            blockchain: "0xc3d4e5f6789012345678901234567890abcde12f",
-            proposer: "Colectivo Tech for Good",
-            supporters: [
-              "Hacklab Local",
-              "Transparencia Internacional",
-              "Desarrolladores Unidos",
-            ],
-          },
-          microcreditos: {
-            title: "Red de Microcréditos para Pequeños Comercios",
-            description:
-              "Fondo rotativo de microcréditos sin interés para emprendedores locales.",
-            timeline: "2 meses de puesta en marcha",
-            budget: "€65,000",
-            impact:
-              "20 emprendimientos financiados, 80 empleos creados, +15% actividad comercial local",
-            blockchain: "0xd4e5f6789012345678901234567890abcde12f34",
-            proposer: "Cámara de Comercio Alternativa",
-            supporters: [
-              "Microfinanzas Éticas",
-              "Emprendedores Unidos",
-              "Banca Ética Local",
-            ],
-          },
-        };
-
-        const proposal = proposalData[proposalId];
-        if (!proposal) return;
-
-        alert(
-          `📋 DETALLES DE LA PROPUESTA\n\n` +
-            `🏷️ Título: ${proposal.title}\n\n` +
-            `📄 Descripción: ${proposal.description}\n\n` +
-            `⏱️ Timeline: ${proposal.timeline}\n\n` +
-            `💰 Presupuesto: ${proposal.budget}\n\n` +
-            `📊 Impacto esperado: ${proposal.impact}\n\n` +
-            `🔗 Hash Blockchain: ${proposal.blockchain}\n\n` +
-            `👤 Propuesto por: ${proposal.proposer}\n\n` +
-            `🤝 Apoyado por: ${proposal.supporters.join(", ")}\n\n` +
-            `🔍 Toda la información es verificable en blockchain`,
-        );
-      }
-
-      // Sistema de notificaciones mejorado
-      function showNotification(message, type = "info", duration = 3000) {
-        const notification = document.createElement("div");
-        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transition-all duration-300 ${
-          type === "success"
-            ? "bg-green-600 text-white"
-            : type === "error"
-              ? "bg-red-600 text-white"
-              : type === "warning"
-                ? "bg-yellow-600 text-white"
-                : "bg-blue-600 text-white"
-        }`;
-
-        notification.style.whiteSpace = "pre-line";
-        notification.textContent = message;
-
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-          notification.style.transform = "translateX(100%)";
-          setTimeout(() => {
-            if (document.body.contains(notification)) {
-              document.body.removeChild(notification);
-            }
-          }, 300);
-        }, duration);
-
-        return notification;
-      }
-
-      // Simulación de datos en tiempo real desde blockchain
-      function updateRealTimeData() {
-        // Esta función simularía actualizaciones automáticas desde la blockchain
-        const stats = document.querySelectorAll('[class*="font-bold"]');
-        // Aquí se actualizarían los contadores en tiempo real
-      }
-
-      // Inicializar actualizaciones en tiempo real
-      setInterval(updateRealTimeData, 30000); // Cada 30 segundos
-    </script>
+    <!-- JavaScript Components -->
+    <script src="../js/components/navbar.js"></script>
+    <script src="../js/components/footer.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="../js/main.js"></script>
+    <script src="../js/proposals.js"></script>
+    
+    <!-- Font Awesome para iconos -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -3,658 +3,859 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CivicWallet | Monedero Híbrido Universal</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <style>
-      /* Estilos específicos para el wallet */
-      .wallet-header {
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-        padding: 3rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .wallet-title {
-        font-size: 2.5rem;
-        font-weight: 300;
-        margin-bottom: 0.5rem;
-        background: linear-gradient(90deg, #00d9ff, #a855f7);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .wallet-subtitle {
-        color: #94a3b8;
-        font-size: 1rem;
-      }
-
-      .balance-card {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
-        padding: 2rem;
-        margin-top: 2rem;
-        text-align: center;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px rgba(0, 217, 255, 0.1);
-      }
-
-      .balance-label {
-        color: #94a3b8;
-        font-size: 0.875rem;
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-
-      .balance-amount {
-        font-size: 3.5rem;
-        font-weight: 200;
-        margin-bottom: 1rem;
-        color: #ffffff;
-      }
-
-      .balance-change {
-        display: inline-flex;
-        align-items: center;
-        background: rgba(34, 197, 94, 0.1);
-        color: #22c55e;
-        padding: 0.5rem 1rem;
-        border-radius: 2rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-      }
-
-      .quick-actions {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        margin: 3rem 0;
-      }
-
-      .action-btn {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
-        padding: 1.5rem;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        color: inherit;
-        text-decoration: none;
-        display: block;
-      }
-
-      .action-btn:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: #00d9ff;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 217, 255, 0.3);
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .action-icon {
-        width: 3rem;
-        height: 3rem;
-        background: linear-gradient(135deg, #00d9ff, #a855f7);
-        border-radius: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1rem;
-        font-size: 1.5rem;
-      }
-
-      .action-label {
-        font-weight: 500;
-        font-size: 1rem;
-        color: #ffffff;
-      }
-
-      .main-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 2rem;
-        margin-top: 2rem;
-      }
-
-      .wallet-section {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
-        padding: 1.5rem;
-      }
-
-      .section-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        color: #00d9ff;
-      }
-
-      .currency-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem;
-        border-radius: 0.75rem;
-        margin-bottom: 0.5rem;
-        transition: background 0.2s ease;
-        cursor: pointer;
-      }
-
-      .currency-item:hover {
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .currency-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .currency-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        color: white;
-      }
-
-      .currency-details h3 {
-        font-weight: 500;
-        margin: 0 0 0.25rem 0;
-        color: #ffffff;
-      }
-
-      .currency-details p {
-        color: #94a3b8;
-        font-size: 0.875rem;
-        margin: 0;
-      }
-
-      .currency-balance {
-        text-align: right;
-      }
-
-      .currency-amount {
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: #ffffff;
-      }
-
-      .currency-change {
-        color: #22c55e;
-        font-size: 0.875rem;
-      }
-
-      .add-currency-btn {
-        width: 100%;
-        padding: 1rem;
-        border: 2px dashed rgba(255, 255, 255, 0.2);
-        border-radius: 0.75rem;
-        background: transparent;
-        color: #94a3b8;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-size: 0.875rem;
-      }
-
-      .add-currency-btn:hover {
-        border-color: #00d9ff;
-        color: #00d9ff;
-      }
-
-      .transaction-item {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem;
-        border-radius: 0.75rem;
-        margin-bottom: 0.5rem;
-        transition: background 0.2s ease;
-      }
-
-      .transaction-item:hover {
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .transaction-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 0.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-      }
-
-      .transaction-details h4 {
-        font-weight: 500;
-        margin: 0 0 0.25rem 0;
-        font-size: 0.9rem;
-        color: #ffffff;
-      }
-
-      .transaction-details p {
-        color: #94a3b8;
-        font-size: 0.75rem;
-        margin: 0;
-      }
-
-      .transaction-amount {
-        margin-left: auto;
-        text-align: right;
-      }
-
-      .staking-pool {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-      }
-
-      .pool-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        margin-bottom: 1rem;
-      }
-
-      .pool-title {
-        font-weight: 500;
-        font-size: 1rem;
-        color: #ffffff;
-      }
-
-      .apy-badge {
-        background: #00d9ff;
-        color: #0f172a;
-        padding: 0.25rem 0.75rem;
-        border-radius: 1rem;
-        font-size: 0.75rem;
-        font-weight: 600;
-      }
-
-      .pool-description {
-        color: #94a3b8;
-        font-size: 0.875rem;
-        margin-bottom: 1rem;
-      }
-
-      .pool-stats {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.875rem;
-      }
-
-      .pool-stats span {
-        color: #94a3b8;
-      }
-
-      .pool-stats .amount {
-        color: #ffffff;
-        font-weight: 500;
-      }
-
-      .pool-total {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        padding-top: 1rem;
-        margin-top: 1rem;
-      }
-
-      .view-all-btn {
-        background: transparent;
-        border: none;
-        color: #00d9ff;
-        font-size: 0.875rem;
-        cursor: pointer;
-        text-decoration: underline;
-      }
-
-      .view-all-btn:hover {
-        color: #a855f7;
-      }
-
-      @media (max-width: 768px) {
-        .main-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .balance-amount {
-          font-size: 2.5rem;
-        }
-
-        .wallet-title {
-          font-size: 2rem;
-        }
-
-        .quick-actions {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-    </style>
+    <meta name="description" content="Wallet digital para gestionar tus fondos - CivicVault" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Wallet | CivicVault</title>
+    <!-- Enlaza tu CSS externo -->
+    <link rel="stylesheet" href="../css/main.css" />
   </head>
   <body>
     <!-- NAVEGACIÓN -->
-    <nav class="navbar">
+    <nav class="navbar navbar--dark">
       <div class="container navbar__inner">
         <!-- Logo -->
-        <a href="index.html" class="navbar__logo">CivicVault</a>
+        <a href="/" class="navbar__logo">
+          <img src="../assets/images/logo.svg" alt="CivicVault Logo" class="navbar__logo-img">
+          <span>CivicVault</span>
+        </a>
 
         <!-- Hamburger Menu Button -->
-        <div class="navbar__hamburger" id="hamburger">
+        <div class="navbar__hamburger" id="walletHamburger">
           <span></span>
           <span></span>
           <span></span>
         </div>
 
         <!-- Menú -->
-        <ul class="navbar__menu" id="navMenu">
-          <li><a href="/index.html">Inicio</a></li>
-          <li><a href="/dashboard/dashboard.html">Dashboard</a></li>
-          <li><a href="/proposals/proposals.html">Propuestas</a></li>
-          <li><a href="/wallet/wallet.html" class="active">💳 Wallet</a></li>
+        <ul class="navbar__menu" id="walletMobileMenu">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="../proposals/proposals.html">Propuestas</a></li>
+          <li><a href="#" class="active">Wallet</a></li>
         </ul>
 
-        <!-- Botón CTA -->
-        <a href="/dashboard/dashboard.html" class="btn btn--primary navbar__cta"
-          >Abrir App</a
-        >
+        <div class="navbar__actions">
+          <div class="notification-bell">
+            <button class="notification-bell__button" id="notificationButton">
+              <i class="fas fa-bell"></i>
+              <span class="notification-bell__badge">3</span>
+            </button>
+            <div class="notification-dropdown" id="notificationDropdown">
+              <div class="notification-dropdown__header">
+                <h3>Notificaciones</h3>
+                <button class="notification-dropdown__close" id="closeNotifications">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="notification-dropdown__body">
+                <div class="notification-item notification-item--unread">
+                  <div class="notification-item__icon" style="background-color: #10b981;">
+                    <i class="fas fa-coins"></i>
+                  </div>
+                  <div class="notification-item__content">
+                    <h4>Recompensa de staking recibida</h4>
+                    <p>Has recibido €26.00 de recompensas del pool "Fondo Comunitario"</p>
+                    <span class="notification-item__time">Hace 2 horas</span>
+                  </div>
+                </div>
+                <div class="notification-item notification-item--unread">
+                  <div class="notification-item__icon" style="background-color: #3b82f6;">
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                  <div class="notification-item__content">
+                    <h4>Nuevo pool de staking disponible</h4>
+                    <p>Se ha lanzado un nuevo pool "Innovación Tecnológica" con 7.5% APY</p>
+                    <span class="notification-item__time">Hace 1 día</span>
+                  </div>
+                </div>
+                <div class="notification-item notification-item--unread">
+                  <div class="notification-item__icon" style="background-color: #f97316;">
+                    <i class="fas fa-shield-alt"></i>
+                  </div>
+                  <div class="notification-item__content">
+                    <h4>Actualización de seguridad</h4>
+                    <p>Se ha aplicado una actualización de seguridad a tu wallet</p>
+                    <span class="notification-item__time">Hace 2 días</span>
+                  </div>
+                </div>
+              </div>
+              <div class="notification-dropdown__footer">
+                <button class="btn btn--text">Marcar todas como leídas</button>
+                <button class="btn btn--text">Ver todas</button>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="btn btn--outline btn--sm">Mi Perfil</a>
+        </div>
       </div>
     </nav>
+    
+    <!-- Modal de Intercambio -->
+    <div id="exchangeModal" class="modal">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2 class="modal__title">Intercambiar Monedas</h2>
+          <button class="modal__close" id="closeExchangeModal">&times;</button>
+        </div>
+        <div class="modal__body">
+          <div class="exchange-form">
+            <div class="exchange-form__row">
+              <div class="form-group">
+                <label for="fromCurrency" class="form-label">De</label>
+                <div class="currency-select">
+                  <select id="fromCurrency" class="form-select">
+                    <option value="EUR">Euro (€1,847.23)</option>
+                    <option value="BTC">Bitcoin (0.0234 BTC)</option>
+                    <option value="USDC">USD Coin (456.78 USDC)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="fromAmount" class="form-label">Cantidad</label>
+                <input type="number" id="fromAmount" class="form-input" placeholder="0.00" min="0" step="0.01">
+              </div>
+            </div>
+            
+            <div class="exchange-form__divider">
+              <button class="exchange-form__swap-btn" id="swapCurrencies">
+                <i class="fas fa-exchange-alt"></i>
+              </button>
+            </div>
+            
+            <div class="exchange-form__row">
+              <div class="form-group">
+                <label for="toCurrency" class="form-label">A</label>
+                <div class="currency-select">
+                  <select id="toCurrency" class="form-select">
+                    <option value="BTC">Bitcoin (0.0234 BTC)</option>
+                    <option value="EUR">Euro (€1,847.23)</option>
+                    <option value="USDC">USD Coin (456.78 USDC)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="toAmount" class="form-label">Recibirás</label>
+                <input type="number" id="toAmount" class="form-input" placeholder="0.00" readonly>
+              </div>
+            </div>
+            
+            <div class="exchange-form__info">
+              <div class="exchange-form__rate">
+                <span>Tasa de cambio:</span>
+                <span id="exchangeRate">1 EUR = 0.000025 BTC</span>
+              </div>
+              <div class="exchange-form__fee">
+                <span>Comisión:</span>
+                <span id="exchangeFee">0.5%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal__footer">
+          <button class="btn btn--outline" id="cancelExchange">Cancelar</button>
+          <button class="btn btn--primary" id="confirmExchange">Confirmar Intercambio</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal de Envío -->
+    <div id="sendModal" class="modal">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2 class="modal__title">Enviar Fondos</h2>
+          <button class="modal__close" id="closeSendModal">&times;</button>
+        </div>
+        <div class="modal__body">
+          <div class="form-group">
+            <label for="sendCurrency" class="form-label">Moneda</label>
+            <select id="sendCurrency" class="form-select">
+              <option value="EUR">Euro (€1,847.23)</option>
+              <option value="BTC">Bitcoin (0.0234 BTC)</option>
+              <option value="USDC">USD Coin (456.78 USDC)</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="recipientAddress" class="form-label">Dirección del Destinatario</label>
+            <div class="address-input">
+              <input type="text" id="recipientAddress" class="form-input" placeholder="Introduce la dirección o selecciona un contacto">
+              <button class="address-input__scan">
+                <i class="fas fa-qrcode"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="sendAmount" class="form-label">Cantidad</label>
+            <input type="number" id="sendAmount" class="form-input" placeholder="0.00" min="0" step="0.01">
+          </div>
+          
+          <div class="form-group">
+            <label for="sendNote" class="form-label">Nota (opcional)</label>
+            <input type="text" id="sendNote" class="form-input" placeholder="Añade una nota para el destinatario">
+          </div>
+          
+          <div class="send-summary">
+            <div class="send-summary__row">
+              <span>Comisión de Red:</span>
+              <span id="networkFee">€0.25</span>
+            </div>
+            <div class="send-summary__row">
+              <span>Total:</span>
+              <span id="sendTotal">€0.25</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal__footer">
+          <button class="btn btn--outline" id="cancelSend">Cancelar</button>
+          <button class="btn btn--primary" id="confirmSend">Confirmar Envío</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal de Recepción -->
+    <div id="receiveModal" class="modal">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2 class="modal__title">Recibir Fondos</h2>
+          <button class="modal__close" id="closeReceiveModal">&times;</button>
+        </div>
+        <div class="modal__body">
+          <div class="form-group">
+            <label for="receiveCurrency" class="form-label">Moneda</label>
+            <select id="receiveCurrency" class="form-select">
+              <option value="EUR">Euro (EUR)</option>
+              <option value="BTC">Bitcoin (BTC)</option>
+              <option value="USDC">USD Coin (USDC)</option>
+            </select>
+          </div>
+          
+          <div class="qr-container">
+            <div class="qr-code" id="receiveQRCode">
+              <!-- QR Code will be generated here -->
+              <img src="../assets/images/qr-placeholder.png" alt="QR Code">
+            </div>
+            <div class="wallet-address">
+              <span id="receiveAddress">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</span>
+              <button class="copy-btn" id="copyAddressBtn">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="share-options">
+            <h4>Compartir vía</h4>
+            <div class="share-buttons">
+              <button class="share-btn">
+                <i class="fas fa-envelope"></i>
+                <span>Email</span>
+              </button>
+              <button class="share-btn">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp</span>
+              </button>
+              <button class="share-btn">
+                <i class="fab fa-telegram"></i>
+                <span>Telegram</span>
+              </button>
+              <button class="share-btn">
+                <i class="fas fa-link"></i>
+                <span>Enlace</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal__footer">
+          <button class="btn btn--outline" id="closeReceive">Cerrar</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Header del Wallet -->
     <header class="wallet-header">
       <div class="container">
-        <h1 class="wallet-title">CivicWallet</h1>
-        <p class="wallet-subtitle">
-          Tu monedero híbrido universal • Fiat + Crypto • Transparencia total
-        </p>
-
-        <!-- Balance total -->
-        <div class="balance-card">
-          <div class="balance-label">Balance Total</div>
-          <div class="balance-amount" id="totalBalance">€3,247.85</div>
-          <div class="balance-change">↗ +€127.45 (+4.1%) último mes</div>
+        <div class="wallet-header__inner">
+          <div class="wallet-header__content">
+            <h1 class="wallet-header__title">Mi Wallet Digital</h1>
+            <p class="wallet-header__subtitle">Gestiona tus fondos y contribuciones de manera segura y transparente</p>
+            
+            <div class="wallet-user">
+              <div class="wallet-user__avatar">
+                <img src="./imagenes/Avatar2.png" alt="Avatar de usuario">
+              </div>
+              <div class="wallet-user__info">
+                <div class="wallet-user__name">María García</div>
+                <div class="wallet-user__address">0x71C...8F92</div>
+                <div class="wallet-user__status wallet-user__status--verified">
+                  <i class="fas fa-check-circle"></i> Verificado
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="wallet-balance">
+            <div class="wallet-balance__card">
+              <div class="wallet-balance__header">
+                <div class="wallet-balance__label">BALANCE TOTAL</div>
+                <div class="wallet-balance__actions">
+                  <button class="wallet-balance__action-btn" title="Actualizar" id="refreshBalance">
+                    <i class="fas fa-sync-alt"></i>
+                  </button>
+                  <button class="wallet-balance__action-btn" title="Ocultar" id="toggleBalanceVisibility">
+                    <i class="fas fa-eye-slash"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="wallet-balance__amount" id="totalBalance">€3,247.85</div>
+              
+              <div class="wallet-balance__trend">
+                <div class="wallet-balance__change wallet-balance__change--positive">
+                  <i class="fas fa-arrow-up"></i> +€127.45 (4.1%)
+                </div>
+                <div class="wallet-balance__period">
+                  <select id="balancePeriod" class="balance-period-select">
+                    <option value="day">Hoy</option>
+                    <option value="week">Esta semana</option>
+                    <option value="month" selected>Este mes</option>
+                    <option value="year">Este año</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="wallet-balance__chart">
+                <!-- Mini gráfico de balance interactivo -->
+                <canvas id="balanceChart" class="balance-mini-chart"></canvas>
+              </div>
+              
+              <div class="wallet-balance__tabs">
+                <button class="wallet-balance__tab wallet-balance__tab--active" data-period="1m">1M</button>
+                <button class="wallet-balance__tab" data-period="3m">3M</button>
+                <button class="wallet-balance__tab" data-period="6m">6M</button>
+                <button class="wallet-balance__tab" data-period="1y">1A</button>
+                <button class="wallet-balance__tab" data-period="all">Todo</button>
+              </div>
+            </div>
+            
+            <div class="wallet-quick-actions">
+              <button id="exchangeBtn" class="wallet-quick-action">
+                <div class="wallet-quick-action__icon">
+                  <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="wallet-quick-action__label">Intercambiar</div>
+              </button>
+              
+              <button id="sendBtn" class="wallet-quick-action">
+                <div class="wallet-quick-action__icon">
+                  <i class="fas fa-paper-plane"></i>
+                </div>
+                <div class="wallet-quick-action__label">Enviar</div>
+              </button>
+              
+              <button id="receiveBtn" class="wallet-quick-action">
+                <div class="wallet-quick-action__icon">
+                  <i class="fas fa-qrcode"></i>
+                </div>
+                <div class="wallet-quick-action__label">Recibir</div>
+              </button>
+              
+              <button id="stakingBtn" class="wallet-quick-action">
+                <div class="wallet-quick-action__icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="wallet-quick-action__label">Staking</div>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="container">
-      <!-- Acciones rápidas -->
-      <section class="quick-actions">
-        <button class="action-btn" onclick="openExchangeModal()">
-          <div class="action-icon">🔄</div>
-          <div class="action-label">Intercambiar</div>
-        </button>
-
-        <button class="action-btn" onclick="openSendModal()">
-          <div class="action-icon">📤</div>
-          <div class="action-label">Enviar</div>
-        </button>
-
-        <button class="action-btn" onclick="openReceiveModal()">
-          <div class="action-icon">📥</div>
-          <div class="action-label">Recibir</div>
-        </button>
-
-        <button class="action-btn" onclick="openStakingModal()">
-          <div class="action-icon">🌱</div>
-          <div class="action-label">Staking</div>
-        </button>
-      </section>
-
-      <div class="main-grid">
-        <!-- Columna Principal: Balances -->
-        <div>
-          <!-- Balances por Moneda -->
-          <div class="wallet-section">
-            <h2 class="section-title">💰 Tus Balances</h2>
-
-            <div>
-              <!-- EUR -->
-              <div class="currency-item">
-                <div class="currency-info">
-                  <div class="currency-icon" style="background-color: #3b82f6">
-                    €
+    <!-- Contenido Principal -->
+    <main class="py-6">
+      <div class="container">
+        <div class="main-grid">
+          <!-- Columna Principal -->
+          <div>
+            <!-- Monedas -->
+            <div class="wallet-section">
+              <div class="wallet-section__header">
+                <h2 class="wallet-section__title">Mis Monedas</h2>
+                <a href="#" class="wallet-section__action">Ver Todas</a>
+              </div>
+              
+              <div class="currency-list">
+                <!-- Euro -->
+                <div class="currency-item">
+                  <div class="currency-info">
+                    <div class="currency-icon" style="background-color: #3b82f6;">€</div>
+                    <div class="currency-details">
+                      <h3>Euro</h3>
+                      <p>Moneda Fiat</p>
+                    </div>
                   </div>
-                  <div class="currency-details">
-                    <h3>Euro (EUR)</h3>
-                    <p>Moneda fiduciaria</p>
+                  <div class="currency-balance">
+                    <div class="currency-amount">€1,847.23</div>
+                    <div class="currency-change">+€23.45</div>
                   </div>
                 </div>
-                <div class="currency-balance">
-                  <div class="currency-amount">€1,847.23</div>
-                  <div class="currency-change">+€23.45</div>
-                </div>
-              </div>
-
-              <!-- Bitcoin -->
-              <div class="currency-item">
-                <div class="currency-info">
-                  <div class="currency-icon" style="background-color: #f97316">
-                    ₿
+                
+                <!-- Bitcoin -->
+                <div class="currency-item">
+                  <div class="currency-info">
+                    <div class="currency-icon" style="background-color: #f97316;">₿</div>
+                    <div class="currency-details">
+                      <h3>Bitcoin</h3>
+                      <p>0.0234 BTC</p>
+                    </div>
                   </div>
-                  <div class="currency-details">
-                    <h3>Bitcoin (BTC)</h3>
-                    <p>0.0234 BTC</p>
+                  <div class="currency-balance">
+                    <div class="currency-amount">€987.45</div>
+                    <div class="currency-change">+€87.23</div>
                   </div>
                 </div>
-                <div class="currency-balance">
-                  <div class="currency-amount">€987.45</div>
-                  <div class="currency-change">+€87.23</div>
-                </div>
-              </div>
-
-              <!-- USDC -->
-              <div class="currency-item">
-                <div class="currency-info">
-                  <div class="currency-icon" style="background-color: #10b981">
-                    $
+                
+                <!-- USDC -->
+                <div class="currency-item">
+                  <div class="currency-info">
+                    <div class="currency-icon" style="background-color: #10b981;">$</div>
+                    <div class="currency-details">
+                      <h3>USD Coin</h3>
+                      <p>456.78 USDC</p>
+                    </div>
                   </div>
-                  <div class="currency-details">
-                    <h3>USD Coin (USDC)</h3>
-                    <p>456.78 USDC</p>
+                  <div class="currency-balance">
+                    <div class="currency-amount">€413.17</div>
+                    <div class="currency-change">+€16.77</div>
                   </div>
                 </div>
-                <div class="currency-balance">
-                  <div class="currency-amount">€413.17</div>
-                  <div class="currency-change">+€16.77</div>
-                </div>
-              </div>
-
-              <!-- Agregar nueva moneda -->
-              <button class="add-currency-btn" onclick="openAddCurrencyModal()">
-                ➕ Agregar Nueva Moneda
-              </button>
-            </div>
-          </div>
-
-          <!-- Historial de Transacciones -->
-          <div class="wallet-section" style="margin-top: 2rem">
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 1.5rem;
-              "
-            >
-              <h2 class="section-title" style="margin-bottom: 0">
-                📋 Historial
-              </h2>
-              <button class="view-all-btn">Ver todas</button>
-            </div>
-
-            <div>
-              <div class="transaction-item">
-                <div
-                  class="transaction-icon"
-                  style="background-color: rgba(34, 197, 94, 0.2)"
-                >
-                  📥
-                </div>
-                <div class="transaction-details">
-                  <h4>Recibido de PayPal</h4>
-                  <p>Hash: 0x7a8b9c... • Hace 2 horas</p>
-                </div>
-                <div class="transaction-amount">
-                  <div style="color: #22c55e; font-weight: 600">+€150.00</div>
-                  <div style="color: #94a3b8; font-size: 0.75rem">EUR</div>
-                </div>
-              </div>
-
-              <div class="transaction-item">
-                <div
-                  class="transaction-icon"
-                  style="background-color: rgba(59, 130, 246, 0.2)"
-                >
-                  🔄
-                </div>
-                <div class="transaction-details">
-                  <h4>Intercambio BTC → EUR</h4>
-                  <p>Hash: 0x5f6e7d... • Ayer</p>
-                </div>
-                <div class="transaction-amount">
-                  <div style="color: #ffffff; font-weight: 600">€327.85</div>
-                  <div style="color: #94a3b8; font-size: 0.75rem">
-                    Rate: €42,380/BTC
-                  </div>
-                </div>
-              </div>
-
-              <div class="transaction-item">
-                <div
-                  class="transaction-icon"
-                  style="background-color: rgba(249, 115, 22, 0.2)"
-                >
-                  🌱
-                </div>
-                <div class="transaction-details">
-                  <h4>Recompensa Staking</h4>
-                  <p>Pool: Proyectos Comunitarios • Hace 3 días</p>
-                </div>
-                <div class="transaction-amount">
-                  <div style="color: #f97316; font-weight: 600">+€12.45</div>
-                  <div style="color: #94a3b8; font-size: 0.75rem">USDC</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Columna Lateral: Staking y más -->
-        <div>
-          <!-- Staking Pools -->
-          <div class="wallet-section">
-            <h2 class="section-title">🌱 Staking Activo</h2>
-
-            <div>
-              <!-- Pool 1: Proyectos Comunitarios -->
-              <div class="staking-pool">
-                <div class="pool-header">
-                  <h3 class="pool-title">Proyectos Comunitarios</h3>
-                  <span class="apy-badge">12.4% APY</span>
-                </div>
-                <p class="pool-description">
-                  Tu contribución financia proyectos reales
-                </p>
-                <div class="pool-stats">
-                  <span>Stakeado: <span class="amount">€450.00</span></span>
-                  <span
-                    >Ganado:
-                    <span class="amount" style="color: #22c55e"
-                      >€18.67</span
-                    ></span
-                  >
-                </div>
-              </div>
-
-              <!-- Pool 2: Liquidez USDC/EUR -->
-              <div class="staking-pool">
-                <div class="pool-header">
-                  <h3 class="pool-title">Liquidez USDC/EUR</h3>
-                  <span class="apy-badge" style="background: #3b82f6"
-                    >8.7% APY</span
-                  >
-                </div>
-                <p class="pool-description">
-                  Facilita intercambios para la comunidad
-                </p>
-                <div class="pool-stats">
-                  <span>Stakeado: <span class="amount">€320.00</span></span>
-                  <span
-                    >Ganado:
-                    <span class="amount" style="color: #3b82f6"
-                      >€9.34</span
-                    ></span
-                  >
-                </div>
-              </div>
-
-              <!-- Pool 3: Seguro Comunitario -->
-              <div class="staking-pool">
-                <div class="pool-header">
-                  <h3 class="pool-title">Seguro Comunitario</h3>
-                  <span class="apy-badge" style="background: #8b5cf6"
-                    >6.2% APY</span
-                  >
-                </div>
-                <p class="pool-description">Protege fondos de proyectos</p>
-                <button
-                  class="btn btn--primary"
-                  onclick="openStakingModal()"
-                  style="width: 100%; margin-top: 0.5rem"
-                >
-                  Comenzar Staking
+                
+                <!-- Añadir Moneda -->
+                <button class="add-currency-btn">
+                  <i class="fas fa-plus"></i> Añadir Moneda
                 </button>
               </div>
-
-              <div class="pool-total">
-                <div
-                  style="
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 0.5rem;
-                  "
-                >
-                  <span style="color: #94a3b8">Total Stakeado:</span>
-                  <span style="color: #ffffff; font-weight: 600">€770.00</span>
+            </div>
+            
+            <!-- Transacciones Recientes -->
+            <div class="wallet-section">
+              <div class="wallet-section__header">
+                <h2 class="wallet-section__title">Transacciones Recientes</h2>
+                <div class="wallet-section__actions">
+                  <div class="transaction-filter">
+                    <select id="transactionTypeFilter" class="form-select form-select--sm">
+                      <option value="all">Todos los tipos</option>
+                      <option value="receive">Recibidos</option>
+                      <option value="send">Enviados</option>
+                      <option value="exchange">Intercambios</option>
+                      <option value="stake">Staking</option>
+                    </select>
+                  </div>
+                  <a href="#" class="wallet-section__action">Ver Todas</a>
                 </div>
-                <div style="display: flex; justify-content: space-between">
-                  <span style="color: #94a3b8">Rendimientos Totales:</span>
-                  <span style="color: #22c55e; font-weight: 600">+€28.01</span>
+              </div>
+              
+              <div class="transaction-list">
+                <!-- Transacción 1 -->
+                <div class="transaction-item" data-type="receive">
+                  <div class="transaction-icon" style="background-color: #10b981;">
+                    <i class="fas fa-arrow-down"></i>
+                  </div>
+                  <div class="transaction-details">
+                    <h4>Depósito Bancario</h4>
+                    <p>15 Ene 2024 · 10:45</p>
+                    <div class="transaction-hash">
+                      <span class="hash-label">ID:</span>
+                      <span class="hash-value">tx_2401151045_28947</span>
+                      <button class="copy-hash-btn"><i class="fas fa-copy"></i></button>
+                    </div>
+                  </div>
+                  <div class="transaction-amount">
+                    <div class="text-success">+€250.00</div>
+                    <div class="transaction-status transaction-status--completed">
+                      <i class="fas fa-check-circle"></i> Completado
+                    </div>
+                  </div>
                 </div>
+                
+                <!-- Transacción 2 -->
+                <div class="transaction-item" data-type="send">
+                  <div class="transaction-icon" style="background-color: #ef4444;">
+                    <i class="fas fa-arrow-up"></i>
+                  </div>
+                  <div class="transaction-details">
+                    <h4>Proyecto Comunitario</h4>
+                    <p>12 Ene 2024 · 14:23</p>
+                    <div class="transaction-hash">
+                      <span class="hash-label">ID:</span>
+                      <span class="hash-value">tx_2401121423_73651</span>
+                      <button class="copy-hash-btn"><i class="fas fa-copy"></i></button>
+                    </div>
+                  </div>
+                  <div class="transaction-amount">
+                    <div class="text-error">-€50.00</div>
+                    <div class="transaction-status transaction-status--completed">
+                      <i class="fas fa-check-circle"></i> Completado
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Transacción 3 -->
+                <div class="transaction-item" data-type="exchange">
+                  <div class="transaction-icon" style="background-color: #3b82f6;">
+                    <i class="fas fa-exchange-alt"></i>
+                  </div>
+                  <div class="transaction-details">
+                    <h4>Intercambio EUR → BTC</h4>
+                    <p>10 Ene 2024 · 09:17</p>
+                    <div class="transaction-hash">
+                      <span class="hash-label">ID:</span>
+                      <span class="hash-value">tx_2401100917_45298</span>
+                      <button class="copy-hash-btn"><i class="fas fa-copy"></i></button>
+                    </div>
+                  </div>
+                  <div class="transaction-amount">
+                    <div>€100.00 → 0.0025 BTC</div>
+                    <div class="transaction-status transaction-status--completed">
+                      <i class="fas fa-check-circle"></i> Completado
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Transacción 4 -->
+                <div class="transaction-item" data-type="stake">
+                  <div class="transaction-icon" style="background-color: #8b5cf6;">
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                  <div class="transaction-details">
+                    <h4>Staking en Fondo Comunitario</h4>
+                    <p>5 Ene 2024 · 16:30</p>
+                    <div class="transaction-hash">
+                      <span class="hash-label">ID:</span>
+                      <span class="hash-value">tx_2401051630_12785</span>
+                      <button class="copy-hash-btn"><i class="fas fa-copy"></i></button>
+                    </div>
+                  </div>
+                  <div class="transaction-amount">
+                    <div class="text-error">-€500.00</div>
+                    <div class="transaction-status transaction-status--completed">
+                      <i class="fas fa-check-circle"></i> Completado
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Transacción 5 -->
+                <div class="transaction-item" data-type="receive">
+                  <div class="transaction-icon" style="background-color: #10b981;">
+                    <i class="fas fa-arrow-down"></i>
+                  </div>
+                  <div class="transaction-details">
+                    <h4>Transferencia Recibida</h4>
+                    <p>2 Ene 2024 · 11:05</p>
+                    <div class="transaction-hash">
+                      <span class="hash-label">ID:</span>
+                      <span class="hash-value">tx_2401021105_67432</span>
+                      <button class="copy-hash-btn"><i class="fas fa-copy"></i></button>
+                    </div>
+                  </div>
+                  <div class="transaction-amount">
+                    <div class="text-success">+€75.50</div>
+                    <div class="transaction-status transaction-status--completed">
+                      <i class="fas fa-check-circle"></i> Completado
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="transaction-pagination">
+                <button class="pagination-btn pagination-btn--prev" disabled>
+                  <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <div class="pagination-info">Mostrando 1-5 de 24</div>
+                <button class="pagination-btn pagination-btn--next">
+                  Siguiente <i class="fas fa-chevron-right"></i>
+                </button>
               </div>
             </div>
           </div>
-
-          <!-- Estadísticas -->
-          <div class="wallet-section" style="margin-top: 2rem">
-            <h2 class="section-title">📊 Estadísticas</h2>
-
-            <div style="display: flex; flex-direction: column; gap: 1rem">
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #94a3b8">Transacciones este mes:</span>
-                <span style="color: #ffffff; font-weight: 600">23</span>
+          
+          <!-- Columna Lateral -->
+          <div>
+            <!-- Staking Pools -->
+            <div class="wallet-section">
+              <div class="wallet-section__header">
+                <h2 class="wallet-section__title">Staking Pools</h2>
+                <div class="wallet-section__actions">
+                  <div class="staking-filter">
+                    <select id="stakingFilter" class="form-select form-select--sm">
+                      <option value="all">Todos los pools</option>
+                      <option value="active">Mis pools activos</option>
+                      <option value="highest">Mayor APY</option>
+                      <option value="community">Proyectos comunitarios</option>
+                    </select>
+                  </div>
+                  <a href="#" class="wallet-section__action">Ver Todos</a>
+                </div>
               </div>
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #94a3b8">Fees pagados:</span>
-                <span style="color: #ffffff; font-weight: 600">€2.15</span>
+              
+              <div class="staking-pools">
+                <!-- Pool 1 -->
+                <div class="staking-pool staking-pool--active">
+                  <div class="pool-badge">Activo</div>
+                  <div class="pool-header">
+                    <div class="pool-title">Fondo Comunitario</div>
+                    <div class="apy-badge">5.2% APY</div>
+                  </div>
+                  <p class="pool-description">
+                    Contribuye al fondo comunitario y gana intereses mientras financias proyectos locales.
+                  </p>
+                  <div class="pool-progress">
+                    <div class="pool-progress__label">
+                      <span>Capacidad del Pool</span>
+                      <span>75% lleno</span>
+                    </div>
+                    <div class="pool-progress__bar">
+                      <div class="pool-progress__value" style="width: 75%"></div>
+                    </div>
+                    <div class="pool-progress__info">
+                      <span>€750,000 / €1,000,000</span>
+                    </div>
+                  </div>
+                  <div class="pool-stats">
+                    <div>
+                      <span>Cantidad Staked:</span>
+                      <div class="amount">€500.00</div>
+                    </div>
+                    <div>
+                      <span>Recompensas:</span>
+                      <div class="amount">€26.00</div>
+                    </div>
+                  </div>
+                  <div class="pool-actions">
+                    <button class="btn btn--sm btn--outline">Retirar</button>
+                    <button class="btn btn--sm btn--primary">Añadir Fondos</button>
+                  </div>
+                  <div class="pool-total">
+                    <span>Total Stakers:</span>
+                    <div class="amount">1,245</div>
+                  </div>
+                </div>
+                
+                <!-- Pool 2 -->
+                <div class="staking-pool staking-pool--active">
+                  <div class="pool-badge">Activo</div>
+                  <div class="pool-header">
+                    <div class="pool-title">Reserva de Liquidez</div>
+                    <div class="apy-badge">3.8% APY</div>
+                  </div>
+                  <p class="pool-description">
+                    Proporciona liquidez para intercambios y gana comisiones por cada operación.
+                  </p>
+                  <div class="pool-progress">
+                    <div class="pool-progress__label">
+                      <span>Capacidad del Pool</span>
+                      <span>45% lleno</span>
+                    </div>
+                    <div class="pool-progress__bar">
+                      <div class="pool-progress__value" style="width: 45%"></div>
+                    </div>
+                    <div class="pool-progress__info">
+                      <span>€225,000 / €500,000</span>
+                    </div>
+                  </div>
+                  <div class="pool-stats">
+                    <div>
+                      <span>Cantidad Staked:</span>
+                      <div class="amount">€250.00</div>
+                    </div>
+                    <div>
+                      <span>Recompensas:</span>
+                      <div class="amount">€9.50</div>
+                    </div>
+                  </div>
+                  <div class="pool-actions">
+                    <button class="btn btn--sm btn--outline">Retirar</button>
+                    <button class="btn btn--sm btn--primary">Añadir Fondos</button>
+                  </div>
+                  <div class="pool-total">
+                    <span>Total Stakers:</span>
+                    <div class="amount">876</div>
+                  </div>
+                </div>
+                
+                <!-- Pool 3 (Nuevo) -->
+                <div class="staking-pool staking-pool--new">
+                  <div class="pool-badge pool-badge--new">Nuevo</div>
+                  <div class="pool-header">
+                    <div class="pool-title">Innovación Tecnológica</div>
+                    <div class="apy-badge apy-badge--high">7.5% APY</div>
+                  </div>
+                  <p class="pool-description">
+                    Financia proyectos de innovación tecnológica en la comunidad y recibe recompensas más altas.
+                  </p>
+                  <div class="pool-progress">
+                    <div class="pool-progress__label">
+                      <span>Capacidad del Pool</span>
+                      <span>15% lleno</span>
+                    </div>
+                    <div class="pool-progress__bar">
+                      <div class="pool-progress__value" style="width: 15%"></div>
+                    </div>
+                    <div class="pool-progress__info">
+                      <span>€45,000 / €300,000</span>
+                    </div>
+                  </div>
+                  <div class="pool-stats">
+                    <div>
+                      <span>Cantidad Staked:</span>
+                      <div class="amount">€0.00</div>
+                    </div>
+                    <div>
+                      <span>Recompensas:</span>
+                      <div class="amount">€0.00</div>
+                    </div>
+                  </div>
+                  <div class="pool-actions">
+                    <button class="btn btn--sm btn--primary btn--block">Unirse al Pool</button>
+                  </div>
+                  <div class="pool-total">
+                    <span>Total Stakers:</span>
+                    <div class="amount">124</div>
+                  </div>
+                </div>
+                
+                <button class="btn btn--outline btn--block mt-4" id="explorePoolsBtn">
+                  <i class="fas fa-plus"></i> Explorar Más Pools
+                </button>
               </div>
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #94a3b8">CO₂ compensado:</span>
-                <span style="color: #22c55e; font-weight: 600">4.2 kg</span>
+            </div>
+            
+            <!-- Actividad Reciente -->
+            <div class="wallet-section">
+              <div class="wallet-section__header">
+                <h2 class="wallet-section__title">Actividad Reciente</h2>
+                <div class="wallet-section__actions">
+                  <div class="activity-filter">
+                    <select id="activityFilter" class="form-select form-select--sm">
+                      <option value="all">Todas las actividades</option>
+                      <option value="votes">Votaciones</option>
+                      <option value="contributions">Contribuciones</option>
+                      <option value="rewards">Recompensas</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #94a3b8">Impacto social:</span>
-                <span style="color: #8b5cf6; font-weight: 600">Alto</span>
+              
+              <div class="activity-list">
+                <div class="activity-item" data-type="votes">
+                  <div class="activity-icon" style="background-color: #8b5cf6;">
+                    <i class="fas fa-vote-yea"></i>
+                  </div>
+                  <div class="activity-details">
+                    <h4>Votaste a favor de "Red de Huertos Urbanos"</h4>
+                    <p>Hace 2 días</p>
+                    <div class="activity-actions">
+                      <a href="../proposals/proposals.html" class="activity-link">Ver propuesta</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="activity-item" data-type="contributions">
+                  <div class="activity-icon" style="background-color: #ef4444;">
+                    <i class="fas fa-hand-holding-usd"></i>
+                  </div>
+                  <div class="activity-details">
+                    <h4>Contribuiste €50 a "Proyecto Comunitario"</h4>
+                    <p>Hace 5 días</p>
+                    <div class="activity-actions">
+                      <a href="../dashboard/dashboard.html" class="activity-link">Ver proyecto</a>
+                      <a href="#" class="activity-link">Ver transacción</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="activity-item" data-type="rewards">
+                  <div class="activity-icon" style="background-color: #10b981;">
+                    <i class="fas fa-coins"></i>
+                  </div>
+                  <div class="activity-details">
+                    <h4>Recibiste €26 de recompensas de staking</h4>
+                    <p>Hace 1 semana</p>
+                    <div class="activity-actions">
+                      <a href="#" class="activity-link">Ver detalles</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="activity-item" data-type="votes">
+                  <div class="activity-icon" style="background-color: #8b5cf6;">
+                    <i class="fas fa-vote-yea"></i>
+                  </div>
+                  <div class="activity-details">
+                    <h4>Votaste a favor de "Centro de Formación en Energías Renovables"</h4>
+                    <p>Hace 1 semana</p>
+                    <div class="activity-actions">
+                      <a href="../proposals/proposals.html" class="activity-link">Ver propuesta</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="activity-item" data-type="rewards">
+                  <div class="activity-icon" style="background-color: #10b981;">
+                    <i class="fas fa-coins"></i>
+                  </div>
+                  <div class="activity-details">
+                    <h4>Recibiste €9.50 de recompensas de staking</h4>
+                    <p>Hace 2 semanas</p>
+                    <div class="activity-actions">
+                      <a href="#" class="activity-link">Ver detalles</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <button class="view-all-btn">Ver toda la actividad</button>
+              </div>
+            </div>
+            
+            <!-- Análisis de Wallet -->
+            <div class="wallet-section">
+              <div class="wallet-section__header">
+                <h2 class="wallet-section__title">Análisis de Wallet</h2>
+              </div>
+              
+              <div class="wallet-analytics">
+                <div class="analytics-card">
+                  <h3 class="analytics-card__title">Distribución de Activos</h3>
+                  <div class="analytics-card__chart">
+                    <canvas id="assetsDistributionChart" height="200"></canvas>
+                  </div>
+                </div>
+                
+                <div class="analytics-summary">
+                  <div class="analytics-summary__item">
+                    <div class="analytics-summary__label">Moneda Principal</div>
+                    <div class="analytics-summary__value">Euro (57%)</div>
+                  </div>
+                  <div class="analytics-summary__item">
+                    <div class="analytics-summary__label">Diversificación</div>
+                    <div class="analytics-summary__value">Media</div>
+                  </div>
+                  <div class="analytics-summary__item">
+                    <div class="analytics-summary__label">Riesgo</div>
+                    <div class="analytics-summary__value">Bajo</div>
+                  </div>
+                </div>
+                
+                <div class="analytics-tips">
+                  <h4 class="analytics-tips__title">Recomendaciones</h4>
+                  <ul class="analytics-tips__list">
+                    <li>Considera diversificar más tus activos para optimizar rendimientos</li>
+                    <li>Explora nuevos pools de staking con mayor APY</li>
+                    <li>Revisa tu historial de contribuciones para maximizar el impacto comunitario</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -664,150 +865,1003 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <div class="container footer__inner">
-        <div class="footer__brand">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="3"
-              y="3"
-              width="18"
-              height="18"
-              rx="4"
-              fill="#0F172A"
-              stroke="#00D9FF"
-              stroke-width="2"
-            />
-            <path
-              d="M7 12l3 3 7-7"
-              stroke="#00D9FF"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          <span class="footer__logo-text">CivicVault</span>
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__brand">
+            <div class="footer__logo">
+              <img src="../assets/images/logo.svg" alt="CivicVault Logo" class="footer__logo-img">
+              <div class="footer__logo-text">CivicVault</div>
+            </div>
+            <p class="footer__tagline">
+              Transformando comunidades a través de la financiación transparente y participativa.
+            </p>
+            <div class="footer__social">
+              <a href="#" class="footer__social-link"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="footer__social-link"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="footer__social-link"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="footer__social-link"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          
+          <div class="footer__column">
+            <h3 class="footer__column-title">Plataforma</h3>
+            <ul class="footer__links">
+              <li><a href="../index.html">Inicio</a></li>
+              <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+              <li><a href="../proposals/proposals.html">Propuestas</a></li>
+              <li><a href="#">Wallet</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer__column">
+            <h3 class="footer__column-title">Recursos</h3>
+            <ul class="footer__links">
+              <li><a href="#">Documentación</a></li>
+              <li><a href="#">Guías</a></li>
+              <li><a href="#">API</a></li>
+              <li><a href="#">Comunidad</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer__column">
+            <h3 class="footer__column-title">Legal</h3>
+            <ul class="footer__links">
+              <li><a href="#">Términos de Servicio</a></li>
+              <li><a href="#">Política de Privacidad</a></li>
+              <li><a href="#">Cookies</a></li>
+              <li><a href="#">Licencias</a></li>
+            </ul>
+          </div>
         </div>
-
-        <ul class="footer__links">
-          <li><a href="#caracteristicas">Características</a></li>
-          <li><a href="#dao">DAO</a></li>
-          <li><a href="#metricas">Métricas</a></li>
-          <li><a href="#protocol">Protocolo</a></li>
-        </ul>
-
-        <div class="footer__copy">
-          © 2025 Protocolo CivicVault. Construyendo el futuro de la gobernanza
-          DeFi.
+        
+        <div class="footer__bottom">
+          <div class="footer__copy">
+            &copy; 2024 CivicVault. Todos los derechos reservados.
+          </div>
+          <div class="footer__legal">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Cookies</a>
+          </div>
         </div>
       </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
-      // Hamburger Menu Toggle (reutiliza el del index.html)
-      const hamburger = document.getElementById("hamburger");
-      const navMenu = document.getElementById("navMenu");
-
-      hamburger.addEventListener("click", function () {
-        hamburger.classList.toggle("active");
-        navMenu.classList.toggle("active");
-      });
-
-      // Cerrar menú al hacer click en un enlace (mobile)
-      navMenu.addEventListener("click", function (e) {
-        if (e.target.tagName === "A") {
-          hamburger.classList.remove("active");
-          navMenu.classList.remove("active");
+    <!-- Estilos adicionales para la wallet mejorada -->
+    <style>
+      /* Estilos para el menú hamburguesa */
+      .navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 100;
+      }
+      
+      .navbar__hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+      
+      .navbar__hamburger.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+      }
+      
+      .navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .navbar__hamburger.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+      
+      @media (max-width: 768px) {
+        .navbar__hamburger {
+          display: flex;
         }
-      });
-
-      // Cerrar menú al hacer click fuera
-      document.addEventListener("click", function (e) {
-        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-          hamburger.classList.remove("active");
-          navMenu.classList.remove("active");
+        
+        .navbar__menu {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          width: 80%;
+          max-width: 300px;
+          height: 100vh;
+          background-color: var(--color-primary-dark);
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          padding: 5rem 2rem 2rem;
+          transition: right 0.3s ease;
+          z-index: 90;
+          box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
         }
-      });
-
-      // Funciones del wallet
-      function openExchangeModal() {
-        alert(
-          "🔄 INTERCAMBIO DE DIVISAS\n\n" +
-            "Próximamente: Modal completo para intercambiar entre:\n\n" +
-            "• EUR ↔ BTC\n" +
-            "• EUR ↔ USDC\n" +
-            "• BTC ↔ USDC\n\n" +
-            "Con rates en tiempo real y fees transparentes.",
-        );
-      }
-
-      function openSendModal() {
-        alert(
-          "📤 ENVIAR DINERO\n\n" +
-            "Próximamente: Envía a cualquier dirección:\n\n" +
-            "• Email: maria@gmail.com\n" +
-            "• Usuario: @maria\n" +
-            "• Wallet: 0x742d35Cc6B...\n" +
-            "• IBAN: ES91 2100 0418...\n\n" +
-            "Envío global sin barreras.",
-        );
-      }
-
-      function openReceiveModal() {
-        alert(
-          "📥 RECIBIR DINERO\n\n" +
-            "Tu dirección universal:\n" +
-            "civicvault.app/u/tu-usuario\n\n" +
-            "📧 Email: tu-email@ejemplo.com\n" +
-            "₿ Bitcoin: bc1qxy2kgdygjrsqtzq2n0yrf...\n" +
-            "🏦 IBAN: ES91 2100 0418 4502 0005 1332\n\n" +
-            "💳 También puedes generar un código QR",
-        );
-      }
-
-      function openStakingModal() {
-        alert(
-          "🌱 STAKING - GENERA RENDIMIENTOS\n\n" +
-            "Pools disponibles:\n\n" +
-            "🏘️ Proyectos Comunitarios (12.4% APY)\n" +
-            "💱 Liquidez USDC/EUR (8.7% APY)\n" +
-            "🛡️ Seguro Comunitario (6.2% APY)\n\n" +
-            "Contribuye al impacto social mientras generas rendimientos.",
-        );
-      }
-
-      function openAddCurrencyModal() {
-        alert(
-          "➕ AGREGAR NUEVA MONEDA\n\n" +
-            "Monedas disponibles:\n\n" +
-            "🏦 Fiat: USD, GBP, CHF, JPY\n" +
-            "₿ Crypto: ETH, ADA, SOL, DOT\n" +
-            "💰 Stablecoins: USDT, DAI, BUSD\n\n" +
-            "✨ Próximamente: Monedas locales y CBDCs",
-        );
-      }
-
-      // Simulación de actualizaciones en tiempo real
-      function updateBalances() {
-        const totalBalance = document.getElementById("totalBalance");
-        if (totalBalance) {
-          const variation = (Math.random() - 0.5) * 5; // ±€2.5
-          const currentValue = parseFloat(
-            totalBalance.textContent.replace("€", "").replace(",", ""),
-          );
-          const newValue = currentValue + variation;
-          totalBalance.textContent = `€${newValue.toFixed(2).replace(".", ",")}`;
+        
+        .navbar__menu.active {
+          right: 0;
+        }
+        
+        .navbar__menu li {
+          margin: 1rem 0;
+          width: 100%;
+        }
+        
+        .navbar__menu a {
+          font-size: 1.125rem;
+          padding: 0.5rem 0;
+          display: block;
+          width: 100%;
         }
       }
-
-      // Actualizar cada 30 segundos
-      setInterval(updateBalances, 30000);
-    </script>
+      
+      /* Estilos para notificaciones */
+      .notification-bell {
+        position: relative;
+        margin-right: 1rem;
+      }
+      
+      .notification-bell__button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.25rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        position: relative;
+      }
+      
+      .notification-bell__badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--color-error);
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 600;
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .notification-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 350px;
+        background: white;
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-lg);
+        z-index: 100;
+        display: none;
+        overflow: hidden;
+      }
+      
+      .notification-dropdown.active {
+        display: block;
+        animation: fadeInDown 0.3s ease-out;
+      }
+      
+      .notification-dropdown__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      
+      .notification-dropdown__header h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0;
+      }
+      
+      .notification-dropdown__close {
+        background: none;
+        border: none;
+        color: var(--color-text-light);
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      
+      .notification-dropdown__body {
+        max-height: 350px;
+        overflow-y: auto;
+      }
+      
+      .notification-dropdown__footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 1.5rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      
+      .notification-item {
+        display: flex;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+      
+      .notification-item:last-child {
+        border-bottom: none;
+      }
+      
+      .notification-item:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+      
+      .notification-item--unread {
+        background-color: rgba(var(--color-primary-rgb), 0.05);
+      }
+      
+      .notification-item__icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-right: 1rem;
+        flex-shrink: 0;
+      }
+      
+      .notification-item__content {
+        flex: 1;
+      }
+      
+      .notification-item__content h4 {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0 0 0.25rem;
+      }
+      
+      .notification-item__content p {
+        font-size: 0.875rem;
+        color: var(--color-text-light);
+        margin: 0 0 0.5rem;
+      }
+      
+      .notification-item__time {
+        font-size: 0.75rem;
+        color: var(--color-text-lighter);
+      }
+      
+      /* Estilos para el balance */
+      .wallet-balance__tabs {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1rem;
+      }
+      
+      .wallet-balance__tab {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.875rem;
+        font-weight: 500;
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: var(--border-radius-sm);
+      }
+      
+      .wallet-balance__tab:hover {
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      
+      .wallet-balance__tab--active {
+        color: white;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      
+      .balance-period-select {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.875rem;
+        padding: 0;
+        cursor: pointer;
+        appearance: none;
+      }
+      
+      .balance-period-select:focus {
+        outline: none;
+      }
+      
+      .balance-hidden {
+        font-family: monospace;
+        letter-spacing: 0.25rem;
+      }
+      
+      @keyframes rotating {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      
+      .rotating {
+        animation: rotating 1s linear infinite;
+      }
+      
+      /* Estilos para transacciones */
+      .transaction-filter {
+        margin-right: 1rem;
+      }
+      
+      .transaction-hash {
+        display: flex;
+        align-items: center;
+        font-size: 0.75rem;
+        color: var(--color-text-lighter);
+        margin-top: 0.25rem;
+      }
+      
+      .hash-label {
+        margin-right: 0.25rem;
+      }
+      
+      .hash-value {
+        font-family: 'Roboto Mono', monospace;
+      }
+      
+      .copy-hash-btn {
+        background: none;
+        border: none;
+        color: var(--color-text-light);
+        font-size: 0.75rem;
+        cursor: pointer;
+        padding: 0.25rem;
+        margin-left: 0.25rem;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+      }
+      
+      .copy-hash-btn:hover {
+        opacity: 1;
+        color: var(--color-primary);
+      }
+      
+      .transaction-status {
+        display: flex;
+        align-items: center;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+      }
+      
+      .transaction-status i {
+        margin-right: 0.25rem;
+      }
+      
+      .transaction-status--completed {
+        color: var(--color-success);
+      }
+      
+      .transaction-status--pending {
+        color: var(--color-warning);
+      }
+      
+      .transaction-status--failed {
+        color: var(--color-error);
+      }
+      
+      .transaction-pagination {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      
+      .pagination-btn {
+        background: none;
+        border: none;
+        color: var(--color-primary);
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0.5rem 0.75rem;
+        border-radius: var(--border-radius-sm);
+        transition: all 0.3s ease;
+      }
+      
+      .pagination-btn:hover:not(:disabled) {
+        background: rgba(var(--color-primary-rgb), 0.1);
+      }
+      
+      .pagination-btn:disabled {
+        color: var(--color-text-lighter);
+        cursor: not-allowed;
+      }
+      
+      .pagination-info {
+        font-size: 0.875rem;
+        color: var(--color-text-light);
+      }
+      
+      /* Estilos para staking pools */
+      .staking-filter {
+        margin-right: 1rem;
+      }
+      
+      .staking-pool {
+        position: relative;
+      }
+      
+      .pool-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(var(--color-primary-rgb), 0.1);
+        color: var(--color-primary);
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.25rem 0.5rem;
+        border-radius: 2rem;
+      }
+      
+      .pool-badge--new {
+        background: rgba(var(--color-success-rgb), 0.1);
+        color: var(--color-success);
+      }
+      
+      .apy-badge--high {
+        background: rgba(var(--color-success-rgb), 0.2);
+        color: var(--color-success);
+      }
+      
+      .pool-progress {
+        margin: 1.5rem 0;
+      }
+      
+      .pool-progress__label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.875rem;
+        color: var(--color-text);
+        margin-bottom: 0.5rem;
+      }
+      
+      .pool-progress__bar {
+        height: 0.5rem;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 1rem;
+        overflow: hidden;
+      }
+      
+      .pool-progress__value {
+        height: 100%;
+        background: var(--color-primary);
+        border-radius: 1rem;
+      }
+      
+      .pool-progress__info {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 0.75rem;
+        color: var(--color-text-light);
+        margin-top: 0.25rem;
+      }
+      
+      .pool-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin: 1rem 0;
+      }
+      
+      /* Estilos para actividad */
+      .activity-filter {
+        margin-right: 1rem;
+      }
+      
+      .activity-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+      
+      .activity-link {
+        font-size: 0.75rem;
+        color: var(--color-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      
+      .activity-link:hover {
+        text-decoration: underline;
+      }
+      
+      /* Estilos para análisis */
+      .wallet-analytics {
+        padding: 1.5rem;
+      }
+      
+      .analytics-card {
+        margin-bottom: 1.5rem;
+      }
+      
+      .analytics-card__title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin-bottom: 1rem;
+      }
+      
+      .analytics-card__chart {
+        height: 200px;
+      }
+      
+      .analytics-summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .analytics-summary__item {
+        background: rgba(var(--color-primary-rgb), 0.05);
+        padding: 1rem;
+        border-radius: var(--border-radius-md);
+      }
+      
+      .analytics-summary__label {
+        font-size: 0.875rem;
+        color: var(--color-text-light);
+        margin-bottom: 0.5rem;
+      }
+      
+      .analytics-summary__value {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--color-text);
+      }
+      
+      .analytics-tips {
+        background: rgba(var(--color-warning-rgb), 0.05);
+        padding: 1rem;
+        border-radius: var(--border-radius-md);
+        border-left: 3px solid var(--color-warning);
+      }
+      
+      .analytics-tips__title {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin-bottom: 0.75rem;
+      }
+      
+      .analytics-tips__list {
+        padding-left: 1.25rem;
+        margin: 0;
+      }
+      
+      .analytics-tips__list li {
+        font-size: 0.875rem;
+        color: var(--color-text);
+        margin-bottom: 0.5rem;
+      }
+      
+      /* Estilos para modales */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+      
+      .modal--open {
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      .modal__content {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow-lg);
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+      }
+      
+      .modal--open .modal__content {
+        transform: translateY(0);
+      }
+      
+      .modal__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      
+      .modal__title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0;
+      }
+      
+      .modal__close {
+        background: none;
+        border: none;
+        color: var(--color-text-light);
+        font-size: 1.5rem;
+        cursor: pointer;
+        line-height: 1;
+      }
+      
+      .modal__body {
+        padding: 1.5rem;
+      }
+      
+      .modal__footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        padding: 1.5rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      
+      /* Estilos para el formulario de intercambio */
+      .exchange-form__row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .exchange-form__divider {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1.5rem 0;
+        position: relative;
+      }
+      
+      .exchange-form__divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.05);
+        z-index: 1;
+      }
+      
+      .exchange-form__swap-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background: var(--color-primary);
+        color: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s ease;
+      }
+      
+      .exchange-form__swap-btn:hover {
+        transform: scale(1.1);
+      }
+      
+      .exchange-form__info {
+        background: rgba(var(--color-primary-rgb), 0.05);
+        padding: 1rem;
+        border-radius: var(--border-radius-md);
+        margin-top: 1.5rem;
+      }
+      
+      .exchange-form__rate,
+      .exchange-form__fee {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.875rem;
+        color: var(--color-text);
+        margin-bottom: 0.5rem;
+      }
+      
+      .exchange-form__fee {
+        margin-bottom: 0;
+      }
+      
+      /* Estilos para el formulario de envío */
+      .address-input {
+        display: flex;
+      }
+      
+      .address-input__scan {
+        background: var(--color-primary);
+        color: white;
+        border: none;
+        width: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top-right-radius: var(--border-radius-md);
+        border-bottom-right-radius: var(--border-radius-md);
+        cursor: pointer;
+      }
+      
+      .address-input .form-input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        flex: 1;
+      }
+      
+      .send-summary {
+        background: rgba(var(--color-primary-rgb), 0.05);
+        padding: 1rem;
+        border-radius: var(--border-radius-md);
+        margin-top: 1.5rem;
+      }
+      
+      .send-summary__row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.875rem;
+        color: var(--color-text);
+        margin-bottom: 0.5rem;
+      }
+      
+      .send-summary__row:last-child {
+        margin-bottom: 0;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        font-weight: 600;
+      }
+      
+      /* Estilos para el formulario de recepción */
+      .qr-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 1.5rem 0;
+      }
+      
+      .qr-code {
+        width: 200px;
+        height: 200px;
+        background: white;
+        padding: 1rem;
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-md);
+        margin-bottom: 1rem;
+      }
+      
+      .qr-code img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      
+      .wallet-address {
+        display: flex;
+        align-items: center;
+        background: rgba(var(--color-primary-rgb), 0.05);
+        padding: 0.75rem 1rem;
+        border-radius: var(--border-radius-md);
+        width: 100%;
+      }
+      
+      .wallet-address span {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 0.875rem;
+        color: var(--color-text);
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      .copy-btn {
+        background: none;
+        border: none;
+        color: var(--color-primary);
+        cursor: pointer;
+        padding: 0.25rem;
+        margin-left: 0.5rem;
+      }
+      
+      .share-options {
+        margin-top: 1.5rem;
+      }
+      
+      .share-options h4 {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin-bottom: 1rem;
+      }
+      
+      .share-buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+      }
+      
+      .share-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(var(--color-primary-rgb), 0.05);
+        border: none;
+        padding: 0.75rem;
+        border-radius: var(--border-radius-md);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .share-btn:hover {
+        background: rgba(var(--color-primary-rgb), 0.1);
+      }
+      
+      .share-btn i {
+        font-size: 1.25rem;
+        color: var(--color-primary);
+        margin-bottom: 0.5rem;
+      }
+      
+      .share-btn span {
+        font-size: 0.75rem;
+        color: var(--color-text);
+      }
+      
+      /* Estilos para notificaciones */
+      .notification {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: 1rem 1.5rem;
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-lg);
+        transform: translateY(100%);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        max-width: 350px;
+      }
+      
+      .notification--show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      
+      .notification--success {
+        border-left: 4px solid var(--color-success);
+      }
+      
+      .notification--error {
+        border-left: 4px solid var(--color-error);
+      }
+      
+      .notification--info {
+        border-left: 4px solid var(--color-primary);
+      }
+      
+      .notification--warning {
+        border-left: 4px solid var(--color-warning);
+      }
+      
+      .notification__icon {
+        margin-right: 1rem;
+        font-size: 1.25rem;
+      }
+      
+      .notification--success .notification__icon {
+        color: var(--color-success);
+      }
+      
+      .notification--error .notification__icon {
+        color: var(--color-error);
+      }
+      
+      .notification--info .notification__icon {
+        color: var(--color-primary);
+      }
+      
+      .notification--warning .notification__icon {
+        color: var(--color-warning);
+      }
+      
+      .notification__content {
+        flex: 1;
+        font-size: 0.9375rem;
+        color: var(--color-text);
+      }
+      
+      .notification__close {
+        background: none;
+        border: none;
+        color: var(--color-text-light);
+        font-size: 1.25rem;
+        cursor: pointer;
+        margin-left: 1rem;
+      }
+      
+      /* Animaciones */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+    </style>
+    
+    <!-- JavaScript Components -->
+    <script src="../js/components/navbar.js"></script>
+    <script src="../js/components/footer.js"></script>
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="../js/main.js"></script>
+    <script src="../js/wallet.js"></script>
+    
+    <!-- Font Awesome para iconos -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   </body>
 </html>

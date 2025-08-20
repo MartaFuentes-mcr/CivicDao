@@ -1,0 +1,938 @@
+/**
+ * Proposals Page CSS
+ * Estilos específicos para la página de propuestas
+ */
+
+/* Header de Propuestas */
+.proposals-header {
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+.proposals-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 30px 30px, rgba(255,255,255,0.1) 2px, transparent 2px),
+    radial-gradient(circle at 80px 80px, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 60px 60px, 120px 120px;
+  background-repeat: repeat;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.proposals-header::after {
+  content: '';
+  position: absolute;
+  bottom: -6rem;
+  right: -6rem;
+  width: 30rem;
+  height: 30rem;
+  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.proposals-header__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.proposals-header__content {
+  flex: 1;
+}
+
+.proposals-header__title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.5px;
+}
+
+.proposals-header__subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 2.5rem;
+  max-width: 36rem;
+  line-height: 1.5;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.proposals-stats {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.proposals-stat {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.proposals-stat:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.proposals-stat::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.proposals-stat:hover::after {
+  transform: translateX(100%);
+}
+
+.proposals-stat__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.proposals-stat__label {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.proposals-header__action {
+  flex-shrink: 0;
+  animation: fadeInRight 0.8s ease-out;
+}
+
+.proposals-header__action .btn {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.proposals-header__action .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* Filtros de Propuestas */
+.proposals-filters {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.proposals-filters__tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.proposals-filters__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.proposals-filters__tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+  position: relative;
+}
+
+.proposals-filters__tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-normal);
+}
+
+.proposals-filters__tab:hover {
+  color: var(--color-secondary);
+}
+
+.proposals-filters__tab--active {
+  color: var(--color-primary);
+}
+
+.proposals-filters__tab--active::after {
+  transform: scaleX(1);
+}
+
+.proposals-filters__tab-icon {
+  font-size: 1rem;
+}
+
+.proposals-filters__tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.375rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.proposals-filters__tab--active .proposals-filters__tab-count {
+  background: var(--color-primary);
+  color: white;
+}
+
+.proposals-filters__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.proposals-filters__sort {
+  flex-shrink: 0;
+}
+
+.proposals-filters__view {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Grid de Propuestas */
+.proposals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Tarjetas de Propuestas */
+.proposal-card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.proposal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.proposal-card__header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.proposal-card__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.proposal-card__category {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+}
+
+.proposal-card__body {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.proposal-card__description {
+  font-size: 0.9375rem;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.proposal-card__footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.proposal-card__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Nuevos estilos para proposal-card mejorado */
+.proposal-card__header .proposal-card__category {
+  background: rgba(var(--color-secondary-rgb), 0.1);
+  color: var(--color-secondary);
+  padding: 0.375rem 0.75rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.proposal-card__content {
+  padding: 0 1.5rem 1.5rem;
+  flex: 1;
+}
+
+.proposal-card__budget {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(var(--color-primary-rgb), 0.05);
+  border-radius: var(--border-radius-md);
+  margin-bottom: 1.25rem;
+  border-left: 3px solid var(--color-primary);
+}
+
+.proposal-card__budget-label {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  font-weight: 500;
+}
+
+.proposal-card__budget-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.proposal-card__progress {
+  margin-bottom: 1.25rem;
+}
+
+.proposal-card__progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.proposal-card__progress-label {
+  color: var(--color-text);
+}
+
+.proposal-card__progress-percentage {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.proposal-card__progress-bar {
+  width: 100%;
+  height: 0.5rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.proposal-card__progress-value {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-success), var(--color-success));
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.proposal-card__progress-value::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Estilos para propuestas aprobadas */
+.proposal-card__result {
+  margin-bottom: 1.25rem;
+}
+
+.proposal-card__result-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.proposal-card__result-label {
+  color: var(--color-text);
+}
+
+.proposal-card__result-percentage {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.proposal-card__result-bar {
+  width: 100%;
+  height: 0.5rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.proposal-card__result-value {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-success), rgba(var(--color-success-rgb), 0.8));
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.proposal-card__result-value::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.proposal-card__votes {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: var(--border-radius-md);
+}
+
+.proposal-card__vote-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.proposal-card__vote-item--favor {
+  color: var(--color-success);
+}
+
+.proposal-card__vote-item--against {
+  color: var(--color-error);
+}
+
+.proposal-card__vote-item i {
+  font-size: 0.875rem;
+}
+
+.proposal-card__meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.proposal-card__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+}
+
+.proposal-card__meta-item i {
+  color: var(--color-secondary);
+  font-size: 0.875rem;
+}
+
+/* Efectos adicionales */
+.proposal-card__title:hover {
+  color: var(--color-primary);
+  transition: color var(--transition-normal);
+}
+
+.proposal-card__actions .btn {
+  transition: all var(--transition-normal);
+}
+
+.proposal-card__actions .btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from { 
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Estilos para el botón pulsante */
+.btn--pulse {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--pulse::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%) scale(0);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.8;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Tooltip para el botón de nueva propuesta */
+.proposals-header__tooltip {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeIn 0.5s ease-in-out 1s forwards;
+  opacity: 0;
+}
+
+.proposals-header__tooltip i {
+  color: var(--color-primary-light);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Propuesta en Lista */
+.proposal-list-item {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1.5rem;
+  transition: all var(--transition-normal);
+}
+
+.proposal-list-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.proposal-list-item__content {
+  flex: 1;
+}
+
+.proposal-list-item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.proposal-list-item__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.proposal-list-item__category {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+}
+
+.proposal-list-item__description {
+  font-size: 0.9375rem;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.proposal-list-item__meta {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.proposal-list-item__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.proposal-list-item__side {
+  flex-shrink: 0;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.proposal-list-item__budget {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.proposal-list-item__date {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.pagination__btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--color-white);
+  border-radius: var(--border-radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.pagination__btn:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.pagination__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 1rem;
+}
+
+.pagination__page {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--color-white);
+  border-radius: var(--border-radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.pagination__page:hover:not(.pagination__page--active) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.pagination__page--active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.pagination__ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+}
+
+/* Modal de Nueva Propuesta */
+.proposal-form__group {
+  margin-bottom: 1.5rem;
+}
+
+.proposal-form__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--color-secondary);
+}
+
+.proposal-form__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+  font-size: 0.9375rem;
+  transition: all var(--transition-normal);
+}
+
+.proposal-form__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+}
+
+.proposal-form__textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+  font-size: 0.9375rem;
+  min-height: 150px;
+  resize: vertical;
+  transition: all var(--transition-normal);
+}
+
+.proposal-form__textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+}
+
+.proposal-form__select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+  font-size: 0.9375rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+  transition: all var(--transition-normal);
+}
+
+.proposal-form__select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+}
+
+.proposal-form__buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .proposals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .proposals-header__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .proposals-header__action {
+    align-self: flex-start;
+    margin-top: 1.5rem;
+  }
+  
+  .proposals-stats {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .proposals-stat {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .proposals-header {
+    padding: 3rem 0;
+  }
+  
+  .proposals-header__title {
+    font-size: 2.25rem;
+  }
+  
+  .proposals-filters__actions {
+    flex-wrap: wrap;
+  }
+  
+  .proposals-filters__tabs {
+    padding: 0;
+  }
+  
+  .proposals-filters__tab {
+    padding: 1rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .proposals-filters__tab-text {
+    display: none;
+  }
+  
+  .proposals-filters__tab-icon {
+    font-size: 1.25rem;
+  }
+  
+  .search-box {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .proposals-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .proposal-card__meta {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .proposal-card__votes {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .proposal-card__actions {
+    flex-direction: column;
+  }
+  
+  .proposal-list-item {
+    flex-direction: column;
+  }
+  
+  .proposal-list-item__side {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .proposal-list-item__budget {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .proposals-header__title {
+    font-size: 1.875rem;
+  }
+  
+  .proposals-stats {
+    flex-direction: column;
+  }
+  
+  .proposals-stat {
+    min-width: auto;
+  }
+}

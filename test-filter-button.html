@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Botón de Filtros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .filters-panel {
+            position: absolute;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-top: 10px;
+            display: none;
+            padding: 16px;
+            border: 1px solid #eee;
+        }
+        
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .filters-header h4 {
+            margin: 0;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .filters-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prueba de Botón de Filtros</h1>
+        
+        <div style="position: relative; margin-bottom: 200px;">
+            <button id="filterButton" class="btn">
+                <i>⚙️</i> Filtros Avanzados
+            </button>
+            
+            <div id="filtersPanel" class="filters-panel">
+                <div class="filters-header">
+                    <h4>Filtros Avanzados</h4>
+                    <button id="closeButton" class="close-btn">×</button>
+                </div>
+                
+                <div class="filters-content">
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select class="form-select">
+                            <option value="">Todas las categorías</option>
+                            <option value="sostenibilidad">Sostenibilidad</option>
+                            <option value="educacion">Educación</option>
+                            <option value="tecnologia">Tecnología</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Ubicación</label>
+                        <select class="form-select">
+                            <option value="">Todas las ubicaciones</option>
+                            <option value="centro">Distrito Centro</option>
+                            <option value="norte">Distrito Norte</option>
+                            <option value="sur">Distrito Sur</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="filters-footer">
+                    <button class="btn">Restablecer</button>
+                    <button class="btn" style="background-color: #3b82f6; color: white;">Aplicar</button>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <p>Este es un ejemplo simple para probar el funcionamiento del botón de filtros.</p>
+            <p>Haz clic en el botón "Filtros Avanzados" para mostrar/ocultar el panel de filtros.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Esperar a que el DOM esté completamente cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM cargado - Inicializando botón de filtros de prueba');
+            
+            // Obtener referencias a los elementos
+            var filterButton = document.getElementById('filterButton');
+            var filtersPanel = document.getElementById('filtersPanel');
+            var closeButton = document.getElementById('closeButton');
+            
+            console.log('Botón de filtros:', filterButton);
+            console.log('Panel de filtros:', filtersPanel);
+            console.log('Botón de cerrar:', closeButton);
+            
+            // Verificar si los elementos existen
+            if (!filterButton || !filtersPanel) {
+                console.error('No se encontraron los elementos necesarios para el botón de filtros');
+                return;
+            }
+            
+            // Función para mostrar/ocultar el panel
+            function togglePanel() {
+                console.log('Alternando panel de filtros');
+                if (filtersPanel.style.display === 'none' || filtersPanel.style.display === '') {
+                    filtersPanel.style.display = 'block';
+                    filterButton.classList.add('active');
+                    console.log('Panel mostrado');
+                } else {
+                    filtersPanel.style.display = 'none';
+                    filterButton.classList.remove('active');
+                    console.log('Panel ocultado');
+                }
+            }
+            
+            // Función para cerrar el panel
+            function closePanel() {
+                console.log('Cerrando panel de filtros');
+                filtersPanel.style.display = 'none';
+                filterButton.classList.remove('active');
+            }
+            
+            // Asignar eventos
+            filterButton.addEventListener('click', togglePanel);
+            
+            if (closeButton) {
+                closeButton.addEventListener('click', closePanel);
+            }
+            
+            // Cerrar el panel al hacer clic fuera de él
+            document.addEventListener('click', function(event) {
+                if ((filtersPanel.style.display === 'block') && 
+                    !filtersPanel.contains(event.target) && 
+                    event.target !== filterButton) {
+                    closePanel();
+                }
+            });
+            
+            console.log('Inicialización del botón de filtros de prueba completada');
+        });
+    </script>
+</body>
+</html>

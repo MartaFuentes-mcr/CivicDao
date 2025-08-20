@@ -1,0 +1,304 @@
+/**
+ * Progress CSS
+ * Estilos para barras de progreso y elementos relacionados
+ */
+
+/* Barra de progreso básica */
+.progress {
+  width: 100%;
+  height: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  border-radius: 1rem;
+  transition: width 0.5s ease;
+}
+
+/* Variantes de color */
+.progress--success .progress__bar {
+  background: linear-gradient(90deg, var(--color-success), #4ade80);
+}
+
+.progress--warning .progress__bar {
+  background: linear-gradient(90deg, var(--color-warning), #fbbf24);
+}
+
+.progress--error .progress__bar {
+  background: linear-gradient(90deg, var(--color-error), #f87171);
+}
+
+/* Tamaños */
+.progress--sm {
+  height: 0.25rem;
+}
+
+.progress--lg {
+  height: 0.75rem;
+}
+
+.progress--xl {
+  height: 1rem;
+}
+
+/* Progreso con etiqueta */
+.progress-labeled {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progress-labeled__header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
+
+.progress-labeled__title {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.progress-labeled__value {
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+/* Progreso con pasos */
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.progress-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 0.75rem;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.progress-step.is-complete:not(:last-child)::after {
+  background-color: var(--color-primary);
+}
+
+.progress-step__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.progress-step.is-complete .progress-step__icon {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.progress-step.is-active .progress-step__icon {
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+}
+
+.progress-step__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  text-align: center;
+}
+
+.progress-step.is-complete .progress-step__label,
+.progress-step.is-active .progress-step__label {
+  color: var(--color-text);
+}
+
+/* Progreso circular */
+.progress-circular {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+}
+
+.progress-circular__svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.progress-circular__background {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.05);
+  stroke-width: 4;
+}
+
+.progress-circular__value {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-circular__label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+/* Proyecto y propuesta específicos */
+.project-meta,
+.proposal-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.project-meta__item,
+.proposal-meta__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.project-meta__label,
+.proposal-meta__label {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+}
+
+.project-meta__value,
+.proposal-meta__value {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-secondary);
+}
+
+.project-votes,
+.proposal-votes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.project-votes__item,
+.proposal-votes__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  border-radius: var(--border-radius-md);
+}
+
+.project-votes__item--favor,
+.proposal-votes__item--favor {
+  background-color: rgba(0, 168, 107, 0.1);
+}
+
+.project-votes__item--against,
+.proposal-votes__item--against {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.project-votes__label,
+.proposal-votes__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.project-votes__item--favor .project-votes__label,
+.proposal-votes__item--favor .proposal-votes__label {
+  color: var(--color-success);
+}
+
+.project-votes__item--against .project-votes__label,
+.proposal-votes__item--against .proposal-votes__label {
+  color: var(--color-error);
+}
+
+.project-votes__value,
+.proposal-votes__value {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+.proposal-progress__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  margin-bottom: 0.5rem;
+}
+
+.proposal-result {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.proposal-result__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.proposal-result__label {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+}
+
+.proposal-result__value {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .project-meta,
+  .proposal-meta,
+  .proposal-result {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .progress-steps {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .progress-step {
+    flex: 0 0 calc(50% - 0.5rem);
+  }
+  
+  .progress-step:not(:last-child)::after {
+    display: none;
+  }
+}
