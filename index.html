@@ -42,9 +42,9 @@
               >Métricas</a
             >
           </li>
-          <li><a href="/dashboard/dashboard.html">Dashboard</a></li>
-          <li><a href="/proposals/proposals.html">Propuestas</a></li>
-          <li><a href="/wallet/wallet.html">💳 Wallet</a></li>
+          <li><a href="./dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="./proposals/proposals.html">Propuestas</a></li>
+          <li><a href="./wallet/wallet.html">💳 Wallet</a></li>
         </ul>
 
         <!-- Botón CTA -->
@@ -301,6 +301,17 @@
             >Ver Propuestas</a
           >
         </div>
+        
+        <!-- Demo AI: Generador de historias con OpenAI -->
+        <div class="ai-demo" style="margin-top: 2rem;">
+          <h3 style="margin-bottom: 0.5rem;">Prueba el generador de historias</h3>
+          <form id="aiForm" class="ai-form" style="display: flex; gap: 0.5rem; align-items: center;">
+            <input id="aiPrompt" type="text" placeholder="Escribe un tema (p. ej., un unicornio en Madrid)" style="flex: 1; padding: 0.6rem 0.8rem;" />
+            <button id="aiSubmit" type="submit" class="btn btn--primary">Generar</button>
+            <span id="aiSpinner" style="display:none;">⏳</span>
+          </form>
+          <pre id="aiOutput" style="white-space: pre-wrap; padding: 0.8rem; background: #0b1020; color: #e5e7eb; border-radius: 8px; margin-top: 0.75rem; min-height: 3rem;"></pre>
+        </div>
       </div>
     </section>
 
@@ -364,6 +375,7 @@
     <!-- Main JavaScript -->
     <script src="js/main.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/components/ai.js"></script>
     
     <script>
       // Initialize components when DOM is ready
@@ -379,9 +391,12 @@
       
       // Cerrar menú al hacer click fuera
       document.addEventListener("click", function (e) {
-        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-          hamburger.classList.remove("active");
-          navMenu.classList.remove("active");
+        const hamburgerEl = document.getElementById("hamburger");
+        const navMenuEl = document.getElementById("navMenu");
+        if (!hamburgerEl || !navMenuEl) return;
+        if (!hamburgerEl.contains(e.target) && !navMenuEl.contains(e.target)) {
+          hamburgerEl.classList.remove("active");
+          navMenuEl.classList.remove("active");
         }
       });
 
